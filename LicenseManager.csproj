@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C147A441-64DE-4773-948C-105CC3BBCA07}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HGM.Hotbird64.LicenseManager</RootNamespace>
+    <AssemblyName>LicenseManager</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\!bin!\License Manager\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\!bin!\License Manager\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\!bin!\License Manager\x86</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\..\!bin!\License Manager\x86</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon1.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B79E6A9335DD430F69809DCA93C295216540EAFC</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>TheFlightSims App Publisher.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\!bin!\License Manager\x64</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\..\!bin!\License Manager\x64</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AboutBox.xaml.cs">
+      <DependentUpon>AboutBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="API\BinaryProductKey.cs" />
+    <Compile Include="API\KmsDataBase.cs" />
+    <Compile Include="API\KmsGuid.cs" />
+    <Compile Include="API\PidGenX.cs" />
+    <Compile Include="API\pkeyConfig.cs" />
+    <Compile Include="Contracts\IHaveNotifyOfPropertyChange.cs" />
+    <Compile Include="Contracts\IWmiProperty.cs" />
+    <Compile Include="Controls\RibbonMenuButton.xaml.cs">
+      <DependentUpon>RibbonMenuButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WmiPropertyBox.xaml.cs">
+      <DependentUpon>WmiPropertyBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters.cs" />
+    <Compile Include="ExportIds.xaml.cs">
+      <DependentUpon>ExportIds.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\DateTime.cs" />
+    <Compile Include="Extensions\PropertyChangeBase.cs" />
+    <Compile Include="Extensions\Wmi.cs" />
+    <Compile Include="Extensions\Wpf.cs" />
+    <Compile Include="Icons\multi\ClientComputer.xaml.cs">
+      <DependentUpon>ClientComputer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\Database.xaml.cs">
+      <DependentUpon>Database.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\DatabaseBrowse.xaml.cs">
+      <DependentUpon>DatabaseBrowse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\Export.xaml.cs">
+      <DependentUpon>Export.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\InstallKey.xaml.cs">
+      <DependentUpon>InstallKey.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\KeyIcon.xaml.cs">
+      <DependentUpon>KeyIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\KmsServerIcon.xaml.cs">
+      <DependentUpon>KmsServerIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\MagnifyingGlass.xaml.cs">
+      <DependentUpon>MagnifyingGlass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\Office2013.xaml.cs">
+      <DependentUpon>Office2013.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\QueryKey.xaml.cs">
+      <DependentUpon>QueryKey.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\QuestionOrange.xaml.cs">
+      <DependentUpon>QuestionOrange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\Server.xaml.cs">
+      <DependentUpon>Server.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\Unlock.xaml.cs">
+      <DependentUpon>Unlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\Refresh.xaml.cs">
+      <DependentUpon>Refresh.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\vs2013.xaml.cs">
+      <DependentUpon>vs2013.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\multi\Windows.xaml.cs">
+      <DependentUpon>Windows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InstallKmsKeys.xaml.cs">
+      <DependentUpon>InstallKmsKeys.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KmsClientWindow.xaml.cs">
+      <DependentUpon>KmsClientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="API\ProductKey.cs" />
+    <Compile Include="KmsLicense.cs" />
+    <Compile Include="Model\LicenseStatus.cs" />
+    <Compile Include="Model\LicenseModel.cs" />
+    <Compile Include="OwnKeyWindow.xaml.cs">
+      <DependentUpon>OwnKeyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProductBrowser.xaml.cs">
+      <DependentUpon>ProductBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProductSelector.xaml.cs">
+      <DependentUpon>ProductSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyChangeBase.cs" />
+    <Compile Include="ScalableWindow.cs" />
+    <Compile Include="ProductKeys.xaml.cs">
+      <DependentUpon>ProductKeys.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="API\KMS.cs" />
+    <Compile Include="Pid.cs" />
+    <Compile Include="KmsServer.xaml.cs">
+      <DependentUpon>KmsServer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectForm.xaml.cs">
+      <DependentUpon>ConnectForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceConfiguration.xaml.cs">
+      <DependentUpon>ServiceConfiguration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TapMirror.cs" />
+    <Compile Include="VlmcsdData.cs" />
+    <Compile Include="WMIProperty.cs" />
+    <Compile Include="WPF\Converters\ConverterBase.cs" />
+    <Compile Include="WPF\Converters\Wmi.cs" />
+    <Page Include="AboutBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RibbonMenuButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WmiPropertyBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExportIds.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\ClientComputer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\Database.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\DatabaseBrowse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\Export.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\InstallKey.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\KeyIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\KmsServerIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\MagnifyingGlass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\Office2013.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\QueryKey.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\QuestionOrange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\Server.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\Unlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\Refresh.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\vs2013.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\multi\Windows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InstallKmsKeys.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OwnKeyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProductBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProductKeys.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KmsClientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LicenseMachine.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="KmsServer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConnectForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProductSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServiceConfiguration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <Resource Include="KmsDataBase.xsd">
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2015.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_office14.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_office15pre.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_office15.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_Office15KMSHost.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_vista.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win10-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win10.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win10_anniversary-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win10_anniversary.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win7.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win8.1-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win8.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_winemb8.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_winNext-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_winNext.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_winPosReady7.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_winThinPC.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win8.1Update.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_win8-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2010.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2013.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2012.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2017.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\16299-pkeyconfig-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\16299-pkeyconfig.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkeyconfig-office.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkeyconfig-office-kmshost.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2019.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2022.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\18362-pkeyconfig.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\19041-pkeyconfig-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\19041-pkeyconfig-downlevel.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\19041-pkeyconfig.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\22621-pkeyconfig-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\22621-pkeyconfig.xrm-ms.gz" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="pkeyConfig.xsd">
+      <SubType>Designer</SubType>
+      <LastGenOutput>pkeyConfig.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="LmInternalDatabase.xml">
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\16\folder_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\16\setting_tools.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\32\folder_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\16\zoom_actual.png" />
+    <Resource Include="Icons\16\zoom_in.png" />
+    <Resource Include="Icons\16\zoom_out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\16\to_do_list_checked_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\16\size_vertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

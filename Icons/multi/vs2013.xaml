@@ -1,0 +1,26 @@
+﻿<ContentControl x:Class="HGM.Hotbird64.Icons.Vs2013"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Viewbox Stretch="Uniform">
+    <Canvas Width="9.67" Height="9.67">
+      <Canvas.RenderTransform>
+        <TranslateTransform X="0.2" Y="0.2"/>
+      </Canvas.RenderTransform>
+      <Canvas.Resources/>
+      <Canvas >
+        <Canvas.RenderTransform>
+          <TranslateTransform X="0" Y="-287.45"/>
+        </Canvas.RenderTransform>
+        <Path Fill="#FF68217A" StrokeThickness="0.26458332">
+          <Path.Data>
+            <PathGeometry Figures="m 7.187792 287.45728 2.3539979 0.95038 v 7.62397 l -2.3759579 0.95065 -3.779573 -3.75815 -2.39739001 1.85764 -0.95038097 -0.47519 v -4.77361 l 0.95038097 -0.4535 2.39739001 1.87907 z m -6.19892301 3.34777 v 2.89428 L 2.414444 292.23062 Z m 3.71501501 1.42557 2.462212 1.94416 v -3.88831 z" FillRule="NonZero"/>
+          </Path.Data>
+        </Path>
+      </Canvas>
+    </Canvas>
+  </Viewbox>
+</ContentControl>

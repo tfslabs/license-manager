@@ -1,0 +1,36 @@
+﻿<ContentControl x:Class="HGM.Hotbird64.Icons.Office2013"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HGM.Hotbird64.Icons"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Viewbox Stretch="Uniform">
+    <Canvas Width="64.356" Height="64.356">
+      <Canvas.Resources/>
+      <!--Unknown tag: metadata-->
+      <!--Unknown tag: sodipodi:namedview-->
+      <Canvas>
+        <Canvas.RenderTransform>
+          <TranslateTransform X="-210.27358" Y="-715.28882"/>
+        </Canvas.RenderTransform>
+        <Canvas>
+          <Canvas.RenderTransform>
+            <MatrixTransform Matrix="1.8232952 0 0 1.8232952 -597.71681 -124.12247"/>
+          </Canvas.RenderTransform>
+            <Canvas>
+              <Canvas.RenderTransform>
+                <MatrixTransform Matrix="0.74069815 0 0 0.74069815 98.5698 -8.2505871"/>
+              </Canvas.RenderTransform>
+              <Path Fill="#FFEB3C00">
+                <Path.Data>
+                  <PathGeometry Figures="m469.87 671.03 0-28.52 25.229-9.3238 13.711 4.3877 0 38.392-13.711 4.133-25.229-9.0691 25.229 3.0361 0-33.201-16.454 3.8392 0 22.487z" FillRule="NonZero"/>
+                </Path.Data>
+              </Path>
+            </Canvas>
+          </Canvas>
+        </Canvas>
+      </Canvas>
+  </Viewbox>
+</ContentControl>

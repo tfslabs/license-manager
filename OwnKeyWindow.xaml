@@ -1,0 +1,57 @@
+﻿<local:ScalableWindow x:Class="HGM.Hotbird64.LicenseManager.OwnKeyWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:HGM.Hotbird64.LicenseManager" mc:Ignorable="d"
+    Title="Keys found in the Registry" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight">
+
+  <local:ScalableWindow.Resources>
+    <Style x:Key="GridStyle" TargetType="{x:Type TextBlock}">
+      <Setter Property="Margin" Value="2" />
+    </Style>
+  </local:ScalableWindow.Resources>
+
+  <local:ScalableWindow.CommandBindings>
+    <CommandBinding Command="{x:Static local:OwnKeyWindow.InstallKey}" CanExecute="InstallKey_CanExecute" Executed="InstallKey_Executed" />
+  </local:ScalableWindow.CommandBindings>
+
+  <StackPanel Orientation="Vertical">
+    <!--<TextBlock Margin="8,8,0,0">Select one of the following keys to analyze and install them</TextBlock>-->
+    <GroupBox x:Name="TopElement" Header="Keys in the Registry" Margin="5,5,5,5">
+
+      <DataGrid DataContext="{Binding}" x:Name="DataGridKeys" Height="Auto" AutoGenerateColumns="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray"
+          SelectedCellsChanged="DataGrid_Keys_SelectedCellsChanged" VerticalGridLinesBrush="LightGray" SelectionMode="Single" SelectionUnit="CellOrRowHeader"
+          RowHeaderWidth="20" LoadingRow="DataGrid_Keys_LoadingRow">
+        <DataGrid.ContextMenu>
+          <ContextMenu>
+            <MenuItem Command="Copy" />
+            <MenuItem Command="{x:Static local:OwnKeyWindow.InstallKey}" />
+          </ContextMenu>
+        </DataGrid.ContextMenu>
+        <DataGrid.RowStyle>
+          <Style TargetType="DataGridRow">
+            <Setter Property="ToolTipService.ShowDuration" Value="15000" />
+            <Setter Property="ToolTip">
+              <Setter.Value>
+                <TextBlock Text="{Binding HiveName}" />
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </DataGrid.RowStyle>
+
+        <DataGrid.Columns>
+          <DataGridTextColumn ElementStyle="{StaticResource GridStyle}" Header="Install Date" Binding="{Binding DisplayDate}" SortDirection="Ascending"
+              SortMemberPath="InstallDate" IsReadOnly="True" />
+          <DataGridTextColumn ElementStyle="{StaticResource GridStyle}" Header="Product Name" Binding="{Binding ProductName}" IsReadOnly="True" />
+          <DataGridTextColumn ElementStyle="{StaticResource GridStyle}" Header="Digital Product 3rd ID Key" Binding="{Binding Id3}" IsReadOnly="True" />
+          <DataGridTextColumn ElementStyle="{StaticResource GridStyle}" Header="Digital Product 4th ID Key" Binding="{Binding Id4}" IsReadOnly="True" />
+
+        </DataGrid.Columns>
+      </DataGrid>
+
+    </GroupBox>
+    <WrapPanel Margin="0,0,10,10" Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button x:Name="InstallButton" Content="Check _Key" Height="24" MinWidth="60" Padding="5,0,5,0" Margin="5,0,5,0" IsEnabled="False"
+          Click="InstallButton_Click" />
+      <Button x:Name="CancelButton" Content="_Cancel" IsCancel="True" Height="24" MinWidth="60" Padding="5,0,5,0" Margin="5,0,5,0" Click="CancelButton_Click" />
+    </WrapPanel>
+  </StackPanel>
+</local:ScalableWindow>

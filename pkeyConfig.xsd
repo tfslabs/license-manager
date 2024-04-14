@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ProductKeyConfiguration" targetNamespace="http://www.microsoft.com/DRM/PKEY/Configuration/2.0" xmlns:mstns="http://www.microsoft.com/DRM/PKEY/Configuration/2.0" xmlns="http://www.microsoft.com/DRM/PKEY/Configuration/2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:element name="ProductKeyConfiguration">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Configurations">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Configuration" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ActConfigId" type="xs:string" minOccurs="0" />
+                    <xs:element name="RefGroupId" type="xs:int" minOccurs="0" />
+                    <xs:element name="EditionId" type="xs:string" minOccurs="0" />
+                    <xs:element name="ProductDescription" type="xs:string" minOccurs="0" />
+                    <xs:element name="ProductKeyType" type="xs:string" minOccurs="0" />
+                    <xs:element name="IsRandomized" type="xs:boolean" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="KeyRanges">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="KeyRange" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="RefActConfigId" type="xs:string" minOccurs="0" />
+                    <xs:element name="PartNumber" type="xs:string" minOccurs="0" />
+                    <xs:element name="EulaType" type="xs:string" minOccurs="0" />
+                    <xs:element name="IsValid" type="xs:boolean" minOccurs="0" />
+                    <xs:element name="Start" type="xs:int" minOccurs="0" />
+                    <xs:element name="End" type="xs:int" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PublicKeys">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PublicKey" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="GroupId" type="xs:int" minOccurs="0" />
+                    <xs:element name="AlgorithmId" type="xs:string" minOccurs="0" />
+                    <xs:element name="PublicKeyValue" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:key id="ActConfigId" name="ActConfigId_Constraint">
+      <xs:selector xpath=".//Configuration" />
+      <xs:field xpath="@ActConfigId" />
+    </xs:key>
+    <xs:key id="GroupId" name="GroupId_Constraint">
+      <xs:selector xpath=".//PublicKey" />
+      <xs:field xpath="@GroupId" />
+    </xs:key>
+    <xs:keyref name="GroupId_Reference" refer="GroupId_Constraint">
+      <xs:selector xpath=".//Configuration"/>
+      <xs:field xpath="@RefGroupId"/>
+    </xs:keyref>
+  </xs:element>
+</xs:schema>

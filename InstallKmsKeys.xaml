@@ -1,0 +1,106 @@
+﻿<local:ScalableWindow x:Class="HGM.Hotbird64.LicenseManager.InstallKmsKeys" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:HGM.Hotbird64.LicenseManager"
+    mc:Ignorable="d" Title="Install Multiple GVLKs" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+  <local:ScalableWindow.Resources>
+
+  </local:ScalableWindow.Resources>
+  <Grid x:Name="TopElement">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="24" />
+    </Grid.RowDefinitions>
+
+    <GroupBox Header="KMS Client Products" Margin="5,5,5,5" Grid.Row="0" Grid.Column="0">
+      <DataGrid DataContext="{Binding}" HorizontalScrollBarVisibility="Auto" ColumnWidth="Auto" x:Name="DataGrid" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray"
+          VerticalGridLinesBrush="LightGray" AutoGenerateColumns="False" Width="Auto" Height="Auto" SelectionMode="Single" SelectionUnit="CellOrRowHeader" HeadersVisibility="Column"
+          LoadingRow="DataGrid_LoadingRow" CanUserDeleteRows="False" CanUserAddRows="False">
+
+        <DataGrid.CellStyle>
+          <Style TargetType="DataGridCell">
+            <Style.Triggers>
+              <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#000000ff" />
+                <Setter Property="BorderBrush" Value="#20000000" />
+              </Trigger>
+            </Style.Triggers>
+          </Style>
+        </DataGrid.CellStyle>
+
+        <DataGrid.ContextMenu>
+          <ContextMenu>
+            <MenuItem Command="Copy" />
+          </ContextMenu>
+        </DataGrid.ContextMenu>
+
+        <DataGrid.Columns>
+          <DataGridTextColumn Binding="{Binding}" Header="Product" Foreground="Black" IsReadOnly="True" SortMemberPath="DisplayName" SortDirection="Ascending" />
+          <DataGridTextColumn x:Name="PartialProductKeyColumn" Binding="{Binding PartialProductKey}" Foreground="Black" Header="Installed GVLK" IsReadOnly="True" SortMemberPath="PartialProductKey" />
+
+          <DataGridTemplateColumn Header="Available GVLK" IsReadOnly="True" SortMemberPath="Gvlk">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate DataType="local:KmsLicense">
+                <TextBlock Foreground="Black" Margin="5,0,5,0" Text="{Binding Gvlk}" Background="{Binding GvlkColor}" ToolTip="{Binding GvlkToolTip}" ToolTipService.ShowDuration="15000" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+
+          <DataGridTemplateColumn x:Name="LicenseStatusColumn" Header="License Status" IsReadOnly="True" SortMemberPath="LicenseStatusText">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate DataType="local:KmsLicense">
+                <TextBlock Margin="5,0,5,0" Text="{Binding LicenseStatusText}" Foreground="{Binding LicenseColor}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+
+          <DataGridTemplateColumn x:Name="SelectColumn" Header="Install">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate DataType="local:KmsLicense">
+                <StackPanel>
+                  <StackPanel.ContextMenu>
+                    <ContextMenu>
+                      <MenuItem Command="Copy" IsEnabled="False"></MenuItem>
+                    </ContextMenu>
+                  </StackPanel.ContextMenu>
+                  <CheckBox IsEnabled="{Binding IsControlEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      IsChecked="{Binding IsCheckBoxChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding CheckBoxVisibility}" Click="Install_Click" />
+                  <RadioButton IsEnabled="{Binding IsControlEnabled,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      IsChecked="{Binding IsRadioButtonChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding RadioButtonVisibility}" Click="Install_Click" />
+                </StackPanel>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+
+          <DataGridTemplateColumn Header="Result" Visibility="Collapsed" x:Name="ResultColumn" SortMemberPath="InstallMessage">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate DataType="local:KmsLicense">
+                <TextBlock Margin="5,0,5,0" Text="{Binding InstallMessage}" Foreground="{Binding InstallMessageColor}" ToolTip="{Binding InstallToolTip}" ToolTipService.ShowDuration="30000" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+
+      </DataGrid>
+
+    </GroupBox>
+
+    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,6,0,10">
+      <StackPanel.Resources>
+        <Style TargetType="Button">
+          <Setter Property="Height" Value="24" />
+          <Setter Property="MinWidth" Value="80" />
+          <Setter Property="Margin" Value="0,0,10,0" />
+          <Setter Property="Padding" Value="8,0,8,0" />
+        </Style>
+      </StackPanel.Resources>
+      <Button x:Name="InstallButton" Content="_Install GVLKs" IsDefault="True" Click="InstallButton_Click" />
+      <Button x:Name="CancelButton" Content="_Cancel" IsCancel="True" />
+    </StackPanel>
+
+    <Rectangle Grid.Row="2" Fill="#f0f0f0" />
+    <DockPanel Grid.Row="2">
+      <TextBlock x:Name="LabelStatus" Margin="5,0,0,0" VerticalAlignment="Center">Ready</TextBlock>
+      <ProgressBar x:Name="ProgressBar" IsIndeterminate="False" Visibility="Collapsed" Margin="5,4,5,4" />
+    </DockPanel>
+  </Grid>
+</local:ScalableWindow>

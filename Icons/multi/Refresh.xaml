@@ -1,0 +1,193 @@
+﻿<ContentControl x:Class="HGM.Hotbird64.Icons.Refresh"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  <!-- ReSharper disable InconsistentNaming -->
+  <Viewbox Stretch="Uniform">
+    <Canvas Width="43" Height="43">
+      <Canvas.RenderTransform>
+        <TranslateTransform X="-4.8" Y="-2"></TranslateTransform>
+      </Canvas.RenderTransform>
+      <Canvas.Resources>
+        <LinearGradientBrush x:Key="linearGradient1486" MappingMode="Absolute" StartPoint="13,11" EndPoint="15,19">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FF3465A4" Offset="0"/>
+              <GradientStop Color="#FF5B86BE" Offset="0.33333334"/>
+              <GradientStop Color="#0083A8D8" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <MatrixTransform Matrix="1.0666667 0 0 1.0666667 0.49644053 -0.2960992"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient1488" MappingMode="Absolute" StartPoint="37,30" EndPoint="37,26">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FF3465A4" Offset="0"/>
+              <GradientStop Color="#003465A4" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <MatrixTransform Matrix="-1.0666667 0 0 -1.0666667 50.696437 48.903904"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient1491" MappingMode="Absolute" StartPoint="6,26" EndPoint="53,26">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FFFFFFFF" Offset="0"/>
+              <GradientStop Color="#00FFFFFF" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient1493" MappingMode="Absolute" StartPoint="6,26" EndPoint="53,26">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FFFFFFFF" Offset="0"/>
+              <GradientStop Color="#00FFFFFF" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient2688" MappingMode="Absolute" StartPoint="37,31" EndPoint="37,25">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FF3977C3" Offset="0"/>
+              <GradientStop Color="#0089AEDC" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient2696" MappingMode="Absolute" StartPoint="33,31" EndPoint="37,25">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FFC4D7EB" Offset="0"/>
+              <GradientStop Color="#00C4D7EB" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient66" MappingMode="Absolute" StartPoint="63,36" EndPoint="16,21">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FFB9CFE7" Offset="0"/>
+              <GradientStop Color="#FF729FCF" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient68" MappingMode="Absolute" StartPoint="47,45" EndPoint="45,51">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FF3465A4" Offset="0"/>
+              <GradientStop Color="#FF3465A4" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient70" MappingMode="Absolute" StartPoint="19,24" EndPoint="54,27">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FF729FCF" Offset="0"/>
+              <GradientStop Color="#FF528AC5" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="linearGradient72" MappingMode="Absolute" StartPoint="47,45" EndPoint="45,51">
+          <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+              <GradientStop Color="#FF3465A4" Offset="0"/>
+              <GradientStop Color="#FF3465A4" Offset="1"/>
+            </GradientStopCollection>
+          </LinearGradientBrush.GradientStops>
+          <LinearGradientBrush.Transform>
+            <ScaleTransform ScaleX="1.0666667" ScaleY="1.0666667"/>
+          </LinearGradientBrush.Transform>
+        </LinearGradientBrush>
+      </Canvas.Resources>
+      <!--Unknown tag: sodipodi:namedview-->
+      <!--Unknown tag: metadata-->
+      <Canvas>
+        <Path Fill="{StaticResource linearGradient1486}" StrokeThickness="1.06666625" Stroke="{StaticResource linearGradient1488}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+          <Path.Data>
+            <PathGeometry Figures="m 21.496441 11.103898 c 0 0 -9.533334 -0.666667 -6.6 10.533333 H 6.6964407 c 0 0 0.5333334 -12.6666667 14.8000003 -10.533333 z" FillRule="NonZero"/>
+          </Path.Data>
+        </Path>
+        <Canvas Opacity="1">
+          <Canvas.RenderTransform>
+            <MatrixTransform Matrix="-0.579051 -0.489228 -0.489228 0.579051 60.71024 14.262795"/>
+          </Canvas.RenderTransform>
+          <Path Fill="{StaticResource linearGradient66}" StrokeThickness="1.40711391" Stroke="{StaticResource linearGradient68}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+            <Path.Data>
+              <PathGeometry Figures="M 47.260569 53.57834 C 67.009597 38.206783 52.975559 14.305818 23.959905 13.330827 L 23.588099 3.361651 8.1328468 21.863204 24.228617 35.433802 c 0 0 -0.268712 -10.539968 -0.268712 -10.539968 20.085077 1.065575 35.180402 15.009844 23.300664 28.684506 z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+        </Canvas>
+        <Path Fill="{StaticResource linearGradient2696}" StrokeThickness="1.06666625" Stroke="{StaticResource linearGradient2688}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+          <Path.Data>
+            <PathGeometry Figures="m 30.266667 35.666667 c 0 0 9.533333 0.666666 6.6 -10.533334 h 8.29428 c 0 1.602776 -0.627614 12.666667 -14.89428 10.533334 z" FillRule="NonZero"/>
+          </Path.Data>
+        </Path>
+        <Canvas Opacity="1">
+          <Canvas.RenderTransform>
+            <MatrixTransform Matrix="0.579051 0.489228 0.489228 -0.579051 -8.4490912 32.571723"/>
+          </Canvas.RenderTransform>
+          <Path Fill="{StaticResource linearGradient70}" StrokeThickness="1.40711391" Stroke="{StaticResource linearGradient72}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+            <Path.Data>
+              <PathGeometry Figures="M 47.260569 53.57834 C 67.009597 38.206783 52.975559 14.305818 23.959905 13.330827 L 23.892727 3.2736317 8.3135392 21.785605 23.959905 35.206772 c 0 0 0 -10.312938 0 -10.312938 20.085077 1.065575 35.180402 15.009844 23.300664 28.684506 z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+        </Canvas>
+        <Path Fill="#FFFFFFFF" StrokeThickness="1.06666648" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.27222224">
+          <Path.Data>
+            <PathGeometry Figures="M 7.5333333 40.733333 7.6 24.866667 l 13.8 -0.4 -4.681465 5.524071 4.12504 2.531412 c -3.2 2.4 -4.852851 2.583604 -5.919517 5.316937 L 11.919409 35.58813 Z" FillRule="NonZero"/>
+          </Path.Data>
+        </Path>
+        <Canvas Opacity="0.5">
+          <Canvas.RenderTransform>
+            <MatrixTransform Matrix="0.508536 0.429651 0.429651 -0.508536 -4.2380672 32.577269"/>
+          </Canvas.RenderTransform>
+          <Path StrokeThickness="1.60222852" Stroke="{StaticResource linearGradient1493}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+            <Path.Data>
+              <PathGeometry Figures="M 54.496283 49.006619 C 64.224496 32.772219 49.740388 13.014539 20.784062 12.745151 L 20.814362 3.950169 6.9698111 20.583082 20.658838 32.286677 c 0 0 0.05933 -9.607336 0.05933 -9.607336 18.696336 -0.238836 37.541531 10.77693 33.778117 26.327278 z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+        </Canvas>
+        <Canvas Opacity="0.5">
+          <Canvas.RenderTransform>
+            <MatrixTransform Matrix="-0.508536 -0.429651 -0.429651 0.508536 56.5856 14.256512"/>
+          </Canvas.RenderTransform>
+          <Path StrokeThickness="1.60222852" Stroke="{StaticResource linearGradient1491}" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
+            <Path.Data>
+              <PathGeometry Figures="M 54.815922 49.606342 C 64.544135 33.371942 50.187481 13.261183 20.937047 12.874405 L 20.632346 4.3207684 6.7640633 20.67144 21.129663 32.815562 c 0 0 -0.193883 -10.08346 -0.193883 -10.08346 19.461266 0.407437 37.102807 11.653596 33.880142 26.87424 z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+        </Canvas>
+        <Path Fill="#FFFFFFFF" StrokeThickness="1.06666648" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.27222224">
+          <Path.Data>
+            <PathGeometry Figures="M 7.2666667 17.6 C 11.099664 6.4626427 24.806701 11.045753 28.8 12.8 33.253661 13.025573 34.853052 9.7759957 38.4 9.6 23.413615 -0.84266272 7.6666667 2.6666667 7.2666667 17.6 Z" FillRule="NonZero"/>
+          </Path.Data>
+        </Path>
+      </Canvas>
+    </Canvas>
+  </Viewbox>
+</ContentControl>

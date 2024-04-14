@@ -1,0 +1,46 @@
+﻿<ContentControl x:Class="HGM.Hotbird64.Icons.QuestionOrange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HGM.Hotbird64.Icons"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Viewbox Stretch="Uniform">
+        <!-- ReSharper disable InconsistentNaming -->
+        <Canvas Width="46" Height="46">
+        <Canvas Width="46" Height="46" Canvas.Left="-1">
+            <Canvas>
+                <Canvas Name="g4006">
+                    <Path Name="path1314" Fill="#FF008000" StrokeThickness="1.08637999999999990" Stroke="#FF004000" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                        <Path.Data>
+                            <PathGeometry Figures="m 46.857143 23.928572 c 0 12.899794 -10.457349 23.357143 -23.357143 23.357143 -12.899794 0 -23.3571434 -10.457349 -23.3571434 -23.357143 0 -12.899794 10.4573494 -23.3571437 23.3571434 -23.3571437 12.899794 0 23.357143 10.4573497 23.357143 23.3571437 z" FillRule="NonZero"/>
+                        </Path.Data>
+                        <Path.RenderTransform>
+                            <MatrixTransform Matrix="0.920488 0 0 0.920488 2.368532 0.97408"/>
+                        </Path.RenderTransform>
+                    </Path>
+                    <Path Name="path3560" StrokeThickness="1.1702975" Stroke="#FFFFFFFF" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="0.35">
+                        <Path.Data>
+                            <PathGeometry Figures="m 49.901535 26.635273 a 23.991123 23.991123 0 1 1 -47.9822464 0 23.991123 23.991123 0 1 1 47.9822464 0 z" FillRule="NonZero"/>
+                        </Path.Data>
+                        <Path.RenderTransform>
+                            <MatrixTransform Matrix="0.85448271 0 0 0.85448271 1.8600011 0.24061972"/>
+                        </Path.RenderTransform>
+                    </Path>
+                    <Path Name="path3684" Fill="#FFFFFFFF" StrokeThickness="0.99999899000000003" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="0.25">
+                        <Path.Data>
+                            <PathGeometry Figures="M 24 3 C 12.954305 3 4 11.954305 4 23 C 4 24.686052 4.2321382 26.310816 4.625 27.875 C 7.8289734 32.668264 17.878522 27.754856 24.84375 22.28125 C 32.8518 15.988144 42.685779 30.640597 43.96875 23.71875 C 43.977181 23.480132 44 23.240675 44 23 C 44 11.954305 35.045695 3 24 3 z " FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+                <TextBlock Margin="-0.8,-22,0,0" FontSize="12" Foreground="#FFFFFFFF" Canvas.Left="14.411133" Canvas.Top="24.4" Name="text23976">
+                    <Span Foreground="#FFFFFFFF" FontSize="36" FontWeight="Black" FontFamily="Arial" FontStyle="Normal">?</Span>
+                </TextBlock>
+            </Canvas>
+            <Canvas Name="layer3"/>
+            <Canvas Name="layer4"/>
+        </Canvas>
+        </Canvas>
+    </Viewbox>
+</ContentControl>

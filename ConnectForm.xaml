@@ -1,0 +1,33 @@
+﻿<lm:ScalableWindow x:Class="HGM.Hotbird64.LicenseManager.ConnectForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lm="clr-namespace:HGM.Hotbird64.LicenseManager"
+        Title="Connect to Another Computer" Height="Auto" Width="350" SizeToContent="Height"
+        >
+    <StackPanel Name="TopElement">
+        <TextBlock Margin="5,5,5,5" TextWrapping="Wrap">
+            Specifiy a remote computer using DNS name, or IP Address
+        </TextBlock>
+        <Grid Name="MainGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Margin="5,5,0,5" Style="{StaticResource StandardLabel}">Computer Name</Label>
+            <TextBox Name="TextBoxComputername" Grid.Column="1" Margin="0,5,5,5" Style="{StaticResource StandardTextBox}" IsReadOnly="False" />
+        </Grid>
+        <CheckBox Name="CheckBoxShowUi" ToolTip="Check this if you do not want to use saved credentials but specify them manually" Margin="5,5,5,5">Change Credentials</CheckBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="130*"/>
+                <ColumnDefinition Width="60*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="5,5,5,5" IsDefault="True" Click="button_Connect_Click">Connect</Button>
+            <Button Name="ButtonConnectLocal" Margin="5,5,5,5" Grid.Column="1" Click="button_Local_Click">Use Local Computer</Button>
+            <Button Margin="5,5,5,5" IsCancel="True" Grid.Column="2">Cancel</Button>
+        </Grid>
+    </StackPanel>
+</lm:ScalableWindow>
+

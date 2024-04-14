@@ -1,0 +1,105 @@
+﻿<ContentControl x:Class="HGM.Hotbird64.Icons.InstallKey"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HGM.Hotbird64.Icons"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Viewbox Stretch="Uniform">
+    <Canvas Width="44" Height="44">
+      <!-- ReSharper disable InconsistentNaming -->
+      <Canvas Canvas.Bottom="2" Canvas.Right="2" Name="svg2" Width="44" Height="44">
+        <Canvas.Resources>
+          <LinearGradientBrush  x:Key="linearGradient4168" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
+            <LinearGradientBrush.GradientStops>
+              <GradientStopCollection>
+                <GradientStop Color="#CEA476"/>
+                <GradientStop Color="#DAB58B" Offset="1"/>
+              </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+          </LinearGradientBrush>
+          <LinearGradientBrush  x:Key="linearGradient4174" MappingMode="Absolute" StartPoint="0,0" EndPoint="1,1">
+            <LinearGradientBrush.GradientStops>
+              <GradientStopCollection>
+                <GradientStop Color="#CEA476"/>
+                <GradientStop Color="#DAB58B" Offset="1"/>
+              </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+          </LinearGradientBrush>
+          <LinearGradientBrush  x:Key="linearGradient4184" MappingMode="Absolute" StartPoint="0,0" EndPoint="1,1">
+            <LinearGradientBrush.GradientStops>
+              <GradientStopCollection>
+                <GradientStop Color="#EBC69A"/>
+                <GradientStop Color="#00F4E0C8" Offset="1"/>
+              </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+            <LinearGradientBrush.Transform>
+              <MatrixTransform Matrix="1 0 0 1.0000029 0 -0.00147598"/>
+            </LinearGradientBrush.Transform>
+          </LinearGradientBrush>
+          <LinearGradientBrush  x:Key="linearGradient4188" MappingMode="Absolute" StartPoint="0,0" EndPoint="1,1">
+            <LinearGradientBrush.GradientStops>
+              <GradientStopCollection>
+                <GradientStop Color="#EBC69A"/>
+                <GradientStop Color="#00F4E0C8" Offset="1"/>
+              </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+            <LinearGradientBrush.Transform>
+              <MatrixTransform Matrix="1 0 0 0.55555727 0 -797.68664"/>
+            </LinearGradientBrush.Transform>
+          </LinearGradientBrush>
+          <LinearGradientBrush  x:Key="linearGradient4139" MappingMode="Absolute" StartPoint="400,517" EndPoint="418,535">
+            <LinearGradientBrush.GradientStops>
+              <GradientStopCollection>
+                <GradientStop Color="#292C2F"/>
+                <GradientStop Color="#00000000" Offset="1"/>
+              </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+          </LinearGradientBrush>
+        </Canvas.Resources>
+        <!--Unknown tag: sodipodi:namedview-->
+        <!--Unknown tag: metadata-->
+        <Canvas Name="layer1">
+          <Canvas.RenderTransform>
+            <MatrixTransform Matrix="1 0 0 1 -384.57143 -499.798"/>
+          </Canvas.RenderTransform>
+          <Rectangle  Canvas.Left="388.57144" Canvas.Top="512.79797" Width="40" Height="30.999973" Name="rect4150" Fill="{StaticResource linearGradient4174}" StrokeThickness="2.8"/>
+          <Path  Name="path4152" Fill="{StaticResource linearGradient4168}">
+            <Path.Data>
+              <PathGeometry Figures="m 388.57147 512.798 5.99996 -9 29 0 5.00001 9 z" FillRule="EvenOdd"/>
+            </Path.Data>
+          </Path>
+          <Path  Name="rect4154" Fill="#FFF4E0C8" StrokeThickness="2.79999995">
+            <Path.Data>
+              <PathGeometry Figures="m 405.57143 503.798 0 13.45763 1 -0.33644 1 0.33644 1 -0.33644 1 0.33644 1 -0.33644 1 0.33644 0 -13.45763 -6 0 z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+          <Rectangle  Canvas.Left="405.57144" Canvas.Top="503.798" Width="6" Height="9.0000229" Name="rect4176" Fill="{StaticResource linearGradient4184}" StrokeThickness="2.79999995"/>
+          <Rectangle  Canvas.Left="405.57144" Canvas.Top="-517.79797" Width="6" Height="5.0000129" Name="rect4186" Fill="{StaticResource linearGradient4188}" StrokeThickness="2.79999995">
+            <Rectangle.RenderTransform>
+              <ScaleTransform ScaleX="1" ScaleY="-1"/>
+            </Rectangle.RenderTransform>
+          </Rectangle>
+          <Path  Name="rect4193" Fill="#FF5C4C3E" StrokeThickness="2.79999995">
+            <Path.Data>
+              <PathGeometry Figures="m 418.57143 514.798 0 8 8 0 0 -8 -8 0 z m 1 1 6 0 0 6 -6 0 0 -6 z m 1 1 0 1 1 0 0 -1 -1 0 z m 2 0 0 2 2 0 0 -2 -2 0 z m -2 2 0 2 1 0 0 -2 -1 0 z m 2 1 0 1 2 0 0 -1 -2 0 z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+          <Path  Name="path4131" Fill="{StaticResource linearGradient4139}" Opacity="0.2">
+            <Path.Data>
+              <PathGeometry Figures="m 404.57143 521.798 10 9.61987 5 -0.61987 0 -4 9 9 10e-6 8 -26.00001 0 -6 -6 z" FillRule="EvenOdd"/>
+            </Path.Data>
+          </Path>
+          <Rectangle  Canvas.Left="388.57147" Canvas.Top="542.79797" Width="39.999969" Height="1" Name="rect4136" Fill="#FF9F8569" StrokeThickness="2.8"/>
+          <!--<Path  Name="path4233" Fill="#FF5C4C3E">
+          <Path.Data>
+            <PathGeometry Figures="m 402.58706 521.798 -6.01563 16 1.94727 0 1.92382 -5.0625 6.41407 0 1.76953 5.0625 1.94531 0 -5.68359 -16 -2.30078 0 z m 1.17187 1.8418 2.45508 7.62695 -5.17578 0 2.7207 -7.62695 z m 12.63867 2.06054 c -1.67852 0 -3.24683 0.41038 -4.15234 0.88477 l 0.50781 1.38086 c 0.97178 -0.45283 2.38444 -0.77735 3.6875 -0.77735 1.63435 0 2.3418 0.73315 2.3418 2.13477 l 0 1.31641 -1.19336 0.1289 c -3.04784 0.43127 -6.05078 0.84043 -6.05078 3.88086 0 2.15634 1.65606 3.14844 3.59961 3.14844 1.2368 0 2.65142 -0.38839 3.68945 -1.53125 l 0.26367 1.27344 1.48047 0 0 -8.4961 c 0 -2.5876 -1.83274 -3.34375 -4.17383 -3.34375 z m 2.38477 6.16797 0 2.84571 c -0.773 1.03504 -2.34042 1.70312 -3.4668 1.70312 -1.12637 0 -1.9668 -0.53823 -1.9668 -1.83203 0 -1.61725 0.99453 -2.13514 4.35157 -2.56641 0.0222 0 1.08203 -0.15039 1.08203 -0.15039 z" FillRule="NonZero"/>
+          </Path.Data>
+        </Path>-->
+        </Canvas>
+        <local:KeyIcon Canvas.Left="6" Canvas.Top="24" Width="36" Angle="30"/>
+      </Canvas>
+    </Canvas>
+  </Viewbox>
+</ContentControl>

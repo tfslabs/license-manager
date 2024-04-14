@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="KmsData" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+
+  <xs:simpleType name="Guid">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})|(\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\})"/>
+      <xs:minLength value="36"/>
+      <xs:maxLength value="38"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProductKey">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(?!^.*N.*N.*$)([BCDFGHJKMPQRTVWXY2-9N]{5}\-){4}[BCDFGHJKMPQRTVWXY2-9N]{4}[BCDFGHJKMPQRTVWXY2-9]"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="KmsProtocol">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="4.0"/>
+      <xs:enumeration value="5.0"/>
+      <xs:enumeration value="6.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="KmsDataVersion">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="2.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EPid">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{5}-[0-9]{5}-[0-9]{3}-[0-9]{6}-03-[0-9]{4,5}-[0-9]{4,5}\.0000-(36[0-6]|3[0-5][0-9]|[0-2][0-9]{2})20[0-9]{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="IdName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z][A-Za-z0-9_]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="PositiveInteger">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="2147483647"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VlmcsdKmsIds">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="VlmcsdEpidIds">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EPID_UNKNOWN"/>
+      <xs:enumeration value="EPID_WINDOWS"/>
+      <xs:enumeration value="EPID_OFFICE2010"/>
+      <xs:enumeration value="EPID_OFFICE2013"/>
+      <xs:enumeration value="EPID_OFFICE2016"/>
+      <xs:enumeration value="EPID_OFFICE2019"/>
+      <xs:enumeration value="EPID_WINDOWS_CHINA_GOV"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="GroupId">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="-1"/>
+      <xs:maxInclusive value="99999"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="KeyId">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="-1"/>
+      <xs:maxInclusive value="999999999"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VlmcsdIndex">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="-1"/>
+      <xs:maxInclusive value="127"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VlmcsdIndex2">
+    <xs:restriction base="VlmcsdIndex">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VlmcsdAppIds">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="BuildNumber">
+    <xs:restriction base="xs:unsignedShort"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="PlatformId">
+    <xs:restriction base="xs:unsignedInt">
+      <xs:maxExclusive value="100000"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="KmsData">
+    <xs:complexType>
+      <xs:choice minOccurs="3" maxOccurs="3">
+        <xs:element name="WinBuilds" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="WinBuild" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="BuildNumber" type="BuildNumber" use="required"/>
+                  <xs:attribute name="DisplayName" type="xs:string" use="required"/>
+                  <xs:attribute name="PlatformId" type="PlatformId" use="required"/>
+                  <xs:attribute name="MayBeServer" type="xs:boolean" use="optional" default="false"/>
+                  <xs:attribute name="UseForEpid" type="xs:boolean" use="optional" default="false"/>
+                  <xs:attribute name="UsesNDR64" type="xs:boolean" use="optional" default="false"/>
+                  <xs:attribute name="ReleaseDate" type="xs:dateTime" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CsvlkItems" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CsvlkItem" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Activate" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="KmsItem" type="Guid" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="IniFileName" type="IdName" use="optional"/>
+                  <xs:attribute name="DisplayName" type="xs:string" use="required"/>
+                  <xs:attribute name="Id" type="Guid" use="required"/>
+                  <xs:attribute name="ReleaseDate" type="xs:dateTime" use="required"/>
+                  <xs:attribute name="IsLab" type="xs:boolean" use="optional" default="false"/>
+                  <xs:attribute name="IsPreview" type="xs:boolean" use="optional" default="false"/>
+                  <xs:attribute name="VlmcsdIndex" type="VlmcsdIndex" use="optional" default="-1"/>
+                  <xs:attribute name="GroupId" type="GroupId" use="optional" default="-1"/>
+                  <xs:attribute name="MinKeyId" type="KeyId" use="optional" default="-1"/>
+                  <xs:attribute name="MaxKeyId" type="KeyId" use="optional" default="-1"/>
+                  <xs:attribute name="EPid" type="EPid" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="AppItems" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AppItem" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">
+                    Defines a KMS Application. There are only three Applications: Windows, Office 2010 and Office 2013+. On a genuine KMS server each Application has a separate counter for currently active clients. Thus each Application needs to be charged seperately.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="KmsItem" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                          A KMS Item is a group of KMS client products (e.g. all Windows 10 Volume License editions). A genuine server uses it to either grant or deny activation. It either activates all or none SKUs in a "KMS Counted Item".
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="SkuItem" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation xml:lang="en">
+                                An SKU Item is a specific KMS client product (e.g. Windows 10 Enterprise 2016 LTSB N).
+                              </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:attribute name="Id" use="required" type="Guid">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">
+                                    The GUID of an SKU aka SKU ID or Activation ID. This attribute is required. (slmgr.vbs calls it Activation Id, most other MS software including ospp.vbs calls it SKU ID).
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="DisplayName"  type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">
+                                    A more descriptive name of the SKU item. This attribute is required. It is used in user interfaces and logging.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="Gvlk" type="ProductKey">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">
+                                    Optional, but recommended: If you enter a GVLK in a Microsoft product, it will activate using a configurable KMS server. There are millions of valid GVLKs but MS publishes usually just one. This one should be entered here.
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="IsGeneratedGvlk"  type="xs:boolean" default="false">
+                                <xs:annotation>
+                                  <xs:documentation xml:lang="en">
+                                    Optional, default false: Set this to true if you only have a GVLK that is generated by a tool. These GVLKs have incorrect hashes and the computer does not get a "Windows Genuine Ticket".
+                                  </xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Id" use="required" type="Guid">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                              The GUID of a KMS item aka KMS Counted ID. This attribute is required.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="DisplayName"  type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                              A more descriptive name of the KMS item. This attribute is required. It is used in user interfaces and logging.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="IsPreview"  type="xs:boolean" default="false">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                              Optional, default false: Should be set to true, if the KMS Item is a group of beta or preview products. Used in KMS emulator detection because genuine KMS servers do not activate beta or preview products.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="IsRetail" type="xs:boolean" default="false">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                              Optional, default false: Should be set to true, if the KMS Item is a group of retail (non-VL) products.  Used in KMS emulator detection because genuine KMS servers do not activate beta or preview products.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="DefaultKmsProtocol" default="6.0" type="KmsProtocol">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                              Optional, default 6.0: Set this to the KMS protocol, that this KMS Item normally uses. Note that Office product groups normally use the KMS protocol of the operating system. Exceptions are Office 2010 (always uses 4.0) and Office 2013 under Windows 7 (uses 5.0 in this case)
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="NCountPolicy" type="PositiveInteger" default="25">
+                          <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                              Optional, default 25: Set this to the number of minimum clients a KMS server must report for an activation to succeed (25 for Windows clients, 5 for Windows Servers and Office)
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="CanMapToDefaultCsvlk" type="xs:boolean" use="optional" default="true"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Id" use="required" type="Guid">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">
+                        The GUID of an Application aka Application ID. This attribute is required.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="DisplayName" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">
+                        A more descriptive name of the Application. This attribute is required. It is used in user interfaces and logging.
+                      </xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="VlmcsdIndex" type="VlmcsdIndex2" use="required"/>
+                  <xs:attribute name="MinActiveClients" type="PositiveInteger" use="optional" default="50"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+      <xs:attribute name="Version" use="required" type="KmsDataVersion">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            Required: Used to correct minor behavior differences in License Manager. Must currently be set to "1.0". Note: This is not the schema version
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Author" use="required" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            Required: Put your name in this field if you create your own version of a License Manager database
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+    <xs:key id="SkuId" name="SkuItem_Constraint">
+      <xs:selector xpath=".//SkuItem" />
+      <xs:field xpath="@Id" />
+    </xs:key>
+    <xs:unique id="Gvlk" name="Gvlk_Constraint">
+      <xs:selector xpath=".//SkuItem" />
+      <xs:field xpath="@Gvlk" />
+    </xs:unique>
+    <xs:key id="KmsId" name="KmsItem_Constraint">
+      <xs:selector xpath=".//KmsItem" />
+      <xs:field xpath="@Id" />
+    </xs:key>
+    <xs:unique id="VlmcsdEpidNameAppId" name="VlmcsdEpidNameAppItem_Constraint">
+      <xs:selector xpath=".//AppItem" />
+      <xs:field xpath="@VlmcsdEpidName" />
+    </xs:unique>
+    <xs:key id="AppId" name="AppItem_Constraint">
+      <xs:selector xpath=".//AppItem" />
+      <xs:field xpath="@Id" />
+    </xs:key>
+  </xs:element>
+</xs:schema>

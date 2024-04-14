@@ -1,0 +1,178 @@
+﻿<lm:ScalableWindow
+    x:Class="HGM.Hotbird64.LicenseManager.KmsServer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lm="clr-namespace:HGM.Hotbird64.LicenseManager"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    MinHeight="540" Height="640" MinWidth="400" Width="720"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance Type=lm:KmsServer}"
+>
+    <Grid IsSharedSizeScope="True" x:Name="TopElement">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="KMS Server Settings" Grid.Row="0" Margin="5,5,5,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Right" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource StandardLabel}" HorizontalAlignment="Left">KMS Host Port</Label>
+                <TextBox x:Name="TextBoxPort" Text="1688" Grid.Row="0" Grid.Column="1" Style="{StaticResource StandardTextBox}" Background="LightGreen" IsReadOnly="False" TextChanged="TextBoxPort_TextChanged" />
+                <Button x:Name="ButtonStartStop" Content="Start Server" Grid.Row="0" Grid.Column="2" Height="20" Margin="4,0,4,0" Click="Button_StartStop_Click"/>
+
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Csvlks}" Grid.Column="0" Grid.ColumnSpan="3">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Right" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Style="{StaticResource StandardLabel}" Content="{Binding DisplayName}"/>
+
+                                <TextBox
+                                        Grid.Column="1"
+                                    Background="{Binding IsValidEpid, Converter={lm:Bool2Brush}}"
+                                    IsReadOnly="{Binding IsRandom}"
+                                    Style="{StaticResource StandardTextBox}"
+                                    Text="{Binding EPid, UpdateSourceTrigger=PropertyChanged}"
+                                    Foreground="{Binding IsRandom, Converter={lm:Bool2Brush True=#606060, False=Black}}"
+                                    />
+
+                                <CheckBox Margin="5,0,5,0" Grid.Column="2" VerticalAlignment="Center" IsChecked="{Binding IsRandom}">Random Pid</CheckBox>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource StandardLabel}" HorizontalAlignment="Left">Hardware ID</Label>
+                <TextBox x:Name="TextBoxHwId" Grid.Row="7" Grid.Column="1" Style="{StaticResource StandardTextBox}" IsReadOnly="False" Background="LightGreen" TextChanged="TextBoxHwId_TextChanged" >3A 1C 04 96 00 B6 00 76</TextBox>
+
+                <Label Visibility="{Binding ElementName=ComboBoxTap, Path=Visibility}" IsEnabled="{Binding ElementName=ComboBoxTap, Path=IsEnabled}" Grid.Row="8" Grid.Column="0"
+            Style="{StaticResource StandardLabel}">VPN Adapter</Label>
+                <ComboBox Visibility="Collapsed" VerticalAlignment="Center" Height="22" x:Name="ComboBoxTap" Grid.Row="8" Grid.Column="1" />
+
+                <Label Visibility="{Binding ElementName=ComboBoxTap, Path=Visibility}" IsEnabled="{Binding ElementName=ComboBoxTap, Path=IsEnabled}" Grid.Row="9" Grid.Column="0"
+            Style="{StaticResource StandardLabel}">VPN IPv4/CIDR</Label>
+                <TextBox x:Name="TextBoxTapIp" Grid.Row="9" Visibility="{Binding ElementName=ComboBoxTap, Path=Visibility}" IsEnabled="{Binding ElementName=ComboBoxTap, Path=IsEnabled}" Grid.Column="1"
+            Style="{StaticResource StandardTextBox}" IsReadOnly="False" Background="LightGreen" TextChanged="TextBoxTapIp_TextChanged">10.10.10.9/30</TextBox>
+
+                <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource StandardLabel}">Activation Renewal Interval</Label>
+                <Grid Grid.Row="10" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*" />
+                        <ColumnDefinition Width="70*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TextBoxVlRenewal" Grid.Column="0" Style="{StaticResource StandardTextBox}" Background="LightGreen" IsReadOnly="False" TextChanged="ActivationInterval_TextChanged" Text="1w"
+              ToolTipService.ShowDuration="30000">
+                        <TextBox.ToolTip>
+                            <TextBlock>
+              Number of minutes that must pass after a successful activation before the client renews the activation for another x days (x = 180 in most cases).<LineBreak />
+              If you append 's', 'h', 'd' or 'w' to the number, the interval is in seconds, hours or days instead of minutes.<LineBreak />Most newer activation clients ignore this parameter
+              if it is less than 1 week (1w) which is 10080 minutes.
+                            </TextBlock>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    <TextBox Text="7 days, 0 hours, 0 minutes" Margin="5,0,0,0" Grid.Column="1" Style="{StaticResource StandardTextBox}" x:Name="TextBoxVlRenewalParsed" />
+                </Grid>
+
+                <Label Grid.Row="11" Grid.Column="0" Style="{StaticResource StandardLabel}" HorizontalAlignment="Left">Activation Retry Interval</Label>
+                <Grid Grid.Row="11" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*" />
+                        <ColumnDefinition Width="70*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="TextBoxVlActivation" Style="{StaticResource StandardTextBox}" Background="LightGreen" IsReadOnly="False" TextChanged="ActivationInterval_TextChanged"
+              Text="2h" ToolTipService.ShowDuration="30000">
+                        <TextBox.ToolTip>
+                            <TextBlock>
+              Number of minutes that must pass after an unsuccessful activation before the client retries.<LineBreak />
+              If you append 's', 'h', 'd' or 'w' to the number, the interval is in seconds, hours or days instead of minutes.<LineBreak />Most newer activation clients ignore this parameter
+              if it is less than 2 hours (2h) which is 120 minutes.
+                            </TextBlock>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    <TextBox Text="0 days, 2 hours, 0 minutes" Margin="5,0,0,0" Grid.Column="1" Style="{StaticResource StandardTextBox}" x:Name="TextBoxVlActivationParsed" />
+                </Grid>
+
+                <WrapPanel Margin="10,5,5,0" Grid.Row="12" Grid.ColumnSpan="3" Grid.Column="0">
+                    <CheckBox x:Name="CheckBoxAllowUnknownProducts" Content="Allow unknown KMS IDs" Width="200" IsChecked="True" IsThreeState="False"
+              ToolTip="If unchecked, clients with unknown KMS IDs or incorrect Application IDs will not be granted activation." ToolTipService.ShowDuration="30000" />
+                    <CheckBox x:Name="CheckBoxAllowNonVl" Content="Allow beta and retail KMS IDs" Width="{Binding ElementName=CheckBoxAllowUnknownProducts,Path=Width}" IsChecked="True" IsThreeState="False"
+              ToolTip="If unchecked, clients with beta and retail KMS IDs or incorrect Application IDs will not be granted activation." ToolTipService.ShowDuration="30000" />
+                    <CheckBox x:Name="CheckBoxCheckTime" Content="Check client time" Width="{Binding ElementName=CheckBoxAllowUnknownProducts,Path=Width}" IsChecked="True" IsThreeState="False"
+              ToolTip="If checked, clients with a time difference of more than 4 hours will not be granted activation." ToolTipService.ShowDuration="30000" HorizontalAlignment="Right" />
+                    <CheckBox x:Name="CheckBoxPreCharge" Content="Pre-charge server" Width="{Binding ElementName=CheckBoxAllowUnknownProducts,Path=Width}" IsChecked="true" IsThreeState="False"
+              ToolTip="If unchecked, the server will not be pre-charged and you need at least 25 Windows clients, 5 Windows servers and/or 5 Office computers for activations to succeed."
+              ToolTipService.ShowDuration="30000" ToolTipService.ShowOnDisabled="True" />
+                    <CheckBox Width="200" x:Name="UseTap" Content="Use VPN (safe mode) on IPv4" Click="UseTap_Click" ToolTipService.ShowDuration="30000"
+              ToolTip="If checked, a compatible VPN device can be used to fake some remote IPv4 addresses which are in fact local addresses. Compatible adapters are Tap-Windows (OpenVPN) and TeamViewer." />
+                </WrapPanel>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Header="Clients" Margin="5">
+            <ItemsControl ItemsSource="{Binding AppItems}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,0,40,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding DisplayName}"/>
+                            <TextBox
+                                Grid.Column="1"
+                                Margin="5,-1,0,0"
+                                Background="{Binding IsValidClientStatus, Converter={lm:Bool2Brush False=OrangeRed, Null=Yellow, True=LightGreen}}"
+                                IsReadOnly="True"
+                                Text="{Binding ClientStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Margin="5,0,5,0" Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </GroupBox>
+
+        <GroupBox Header="KMS Messages" Grid.Row="2" Margin="5">
+            <Grid VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="1" x:Name="TextBoxInfoText" Margin="5,0,5,10" Height="Auto" Style="{StaticResource StandardTextBox}" AcceptsReturn="True" TextWrapping="Wrap" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+</lm:ScalableWindow>
+

@@ -1,0 +1,521 @@
+﻿<lm:ScalableWindow x:Class="HGM.Hotbird64.LicenseManager.KmsClientWindow"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:lm="clr-namespace:HGM.Hotbird64.LicenseManager"
+                   mc:Ignorable="d" Width="1024" MinWidth="200" SizeToContent="Height"
+                   d:DataContext="{d:DesignInstance Type=lm:KmsClientWindow}"
+>
+  <Grid x:Name="TopElement">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="24" />
+    </Grid.RowDefinitions>
+    <Menu IsMainMenu="True">
+      <MenuItem Header="_View">
+        <MenuItem x:Name="AutoSize" Header="_Fit Window Height" IsChecked="True" Click="AutoSize_Click" />
+        <MenuItem x:Name="ShowAllDetectionTests" Header="Always Show Emulator _Detection Tests" IsChecked="False" Click="ShowAllDetectionTests_Click" />
+      </MenuItem>
+    </Menu>
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="45*" />
+        <ColumnDefinition Width="55*" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <GroupBox x:Name="GroupBoxRequest" Header="KMS Request Parameters" Margin="3,3,8,3" Grid.Column="0" Grid.Row="0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <Grid Margin="0,3,4,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <Label ToolTip="{Binding ElementName=TextBoxHost, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="0" Content="KMS Host Name" HorizontalContentAlignment="Left" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxHost" Style="{StaticResource StandardTextBox}" IsReadOnly="False" Grid.Column="1" Grid.Row="0"
+                  ToolTip="Host name or IP address of the KMS server. IDN domain names are allowed." ToolTipService.ShowDuration="30000" TextChanged="TextBox_Host_TextChanged" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxPort, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="1" Content="KMS Host Port" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxPort" Style="{StaticResource StandardTextBox}" IsReadOnly="False" Grid.Column="1" Grid.Row="1" ToolTip="TCP port of the KMS server"
+                  ToolTipService.ShowDuration="30000" TextChanged="TextBox_Port_TextChanged" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxAddress, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="2" Content="KMS Address" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxAddress" Style="{StaticResource StandardTextBox}" IsReadOnly="False" Grid.Column="1" Grid.Row="2"
+                  ToolTip="Full address of the KMS server. IDN domain names are allowed." ToolTipService.ShowDuration="30000" TextChanged="TextBox_Address_TextChanged" />
+
+              <Label ToolTip="{Binding ElementName=ComboBoxAddressFamily, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="3" Content="Internet Protocol" HorizontalContentAlignment="Left" HorizontalAlignment="Left" />
+
+              <ComboBox Height="22" Grid.Column="1" Grid.Row="3" x:Name="ComboBoxAddressFamily" SelectedItem="{Binding SelectedAddressFamily}" SelectedIndex="2"
+                  ItemsSource="{Binding AddressFamilyList, UpdateSourceTrigger=PropertyChanged}"
+                  ToolTip="Select the address family. Selecting this makes sense only if you use a host name (not an IP address) to connect to the KMS server that has an IPv4 and an IPv6 address."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=ComboBoxProduct, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="4" Content="Detail Product Name" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox Height="22" x:Name="ComboBoxProduct" SelectedItem="{Binding SelectedProduct}" ItemsSource="{Binding ProductList, UpdateSourceTrigger=PropertyChanged}"
+                    SelectionChanged="ComboBox_Product_SelectionChanged" ToolTip="Select the product to activate. The selection you make will also change the KMS product and the application."
+                    ToolTipService.ShowDuration="30000" />
+                <Button Height="22" x:Name="ButtonPickProduct" MinWidth="20" Content="..." Grid.Column="1" HorizontalContentAlignment="Center"
+                    ToolTip="Select the product to activate via a hierarchical tree." ToolTipService.ShowDuration="30000" Click="Button_PickProduct_Click" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=TextBoxSkuGuid, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="5" Content="SKU ID" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxSkuGuid" Style="{StaticResource StandardTextBox}" IsReadOnly="False"
+                    ToolTip="Changes the SKU ID manually. Use for an unlisted product or to intentionally send an incorrect KMS request." ToolTipService.ShowDuration="30000"
+                    TextChanged="TextBox_SkuGuid_TextChanged" MouseDoubleClick="CheckableTextBox_MouseDoubleClick">
+                  <TextBox.CommandBindings>
+                    <CommandBinding Command="{x:Static lm:MainWindow.CheckEpid}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+                  </TextBox.CommandBindings>
+                  <TextBox.ContextMenu>
+                    <ContextMenu>
+                      <MenuItem Command="Copy" />
+                      <MenuItem Command="{x:Static lm:MainWindow.CheckEpid}" />
+                    </ContextMenu>
+                  </TextBox.ContextMenu>
+                </TextBox>
+
+                <Button Grid.Column="1" Margin="5,0,0,0" Content="Random" Height="20" Click="RandomGuidButton_Click" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=ComboBoxKmsProduct, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="6" Content="Product Family" HorizontalContentAlignment="Left" Margin="0,0,41,0" />
+              <ComboBox Height="22" Grid.Column="1" Grid.Row="6" x:Name="ComboBoxKmsProduct" SelectedItem="{Binding SelectedKmsProduct}"
+                  ItemsSource="{Binding KmsProductList, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ComboBox_KmsProduct_SelectionChanged"
+                  ToolTip="Changes the KMS product manually. Use only to intentionally send an incorrect KMS request." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxKmsGuid, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="7" Content="KMS ID" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxKmsGuid" Style="{StaticResource StandardTextBox}" IsReadOnly="False"
+                    ToolTip="Changes the KMS ID manually. Use for an unlisted product or to intentionally send an incorrect KMS request." ToolTipService.ShowDuration="30000"
+                    TextChanged="TextBox_KmsGuid_TextChanged" />
+                <Button Grid.Column="1" Margin="5,0,0,0" Content="Random" Height="20" Click="RandomGuidButton_Click" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=ComboBoxApplication, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="8" Content="Application" HorizontalAlignment="Left" />
+              <ComboBox Height="22" Grid.Column="1" Grid.Row="8" x:Name="ComboBoxApplication" SelectedItem="{Binding SelectedApplication}"
+                  ItemsSource="{Binding ApplicationList, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ComboBox_Application_SelectionChanged"
+                  ToolTip="Changes the application manually. Use only to intentionally send an incorrect KMS request." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxAppGuid, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="9" Content="Application ID" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="9">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxAppGuid" Style="{StaticResource StandardTextBox}" IsReadOnly="False"
+                    ToolTip="Changes the Application ID manually. Use for an unlisted product or to intentionally send an incorrect KMS request." ToolTipService.ShowDuration="30000"
+                    TextChanged="TextBox_AppGuid_TextChanged" />
+                <Button Grid.Column="1" Margin="5,0,0,0" Content="Random" Height="20" Click="RandomGuidButton_Click" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=TextBoxMinimumClients, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="10" Content="Number of activation" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxMinimumClients" Style="{StaticResource StandardTextBox}" IsReadOnly="False" Grid.Column="1" Grid.Row="10" ToolTipService.ShowDuration="30000"
+                  TextChanged="TextBox_MinimumClients_TextChanged">
+                <TextBox.ToolTip>
+                  <TextBlock>
+                    This is the minimum number of clients required for an activation to work. Can be used for &quot;overcharging&quot; a genuine KMS server.<LineBreak/>
+                    "Overcharging" is <Run Foreground="Red" FontWeight="Bold">dangerous</Run>. It irreversible increases the number of Client Machine ID a genuine KMS server maintains.<LineBreak/>
+                    If you are not 100 % sure what you are doing set this value no higher than 25 (Windows) or 5 (anything else).
+                  </TextBlock>
+                </TextBox.ToolTip>
+              </TextBox>
+
+              <Label ToolTip="{Binding ElementName=ComboBoxVersion, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="11" Content="KMS Protocol" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="11">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="50*" />
+                  <ColumnDefinition Width="50*" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxVersion" Grid.Column="0" Style="{StaticResource StandardTextBox}" IsReadOnly="False" ToolTipService.ShowDuration="30000"
+                    ToolTip="Allows you to set the KMS protocol version manually. Use only to intentionally sent an incorrect KMS request." TextChanged="TextBox_Version_TextChanged" />
+                <ComboBox Grid.Column="1" Height="22" x:Name="ComboBoxVersion" SelectedItem="{Binding SelectedVersion}" Margin="5,0,0,0"
+                    ItemsSource="{Binding VersionList, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="Selects the KMS protocol version. Will be set to an appropriate value when you change the Product." ToolTipService.ShowDuration="30000"
+                    SelectionChanged="ComboBox_Version_SelectionChanged" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=TextBoxClientGuid, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="12" Content="Client ID" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="12">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxClientGuid" Style="{StaticResource StandardTextBox}" ToolTip="Sets the Client ID which is unique for each client." ToolTipService.ShowDuration="30000"
+                    TextChanged="TextBox_ClientGuid_TextChanged" />
+                <Button x:Name="ButtonRandomClientId" Grid.Column="1" Margin="5,0,0,0" Content="Random" Height="20" Click="RandomGuidButton_Click" Visibility="Collapsed" />
+                <CheckBox x:Name="CheckBoxAutoRandomClientId" Content="Auto" Grid.Column="2" VerticalAlignment="Center" Click="CheckBoxAutoRandomClientId_Click" Margin="5,0,0,0" IsChecked="True"
+                    ToolTipService.ShowDuration="30000" ToolTip="If checked, a random Client ID is automatically generated at each request" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=TextBoxPreviousClientGuid, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="13" Content="Previous Client ID" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="13">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxPreviousClientGuid" Style="{StaticResource StandardTextBox}" IsReadOnly="False" ToolTip="Sets the Previous Client ID which is normally an all zero Guid."
+                    ToolTipService.ShowDuration="30000" TextChanged="TextBox_PreviousClientGuid_TextChanged" />
+                <Button Grid.Column="1" Margin="5,0,0,0" Content="Zero" Height="20" Click="ZeroGuidButton_Click" />
+                <Button Grid.Column="2" Margin="5,0,0,0" Content="Random" Height="20" Click="RandomGuidButton_Click" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=TextBoxWorktstationName, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="14" Content="Client Name" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="14">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxWorktstationName" Style="{StaticResource StandardTextBox}" ToolTip="Sets the workstation name. This is a comment only and can be anything."
+                    ToolTipService.ShowDuration="30000" TextChanged="TextBox_WorkStationName_TextChanged" MaxLength="63" />
+                <CheckBox x:Name="CheckBoxAutoRandomClientName" Content="Auto" Grid.Column="3" VerticalAlignment="Center" Click="CheckBoxAutoRandomClientName_Click" Margin="5,0,0,0" IsChecked="True"
+                    ToolTipService.ShowDuration="30000" ToolTip="If checked, a random Client Name is automatically generated at each request" />
+
+                <Button Grid.Column="1" Margin="5,0,0,0" Content="Random NB" Height="20" Click="RandomNetbiosButton_Click" ToolTip="Generate a random NetBIOS name"
+                    Visibility="{Binding ElementName=ButtonRandomDns, Path=Visibility}" ToolTipService.ShowDuration="30000" x:Name="ButtonRandomNetbios" />
+
+                <Button Visibility="Collapsed" x:Name="ButtonRandomDns" Grid.Column="2" Margin="5,0,0,0" Content="Random DNS" Height="20" Click="RandomDnsButton_Click"
+                    ToolTip="Generate a random DNS name" ToolTipService.ShowDuration="30000" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=ComboBoxLicenseStatus, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="15" Content="License Status" HorizontalAlignment="Left" />
+              <ComboBox Height="22" Grid.Column="1" Grid.Row="15" x:Name="ComboBoxLicenseStatus" SelectedItem="{Binding SelectedLicenseStatus}"
+                  ItemsSource="{Binding LicenseStatusList, UpdateSourceTrigger=PropertyChanged}" ToolTip="Selects the current License Status." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxRemainingTime, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="16" Content="Status Remains" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="16">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="TextBoxRemainingTime" Style="{StaticResource StandardTextBox}" IsReadOnly="False" ToolTip="Time to remain in current License Status in minutes (0=forever)"
+                    ToolTipService.ShowDuration="30000" TextChanged="TextBox_RemainingTime_TextChanged" />
+                <Label ToolTip="{Binding ElementName=TextBoxRemainingTime, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="1" Content="min" Margin="0,0,5,0" HorizontalContentAlignment="Center" />
+                <ComboBox Grid.Column="2" Height="22" x:Name="ComboBoxRemainingTime" ItemsSource="{Binding RemainingTimeList, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding SelectedRemainingTime, UpdateSourceTrigger=PropertyChanged}" ToolTip="Enter or select the time to remain in the current License Status."
+                    ToolTipService.ShowDuration="30000" IsEditable="False" SelectionChanged="ComboBox_RemainingTime_SelectionChanged" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=TextBoxRequestTime, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="17" Content="Request Time" HorizontalAlignment="Left" />
+              <Grid Grid.Column="1" Grid.Row="17">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TextBoxRequestTime" Style="{StaticResource StandardTextBox}"
+                    ToolTip="Allows you to set a custom KMS request time. This value is ignored if you check the &quot;Use current&quot; box." ToolTipService.ShowDuration="30000" MaxLength="63"
+                    TextChanged="TextBox_RequestTime_TextChanged" />
+                <CheckBox Grid.Column="1" Margin="5,0,0,0" Content="Use Current" IsChecked="True" Click="CheckBoxUseCurrentTime_Click"
+                    ToolTip="If checked, uses the actual system time as KMS request time." VerticalAlignment="Center" ToolTipService.ShowDuration="30000" x:Name="CheckBoxUseCurrentTime" />
+              </Grid>
+
+              <Label ToolTip="{Binding ElementName=CheckBoxVirtualMachine, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="18" Content="Flags" VerticalAlignment="Center" HorizontalAlignment="Left" />
+              <WrapPanel Grid.Row="18" Grid.Column="1" Margin="0,6,0,0">
+
+                <CheckBox x:Name="CheckBoxVirtualMachine" VerticalAlignment="Center" Margin="0,0,5,0" Width="140" Content="Virtual Machine"
+                    ToolTip="If checked, the client pretends to be a virtual machine." ToolTipService.ShowDuration="30000" />
+
+                <CheckBox x:Name="CheckBoxUseMultiplexedRpc" VerticalAlignment="Center" Margin="0,0,5,0" Width="140" Content="Multiplexed RPC" IsChecked="True"
+                    ToolTip="If unchecked, the client does not use multiplexed RPC calls. Use to test if an emulator uses the RPC protocol correctly." ToolTipService.ShowDuration="30000" />
+
+                <CheckBox x:Name="CheckBoxBtfn" VerticalAlignment="Center" Margin="0,0,5,0" Width="140" Content="Use BTFN" IsChecked="True"
+                    ToolTip="If checked, the client tries to establish Bind Time Feature Negotiation during RPC setup." ToolTipService.ShowDuration="30000" />
+
+                <CheckBox x:Name="CheckBoxNdr64" VerticalAlignment="Center" Margin="0,0,5,0" Width="140" Content="Use NDR64" IsChecked="True"
+                    ToolTip="If checked, the client tries to negotiate the NDR64 protocol with the RPC server." ToolTipService.ShowDuration="30000" />
+
+                <CheckBox x:Name="CheckBoxMultipleTest" VerticalAlignment="Center" Margin="0,0,5,0" Width="140" Content="Multiple requests" IsChecked="False"
+                    ToolTip="If checked, multiple requests will be sent to the server. This allows some additional tests that can detect a KMS emulator" ToolTipService.ShowDuration="30000"
+                    Click="CheckBoxMultipleTest_Click" />
+
+                <CheckBox x:Name="CheckBoxDangerousTests" VerticalAlignment="Center" Margin="0,0,5,0" Width="140" Content="Run dangerous tests" IsChecked="False" Foreground="Red"
+                    ToolTipService.ShowDuration="30000" Visibility="Collapsed" Click="CheckBoxDangerousTests_Click">
+                  <CheckBox.ToolTip>
+                    <TextBlock>
+                      If checked, some tests will be run that are <Run Foreground="Red" FontWeight="Bold">dangerous</Run> for a genuine KMS server. These tests "overcharge" a KMS server<LineBreak />
+                      by requesting more active clients than a real activation would request. This causes a genuine KMS server to permanently<LineBreak />
+                      maintain more Client Machine IDs than normal. There is no known way reset the genuine KMS server to the default operation.<LineBreak />
+                      It is harmless to run these tests against an emulator. This test is useful as a very sophisticated KMS emulator detection technique.
+                    </TextBlock>
+                  </CheckBox.ToolTip>
+                </CheckBox>
+
+              </WrapPanel>
+
+            </Grid>
+
+          </StackPanel>
+        </ScrollViewer>
+      </GroupBox>
+
+      <GroupBox Header="KMS Response" Margin="3,3,3,3" Grid.Column="1" Grid.Row="0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <Grid Margin="0,3,4,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <Label ToolTip="{Binding ElementName=TextBoxResponseVersion, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="0" Content="Correct Response Size" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxCorrectResponseSize" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="0"
+                  ToolTip="The correct size of the response. If correct size and actual size do not match, it is likely that the response comes from a buggy emulator."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxResponseVersion, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="1" Content="Actual Response Size" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxActualResponseSize" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="1"
+                  ToolTip="The actual size of the response. If correct size and actual size do not match, it is likely that the response comes from a buggy emulator."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxResponseVersion, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="2" Content="KMS Protocol" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxResponseVersion" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="2"
+                  ToolTip="KMS protocol version of the response. Must match the version of the request." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxEPid, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="3" Content="Extended PID" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxEPid" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="3" ToolTip="The extended PID of the response." ToolTipService.ShowDuration="30000"
+                  MouseDoubleClick="CheckableTextBox_MouseDoubleClick">
+                <TextBox.CommandBindings>
+                  <CommandBinding Command="{x:Static lm:MainWindow.CheckEpid}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+                </TextBox.CommandBindings>
+                <TextBox.ContextMenu>
+                  <ContextMenu>
+                    <MenuItem Command="Copy" />
+                    <MenuItem Command="{x:Static lm:MainWindow.CheckEpid}" />
+                  </ContextMenu>
+                </TextBox.ContextMenu>
+              </TextBox>
+
+              <Label ToolTip="{Binding ElementName=TextBoxOs, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="4" Content="KMS Host OS" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxOs" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="4" ToolTip="The operating system used by the KMS server (often fake for emulators)."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxInstallDate, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="5" Content="KMS License Date" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxInstallDate" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="5" ToolTip="The date when the KMS host license was installed."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label Visibility="{Binding ElementName=TextBoxHwId, Path=Visibility}" ToolTip="{Binding ElementName=TextBoxHwId, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0"
+                  Grid.Row="6" Content="Hardware ID" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxHwId" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="6"
+                  ToolTip="Information about the KMS hosts hardware. Used to revoke activation if hardware has changed too much." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxResponseClientId, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="7" Content="Client ID" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxResponseClientId" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="7"
+                  ToolTip="The Client ID returned by the server. Must match the Client ID in the request." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxResponseTimeStamp, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="8" Content="Time Stamp (local)" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxResponseTimeStamp" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="8" ToolTip="Must exactly match the request time."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxResponseTimeStampUtc, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="9" Content="Time Stamp (UTC)" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxResponseTimeStampUtc" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="9" ToolTip="Must exactly match the request time."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxActiveClients, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="10" Content="Active Clients" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxActiveClients" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="10"
+                  ToolTip="A genuine KMS server never reports more than the double amount of the &quot;N Count Policy&quot; in the request." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxRenewalInterval, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="11" Content="Activation Renewal Interval" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxRenewalInterval" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="11"
+                  ToolTip="The amount of time that must pass before an KMS activated client refreshes its activation." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxRetryInterval, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="12" Content="Activation Retry Interval" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxRetryInterval" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="12"
+                  ToolTip="The amount of time that must pass before a failed KMS activation will be retried." ToolTipService.ShowDuration="30000" />
+
+              <Label ToolTip="{Binding ElementName=TextBoxCsvlk, Path=ToolTip}" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="13" Content="KMS Host CSVLK Name" HorizontalAlignment="Left" />
+              <TextBox x:Name="TextBoxCsvlk" Style="{StaticResource StandardTextBox}" Grid.Column="1" Grid.Row="13"
+                  ToolTip="The license that is installed on the KMS host. Note: This is not limited by the KMS host OS. You can for instance install a Windows Server 2016 CSVLK on a Windows Server 2012 host."
+                  ToolTipService.ShowDuration="30000" />
+
+              <Label Visibility="{Binding ElementName=DataGridProtocolConformance, Path=Visibility}" Margin="0,5,0,5" ToolTip="{Binding ElementName=DataGridProtocolConformance, Path=ToolTip}"
+                  Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="14" Content="Valid KMS IDs" VerticalAlignment="Top" />
+              <DataGrid HorizontalScrollBarVisibility="Auto" ColumnWidth="Auto" Margin="0,5,0,5" x:Name="DataGridProtocolConformance" GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" AutoGenerateColumns="False" Grid.Row="14" Grid.Column="1" Width="Auto" MaxHeight="150" Height="Auto"
+                  SelectionMode="Single" SelectionUnit="CellOrRowHeader" RowHeaderWidth="20" HeadersVisibility="Column" LoadingRow="DataGrid_LoadingRow" Visibility="Collapsed">
+                <DataGrid.Columns>
+                  <DataGridTextColumn Header="KMS IDs covered by host's CSVLK" Binding="{Binding DisplayName}" SortDirection="Ascending" SortMemberPath="DisplayName" IsReadOnly="True" />
+                </DataGrid.Columns>
+              </DataGrid>
+
+              <Label Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="15" Content="Warnings" VerticalAlignment="Top" Visibility="{Binding ElementName=TextBoxWarnings, Path=Visibility}" />
+              <TextBox x:Name="TextBoxWarnings" Background="LightYellow" Visibility="Collapsed" VerticalAlignment="Top" Margin="0,4,0,0" Style="{StaticResource StandardTextBox}" Grid.Column="1"
+                  Grid.Row="15" Height="100" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+
+              <Label Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="16" Content="Protocol conformance" VerticalAlignment="Center" HorizontalAlignment="Left" />
+              <WrapPanel Grid.Row="16" Grid.Column="1" Margin="0,6,0,0">
+
+                <CheckBox x:Name="CheckBoxIsValidResponseSize" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="Response size" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000" ToolTip="Checked if the KMS response size (in bytes) is correct" />
+
+                <CheckBox x:Name="CheckBoxDecryptSuccess" Width="100" Content="Decryption" Margin="0,0,5,0" ToolTip="Checked if the KMS response was decrypted successfully (KMSv5 and up)"
+                    ToolTipService.ShowDuration="30000" Click="ResponseCheckBox_Click" />
+
+                <CheckBox x:Name="CheckBoxIsValidHash" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="Hash" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000"
+                    ToolTip="Checked if the KMS response Hash is correct (AES CMAC in KMSv4 / SHA256 in KMSv5 and up)" />
+
+                <CheckBox x:Name="CheckBoxIsValidHmac" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="Hash MAC" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000" ToolTip="Checked if the time-based Hash MAC is correct (KMSv6)" />
+
+                <CheckBox x:Name="CheckBoxIsValidInitializationVector" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="IV (Salt)" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000"
+                    ToolTip="Checked if the response initialization vector (salt) is correct (KMSv5: must be the same as the request salt / KMSv6: can and should be random)" />
+
+                <CheckBox x:Name="CheckBoxIsValidProtocolVersion" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="KMS version" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000" ToolTip="Checked if protocol version of the KMS response matches the request" />
+
+                <CheckBox x:Name="CheckBoxIsValidClientMachineId" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="Client ID" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000"
+                    ToolTip="Checked if Client Machine ID of the KMS response matches the request" />
+
+                <CheckBox x:Name="CheckBoxIsValidTimeStamp" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="Time Stamp" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000" ToolTip="Checked if time stamp of the KMS response matches the request" />
+
+                <CheckBox x:Name="CheckBoxIsValidPidLength" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="ePID length" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000"
+                    ToolTip="Checked if the ePID string size matches the size in the KMS response size field" />
+
+                <CheckBox x:Name="CheckBoxHasBtfn" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="BTFN" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000"
+                    ToolTip="Checked if the KMS server supports BTFN. Undefined if BTFN hasn't been selected in the request." />
+
+                <CheckBox x:Name="CheckBoxHasNdr64" Width="{Binding ElementName=CheckBoxDecryptSuccess, Path=Width}" Content="NDR64" Click="ResponseCheckBox_Click"
+                    Margin="{Binding ElementName=CheckBoxDecryptSuccess, Path=Margin}" ToolTipService.ShowDuration="30000"
+                    ToolTip="Checked if the KMS server supports NDR64. Undefined if NDR64 hasn't been selected in the request." />
+
+              </WrapPanel>
+
+              <Label Visibility="{Binding ElementName=DataGridEmulatorDetection, Path=Visibility}" Margin="0,5,0,5" Style="{StaticResource StandardLabel}" Grid.Column="0" Grid.Row="17"
+                  Content="Emulator Detection" VerticalAlignment="Top" />
+              <DataGrid HorizontalScrollBarVisibility="Auto" ColumnWidth="Auto" Margin="0,5,0,5" x:Name="DataGridEmulatorDetection" GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" AutoGenerateColumns="False" Grid.Row="17" Grid.Column="1" Width="Auto" Height="Auto" SelectionMode="Single"
+                  MaxHeight="150" SelectionUnit="CellOrRowHeader" RowHeaderWidth="20" HeadersVisibility="Column" LoadingRow="DataGrid_LoadingRow" Visibility="Collapsed">
+                <DataGrid.Columns>
+
+                  <DataGridTemplateColumn Header="KMS Server Test" IsReadOnly="True" SortMemberPath="DisplayName">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Margin="0,0,3,0" ToolTipService.ShowDuration="30000" Text="{Binding DisplayName}" d:DataContext="{d:DesignData }">
+                          <TextBlock.ToolTip>
+                            <TextBlock Text="{Binding ToolTip}" />
+                          </TextBlock.ToolTip>
+                        </TextBlock>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="Result" IsReadOnly="True" SortMemberPath="ResultText" SortDirection="Descending">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock ToolTipService.ShowDuration="30000" Text="{Binding ResultText}" Foreground="{Binding ResultBrush}" d:DataContext="{d:DesignData }">
+                          <TextBlock.ToolTip>
+                            <TextBlock Text="{Binding ToolTip}" />
+                          </TextBlock.ToolTip>
+                          </TextBlock>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
+
+                  <DataGridTemplateColumn Header="Severity" IsReadOnly="True" SortMemberPath="Severity">
+                    <DataGridTemplateColumn.CellTemplate>
+                      <DataTemplate>
+                        <TextBlock Margin="0,0,3,0" ToolTipService.ShowDuration="30000" Text="{Binding Severity}" d:DataContext="{d:DesignData }">
+                          <TextBlock.ToolTip>
+                            <TextBlock Text="{Binding ToolTip}" />
+                          </TextBlock.ToolTip>
+                        </TextBlock>
+                      </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                  </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+              </DataGrid>
+
+            </Grid>
+          </StackPanel>
+        </ScrollViewer>
+      </GroupBox>
+
+      <StackPanel x:Name="StackPanelButtons" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Margin="4,4,0,4">
+        <Button Margin="0,0,10,0" Height="24" MinWidth="100" x:Name="ButtonSendRequest" Content="Send _Request" Click="Button_SendRequest_Click" />
+      </StackPanel>
+
+      <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" ResizeBehavior="CurrentAndNext" Width="5" Foreground="#808080" />
+
+    </Grid>
+    <Rectangle Grid.Row="2" Fill="#f0f0f0" />
+    <DockPanel Grid.Row="2">
+      <TextBlock Name="LabelStatus" Margin="5,0,0,0" VerticalAlignment="Center">Initializing...</TextBlock>
+      <ProgressBar Name="ProgressBar" IsIndeterminate="False" Visibility="Visible" Margin="5,4,5,4" />
+    </DockPanel>
+  </Grid>
+</lm:ScalableWindow>
+
