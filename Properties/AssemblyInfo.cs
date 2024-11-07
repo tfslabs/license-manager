@@ -7,7 +7,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("License Manager")]
-[assembly: AssemblyDescription("TheFlightSims (ft. Hotbird64 & nang)")]
+[assembly: AssemblyDescription("TheFlightSims Labs (ft. Hotbird64)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TheFlightSims")]
 [assembly: AssemblyProduct("License Manager")]

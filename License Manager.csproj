@@ -89,9 +89,14 @@
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <DefineConstants>
     </DefineConstants>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>HGM.Hotbird64.LicenseManager.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -410,8 +415,12 @@
     <Resource Include="Data\PKeyConfig\19041-pkeyconfig-csvlk.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\19041-pkeyconfig-downlevel.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\19041-pkeyconfig.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\20348-pkeyconfig-downlevel.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\20348-pkeyconfig.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\22621-pkeyconfig-csvlk.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\22621-pkeyconfig.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\26100-pkeyconfig-downlevel.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\26100-pkeyconfig.xrm-ms.gz" />
     <None Include="ClassDiagram1.cd" />
     <None Include="pkeyConfig.xsd">
       <SubType>Designer</SubType>
