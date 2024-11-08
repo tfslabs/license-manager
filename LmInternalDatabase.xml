@@ -84,8 +84,8 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<WinBuild BuildNumber="2600" ReleaseDate="2001-10-25T00:00:00Z" DisplayName="Windows XP Build 2600" PlatformId="55041" />
 		<WinBuild BuildNumber="2700" ReleaseDate="2004-10-12T00:00:00Z" DisplayName="Windows XP build 2700" PlatformId="55041" />
 		<WinBuild BuildNumber="3000" ReleaseDate="2000-09-14T00:00:00Z" DisplayName="Windows ME" PlatformId="55041" />
-		<WinBuild BuildNumber="3790" ReleaseDate="2003-03-28T00:00:00Z" DisplayName="Windows Server 2003 / XP 64-bit" PlatformId="55041" MayBeServer="true" />
-		<WinBuild BuildNumber="5111" ReleaseDate="2001-10-25T00:00:00Z" DisplayName="Windows XP - Beta" PlatformId="55041" />
+		<WinBuild BuildNumber="3790" ReleaseDate="2003-03-28T00:00:00Z" DisplayName="Windows Server 2003/Windows XP 64-bit" PlatformId="55041" MayBeServer="true" />
+		<WinBuild BuildNumber="5111" ReleaseDate="2001-10-25T00:00:00Z" DisplayName="Windows XP Beta" PlatformId="55041" />
 		<WinBuild BuildNumber="6000" ReleaseDate="2006-11-30T00:00:00Z" DisplayName="Windows Vista/Windows Server 2008 without SP" PlatformId="55041" MayBeServer="true" />
 		<WinBuild BuildNumber="6001" ReleaseDate="2008-02-04T00:00:00Z" DisplayName="Windows Vista/Windows Server 2008 SP1" PlatformId="55041" MayBeServer="true" />
 		<WinBuild BuildNumber="6002" ReleaseDate="2009-05-26T00:00:00Z" DisplayName="Windows Vista/Windows Server 2008 SP2" PlatformId="55041" MayBeServer="true" />
@@ -108,11 +108,11 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<WinBuild BuildNumber="19043" ReleaseDate="2021-04-08T00:00:00Z" DisplayName="Windows 10 21H1" PlatformId="3612" UsesNDR64="true" />
 		<WinBuild BuildNumber="19044" ReleaseDate="2021-11-16T00:00:00Z" DisplayName="Windows 10 21H2" PlatformId="3612" UsesNDR64="true" />
 		<WinBuild BuildNumber="20348" ReleaseDate="2021-08-18T00:00:00Z" DisplayName="Windows Server 2022" PlatformId="3612" MayBeServer="true" UseForEpid="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="20279" ReleaseDate="2020-09-22T00:00:00Z" DisplayName="Windows 10X" PlatformId="3612" MayBeServer="true" />
-		<WinBuild BuildNumber="22000" ReleaseDate="2021-06-24T00:00:00Z" DisplayName="Windows 11 21H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="22610" ReleaseDate="2022-09-21T00:00:00Z" DisplayName="Windows 11 22H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="22621" ReleaseDate="2022-09-21T00:00:00Z" DisplayName="Windows 11 22H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="22631" ReleaseDate="2023-09-21T00:00:00Z" DisplayName="Windows 11 23H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="20279" ReleaseDate="2020-09-22T00:00:00Z" DisplayName="Windows 10X" PlatformId="3612" />
+		<WinBuild BuildNumber="22000" ReleaseDate="2021-06-24T00:00:00Z" DisplayName="Windows 11 21H2" PlatformId="3612" UsesNDR64="true" />
+		<WinBuild BuildNumber="22610" ReleaseDate="2022-09-21T00:00:00Z" DisplayName="Windows 11 22H2" PlatformId="3612" UsesNDR64="true" />
+		<WinBuild BuildNumber="22621" ReleaseDate="2022-09-21T00:00:00Z" DisplayName="Windows 11 22H2" PlatformId="3612" UsesNDR64="true" />
+		<WinBuild BuildNumber="22631" ReleaseDate="2023-09-21T00:00:00Z" DisplayName="Windows 11 23H2" PlatformId="3612" UsesNDR64="true" />
 		<WinBuild BuildNumber="25252" ReleaseDate="2022-12-01T19:08:21Z" DisplayName="Windows Server 2022 (22H2) vNext" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="25246" ReleaseDate="2023-12-01T19:08:21Z" DisplayName="Windows Server 2022 (23H2) vNext" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="26100" ReleaseDate="2024-01-26T11:10:00Z" DisplayName="Windows 11 24H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
