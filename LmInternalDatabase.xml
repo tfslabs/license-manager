@@ -160,7 +160,6 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
 			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5" />
 			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888" />
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows 10 China Government" VlmcsdIndex="1" GroupId="3858" MinKeyId="15000000" MaxKeyId="999999999" IniFileName="WinChinaGov" ReleaseDate="2017-04-05T00:00:00Z" EPid="05426-03858-139-583149-03-1033-9200.0000-1432021" Id="ecc0774a-aed3-4e1a-b815-2b31781adfea">
 			<Activate KmsItem="7ba0bf23-d0f5-4072-91d9-d55af5a481b6" />
@@ -183,7 +182,6 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="8a21fdf3-cbc5-44eb-83f3-fe284e6680a7" />
 			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743" />
 			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5" />
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows Server 2019" GroupId="206" MinKeyId="551000000" MaxKeyId="570999999" IniFileName="Windows" ReleaseDate="2018-10-02T00:00:00Z" EPid="03612-00206-560-708055-03-1033-17763.0000-2862019" Id="2e7a9ad1-a849-4b56-babe-17d5a29fe4b4">
 			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
@@ -225,7 +223,6 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
 			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5" />
 			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888" />
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows Server 2016" GroupId="206" MinKeyId="491000000" MaxKeyId="530999999" IniFileName="Windows" ReleaseDate="2016-08-02T00:00:00Z" EPid="03612-00206-489-321441-03-1033-14393.0000-3382016" Id="d6992aac-29e7-452a-bf10-bbfb8ccabe59">
 			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
@@ -297,7 +294,6 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="e1c51358-fe3e-4203-a4a2-3b6b20c9734e" />
 			<Activate KmsItem="bbb97b3b-8ca4-4a28-9717-89fabd42c4ac" />
 			<Activate KmsItem="6d646890-3606-461a-86ab-598bb84ace82" />
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows 10 2019 (Microsoft Internal Lab)" IsLab="true" GroupId="206" MinKeyId="2860000" MaxKeyId="2864999" IniFileName="Windows" ReleaseDate="2018-10-02T00:00:00Z" Id="60b3ec1b-9545-4921-821f-311b129dd6f6">
 			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
@@ -310,7 +306,6 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="e1c51358-fe3e-4203-a4a2-3b6b20c9734e" />
 			<Activate KmsItem="bbb97b3b-8ca4-4a28-9717-89fabd42c4ac" />
 			<Activate KmsItem="6d646890-3606-461a-86ab-598bb84ace82" />
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows 10 2016 (Microsoft Internal Lab)" IsLab="true" GroupId="206" MinKeyId="2015000" MaxKeyId="2114999" IniFileName="Windows" ReleaseDate="2016-08-02T00:00:00Z" Id="d552befb-48cc-4327-8f39-47d2d94f987c">
 			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
@@ -322,7 +317,6 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="e1c51358-fe3e-4203-a4a2-3b6b20c9734e" />
 			<Activate KmsItem="bbb97b3b-8ca4-4a28-9717-89fabd42c4ac" />
 			<Activate KmsItem="6d646890-3606-461a-86ab-598bb84ace82" />
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows 10 (Pre-Release)" IsPreview="true" GroupId="206" MinKeyId="1000000" MaxKeyId="1009999" IniFileName="Windows" ReleaseDate="2015-07-29T00:00:00Z" Id="d521c0fd-1732-4c15-8b98-a41b2a95bbc4">
 			<Activate KmsItem="7fde5219-fbfa-484a-82c9-34d1ad53e856" />
@@ -349,7 +343,6 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="8665cb71-468c-4aa3-a337-cb9bc9d5eaac" />
 			<Activate KmsItem="8456efd3-0c04-4089-8740-5b7238535a65" />
 			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743" />
-			<Activate KmsItem="6d5f5270-31ac-433e-b90a-39892923c657" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows Server 2012 R2 With Win 10" GroupId="206" MinKeyId="405000000" MaxKeyId="424999999" IniFileName="Windows" ReleaseDate="2015-07-29T00:00:00Z" Id="20e938bb-df44-45ee-bde1-4e4fe7477f37">
 			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
@@ -513,7 +506,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
 			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Office 2024" VlmcsdIndex="6" GroupId="206" MinKeyId="571000000" MaxKeyId="590999999" IniFileName="Office2024" ReleaseDate="2024-10-01T00:00:00Z" EPid="03612-05024-000-000000-03-1033-26100.0000-2962024" Id="f3d89bbf-c0ec-47ce-a8fa-e5a5f97e447f">
+		<CsvlkItem DisplayName="Office 2024" VlmcsdIndex="7" GroupId="206" MinKeyId="571000000" MaxKeyId="590999999" IniFileName="Office2024" ReleaseDate="2024-10-01T00:00:00Z" EPid="03612-00206-593-408864-03-1098-17763.0000-2992024" Id="f3d89bbf-c0ec-47ce-a8fa-e5a5f97e447f">
 			<Activate KmsItem="a8973cb5-bf03-0a4c-9cef-703099645ab3" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Office 2021" VlmcsdIndex="6" GroupId="206" MinKeyId="571000000" MaxKeyId="590999999" IniFileName="Office2021" ReleaseDate="2021-09-16T00:00:00Z" EPid="03612-00206-586-025264-03-1033-20348.0000-2902021" Id="47f3b983-7c53-4d45-abc6-bcd91e2dd90a">
@@ -711,12 +704,10 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			</KmsItem>
 		</AppItem>
 		<AppItem DisplayName="Office" VlmcsdIndex="2" Id="59a52881-a989-479d-af46-f275c6370663" MinActiveClients="10">
-			<KmsItem DisplayName="Office 2010 (Volume, bundled)" Id="e85af946-2e25-47b7-83e1-bebcebeac611" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2010 (Volume)" Id="e85af946-2e25-47b7-83e1-bebcebeac611" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Professional Plus 2010" Id="6f327760-8c5c-417c-9b61-836a98287e0c" Gvlk="VYBBJ-TRJPB-QFQRF-QFT4D-H3GVB" />
 				<SkuItem DisplayName="Office Small Business Basics 2010" Id="ea509e87-07a1-4a45-9edc-eba5a39f36af" Gvlk="D6QFG-VBYP2-XQHM7-J97RH-VVRCK" />
 				<SkuItem DisplayName="Office Standard 2010" Id="9da2a678-fb6b-4e67-ab84-60dd6a9c819a" Gvlk="V7QKV-4XVVR-XYV4D-F7DFM-8R6BM" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2010 (Volume, standalone)" Id="624d8260-7031-4679-84a2-cc7173027538" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access 2010" Id="8ce7e872-188c-4b98-9d90-f8f90b7aad02" Gvlk="V7Y44-9T38C-R2VJK-666HK-T7DDX" />
 				<SkuItem DisplayName="Office Excel 2010" Id="cee5d470-6e3b-4fcc-8c2b-d17428568a9f" Gvlk="H62QG-HXVKF-PP4HP-66KMR-CW9BM" />
 				<SkuItem DisplayName="Office Groove 2010" Id="8947d0b8-c33b-43e1-8c56-9b674c052832" Gvlk="QYYW6-QP4CB-MBV6G-HYMCJ-4T3J4" />
@@ -734,11 +725,9 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Office Visio Standard 2010" Id="9ed833ff-4f92-4f36-b370-8683a4f13275" Gvlk="767HD-QGMWX-8QTDB-9G3R2-KHFGJ" />
 				<SkuItem DisplayName="Office Word 2010" Id="2d0882e7-a4e7-423b-8ccc-70d91e0158b1" Gvlk="HVHB3-C6FV7-KQX9W-YQG79-CRY7T" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2013 (Volume, bundled)" Id="d681860f-589c-4c59-a316-f85eaddea533" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2013 (Volume)" Id="e6a6f1bf-9d40-40c3-aa9f-c77ba21578c0" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Professional Plus 2013" Id="b322da9c-a2e2-4058-9e4e-f59a6970bd69" Gvlk="YC7DK-G2NP3-2QQC3-J6H88-GVGXT" />
 				<SkuItem DisplayName="Office Standard 2013" Id="b13afb38-cd79-4ae5-9f7f-eed058d750ca" Gvlk="KBKQT-2NMXY-JJWGP-M62JB-92CD4" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2013 (Volume, standalone)" Id="e6a6f1bf-9d40-40c3-aa9f-c77ba21578c0" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access 2013" Id="6ee7622c-18d8-4005-9fb7-92db644a279b" Gvlk="NG2JY-H4JBT-HQXYP-78QH9-4JM2D" />
 				<SkuItem DisplayName="Office Excel 2013" Id="f7461d52-7c2b-43b2-8744-ea958e0bd09a" Gvlk="VGPNG-Y7HQW-9RHP7-TKPV3-BG7GB" />
 				<SkuItem DisplayName="Office InfoPath 2013" Id="a30b8040-d68a-423f-b0b5-9ce292ea5a8f" Gvlk="DKT8B-N7VXH-D963P-Q4PHY-F8894" />
@@ -754,31 +743,9 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Office Visio Standard 2013" Id="ac4efaf0-f81f-4f61-bdf7-ea32b02ab117" Gvlk="J484Y-4NKBF-W2HMG-DBMJC-PGWR7" />
 				<SkuItem DisplayName="Office Word 2013" Id="d9f5b1c6-5386-495a-88f9-9ad6b41ac9b3" Gvlk="6Q7VD-NX8JD-WJ2VH-88V73-4GBJ7" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2013 (Pre-release, Volume, bundled)" Id="d4488348-3f85-45db-ad7e-c019c46803b1" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
-				<SkuItem DisplayName="Office Professional Plus 2013 (Pre-Release)" Id="87d2b5bf-d47b-41fb-af62-71c382f5cc85" Gvlk="PGD67-JN23K-JGVWV-KTHP4-GXR9G" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2013 (Pre-release, Volume, standalone)" Id="e562a260-469d-4eaf-b38f-07a6f02bc479" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
-				<SkuItem DisplayName="Office Access 2013 (Pre-Release)" Id="44b538e2-fb34-4732-81e4-644c17d2e746" Gvlk="DJBH8-RGN7Q-836KD-DMP3M-DM9MF" />
-				<SkuItem DisplayName="Office Excel 2013 (Pre-Release)" Id="9373bfa0-97b3-4587-ab73-30934461d55c" Gvlk="Q3BNP-3WXDT-GG8HF-24KMW-HMDBK" />
-				<SkuItem DisplayName="Office Groove 2013 (Pre-Release)" Id="aa286eb4-556f-4eeb-967c-c1b771b7673e" Gvlk="WVCGG-NK4FG-7XKXM-BD4WF-3C624" />
-				<SkuItem DisplayName="Office InfoPath 2013 (Pre-Release)" Id="7ccc8256-fbaa-49c6-b2a9-f5afb4257cd2" Gvlk="7KPJJ-N8TT7-CK3KR-QTV98-YPVXQ" />
-				<SkuItem DisplayName="Office Lync 2013 (Pre-Release)" Id="c53dfe17-cc00-4967-b188-a088a965494d" Gvlk="XNVD3-RYC7T-7R6BT-WX6CF-8BYH7" />
-				<SkuItem DisplayName="Office Mondo 2013 (Pre-Release)" Id="2816a87d-e1ed-4097-b311-e2341c57b179" Gvlk="GCGCN-6FJRM-TR9Q3-BGMWJ-78KQV" />
-				<SkuItem DisplayName="Office OneNote 2013 (Pre-Release)" Id="67c0f908-184f-4f64-8250-12db797ab3c3" Gvlk="VYNYX-8GPBC-7FQMD-D6B7B-7MDFD" />
-				<SkuItem DisplayName="Office Outlook 2013 (Pre-Release)" Id="7bce4e7a-dd80-4682-98fa-f993725803d2" Gvlk="X2KNB-FRRG2-WXDPH-739DM-DM9RH" />
-				<SkuItem DisplayName="Office PowerPoint 2013 (Pre-Release)" Id="1ec10c0a-54f6-453e-b85a-6fa1bbfea9b7" Gvlk="B8CT8-BTNFQ-XQXBK-BFWV8-HMDFQ" />
-				<SkuItem DisplayName="Office Project Pro 2013 (Pre-Release)" Id="3cfe50a9-0e03-4b29-9754-9f193f07b71f" Gvlk="NFKVM-DVG7F-TYWYR-3RPHY-F872K" />
-				<SkuItem DisplayName="Office Project Standard 2013 (Pre-Release)" Id="39e49e57-ae68-4ee3-b098-26480df3da96" Gvlk="N89QF-GGB8J-BKD28-C4V28-W4XTK" />
-				<SkuItem DisplayName="Office Publisher 2013 (Pre-Release)" Id="15aa2117-8f79-49a8-8317-753026d6a054" Gvlk="NB67P-J8XP4-XDK9B-V73VH-M4CKR" />
-				<SkuItem DisplayName="Office Visio Pro 2013 (Pre-Release)" Id="cfbfd60e-0b5f-427d-917c-a4df42a80e44" Gvlk="B3C7Q-D6NH2-2VRFW-HHWDG-FVQB6" />
-				<SkuItem DisplayName="Office Visio Standard 2013 (Pre-Release)" Id="7012cc81-8887-42e9-b17d-4e5e42760f0d" Gvlk="9MKNF-J9XQ6-JV4XB-FJQPY-43F43" />
-				<SkuItem DisplayName="Office Word 2013 (Pre-Release)" Id="de9c7eb6-5a85-420d-9703-fff11bdd4d43" Gvlk="JBGD4-3JNG7-JWWGV-CR6TP-DC62Q" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2016 (Volume, bundled)" Id="661f2993-f126-401e-b6ea-d402e2cfb082" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2016 (Volume)" Id="85b5f61b-320b-4be3-814a-b76b2bfafc82" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Standard 2016" Id="dedfa23d-6ed1-45a6-85dc-63cae0546de6" Gvlk="JNRGM-WHDWX-FJJG3-K47QV-DRTFM" />
 				<SkuItem DisplayName="Office Professional Plus 2016" Id="d450596f-894d-49e0-966a-fd39ed4c4c64" Gvlk="XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2016 (Volume, standalone)" Id="b21662c8-c68b-47c3-9d17-5e44caca0f49" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access 2016" Id="67c0fc0c-deba-401b-bf8b-9c8ad8395804" Gvlk="GNH9Y-D2J4T-FJHGG-QRVH7-QPFDW" />
 				<SkuItem DisplayName="Office Excel 2016" Id="c3e65d36-141f-4d2f-a303-a842ee756a29" Gvlk="9C2PK-NWTVB-JMPW8-BFT28-7FTBF" />
 				<SkuItem DisplayName="Office Mondo 2016" Id="9caabccb-61b1-4b4b-8bec-d10a3c3ac2ce" Gvlk="HFTND-W9MK4-8B7MJ-B6C4G-XQBR2" />
@@ -798,18 +765,9 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Office Visio Standard 2016 C2R" Id="361fe620-64f4-41b5-ba77-84f8e079b1f7" Gvlk="NY48V-PPYYH-3F4PX-XJRKJ-W4423" />
 				<SkuItem DisplayName="Office Word 2016" Id="bb11badf-d8aa-470e-9311-20eaf80fe5cc" Gvlk="WXY84-JN2Q9-RBCCQ-3Q3J3-3PFJ6" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Preview, Volume, bundled)" Id="448410fa-5396-44c0-93cb-5a104d81e010" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
-				<SkuItem DisplayName="Office Professional Plus 2019 C2R Preview" Id="0bc88885-718c-491d-921f-6f214349e79c" Gvlk="VQ9DP-NVHPH-T9HJC-J9PDT-KTQRG" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Preview, Volume, standalone)" Id="616ad227-66d0-4705-aa92-58b40b90f77c" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
-				<SkuItem DisplayName="Office Project Pro 2019 C2R Preview" Id="fc7c4d0c-2e85-4bb9-afd4-01ed1476b5e9" Gvlk="XM2V9-DN9HH-QB449-XDGKC-W2RMW" />
-				<SkuItem DisplayName="Office Visio Pro 2019 C2R Preview" Id="500f6619-ef93-4b75-bcb4-82819998a3ca" Gvlk="N2CG9-YD3YK-936X4-3WR82-Q3X4H" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Volume, bundled)" Id="753e6a4c-1fab-4b79-a818-031cf4a93df0" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2019 (Volume)" Id="617d9eb1-ef36-4f82-86e0-a65ae07b96c6" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Standard 2019" Id="6912a74b-a5fb-401a-bfdb-2e3ab46f4b02" Gvlk="6NWWJ-YQWMR-QKGCB-6TMB3-9D9HK" />
 				<SkuItem DisplayName="Office Professional Plus 2019" Id="85dd8b5f-eaa4-4af3-a628-cce9e77c9a03" Gvlk="NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Volume, standalone)" Id="de64f50d-b364-44d0-8cb3-695260f34a8a" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access 2019" Id="9e9bceeb-e736-4f26-88de-763f87dcc485" Gvlk="9N9PT-27V4Y-VJ2PD-YXFMF-YTFQT" />
 				<SkuItem DisplayName="Office Excel 2019" Id="237854e9-79fc-4497-a0c1-a70969691c6b" Gvlk="TMJWT-YYNMB-3BKTF-644FC-RVXBD" />
 				<SkuItem DisplayName="Office Outlook 2019" Id="c8f8a301-19f5-4132-96ce-2de9d4adbd33" Gvlk="7HD7K-N4PVK-BHBCQ-YWQRW-XW4VK" />
@@ -822,11 +780,9 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Office Visio Standard 2019" Id="e06d7df3-aad0-419d-8dfb-0ac37e2bdf39" Gvlk="7TQNQ-K3YQQ-3PFH7-CCPPM-X4VQ2" />
 				<SkuItem DisplayName="Office Word 2019" Id="059834fe-a8ea-4bff-b67b-4d006b5447d3" Gvlk="PBX3G-NWMT6-Q7XBW-PYJGG-WXD33" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2021 (Volume, bundled)" Id="5ed793cb-27a6-44c6-be48-84fcebc0fe44" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2021 (Volume)" Id="86d50b16-4808-41af-b83b-b338274318b2" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Microsoft Office LTSC Professional Plus 2021" Id="fbdb3e18-a8ef-4fb3-9183-dffd60bd0984" Gvlk="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH" />
 				<SkuItem DisplayName="Microsoft Office LTSC Standard 2021" Id="080a45c5-9f9f-49eb-b4b0-c3c610a5ebd3" Gvlk="KDX7X-BNVR8-TXXGX-4Q7Y8-78VT3" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2021 (Volume, standalone)" Id="1dcf7b9e-654a-4d5d-922a-175c1fc487b3" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access LTSC 2021" Id="1fe429d8-3fa7-4a39-b6f0-03dded42fe14" Gvlk="WM8YG-YNGDD-4JHDC-PG3F4-FC4T4" />
 				<SkuItem DisplayName="Office Excel LTSC 2021" Id="ea71effc-69f1-4925-9991-2f5e319bbc24" Gvlk="NWG3X-87C9K-TC7YY-BC2G7-G6RVC" />
 				<SkuItem DisplayName="Office Outlook LTSC 2021" Id="a5799e4c-f83c-4c6e-9516-dfe9b696150b" Gvlk="C9FM6-3N72F-HFJXB-TM3V9-T86R9" />
@@ -839,16 +795,9 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Office Visio LTSC Standard 2021" Id="72fce797-1884-48dd-a860-b2f6a5efd3ca" Gvlk="MJVNY-BYWPY-CWV6J-2RKRT-4M8QG" />
 				<SkuItem DisplayName="Office Word LTSC 2021" Id="abe28aea-625a-43b1-8e30-225eb8fbd9e5" Gvlk="TN8H9-M34D3-Y64V9-TR72V-X79KV" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2024 Preview (Volume)" Id="e0ddb267-5757-4d2c-9903-82127cbc082d" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
-				<SkuItem DisplayName="Office LTSC Professional Plus 2024 Preview" Id="fceda083-1203-402a-8ec4-3d7ed9f3648c" Gvlk="2TDPW-NDQ7G-FMG99-DXQ7M-TX3T2" />
-				<SkuItem DisplayName="Office Project Pro LTSC 2024 Preview" Id="aaea0dc8-78e1-4343-9f25-b69b83dd1bce" Gvlk="D9GTG-NP7DV-T6JP3-B6B62-JB89R" />
-				<SkuItem DisplayName="Office Visio LTSC Pro 2024 Preview" Id="4ab4d849-aabc-43fb-87ee-3aed02518891" Gvlk="YW66X-NH62M-G6YFP-B7KCT-WXGKQ" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2024 (Volume, bundled)" Id="509b80a1-3d70-4da0-b6f9-022a9e93c174" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2024 (Volume)" Id="a8973cb5-bf03-0a4c-9cef-703099645ab3" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office LTSC Professional Plus 2024" Id="8d368fc1-9470-4be2-8d66-90e836cbb051" Gvlk="XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB" />
 				<SkuItem DisplayName="Office LTSC Standard 2024" Id="bbac904f-6a7e-418a-bb4b-24c85da06187" Gvlk="V28N4-JG22K-W66P8-VTMGK-H6HGR" />
-			</KmsItem>
-			<KmsItem DisplayName="Office 2024 (Volume, standalone)" Id="151e3a4a-4be9-4537-a75a-c8da2412c48a" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access LTSC 2024" Id="72e9faa7-ead1-4f3d-9f6e-3abc090a81d7" Gvlk="82FTR-NCHR7-W3944-MGRHM-JMCWD"/>
 				<SkuItem DisplayName="Office Excel LTSC 2024" Id="cbbba2c3-0ff5-4558-846a-043ef9d78559" Gvlk="F4DYN-89BP2-WQTWJ-GR8YC-CKGJG"/>
 				<SkuItem DisplayName="Office Outlook LTSC 2024" Id="bef3152a-8a04-40f2-a065-340c3f23516d" Gvlk="D2F8D-N3Q3B-J28PV-X27HD-RJWB9"/>
