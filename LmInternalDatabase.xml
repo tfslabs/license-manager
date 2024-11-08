@@ -703,7 +703,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Windows Server 2025 Datacenter: Azure Edition" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="XGN3F-F394H-FD2MY-PP6FD-8MCRC"/>
 			</KmsItem>
 		</AppItem>
-		<AppItem DisplayName="Office" VlmcsdIndex="2" Id="59a52881-a989-479d-af46-f275c6370663" MinActiveClients="10">
+		<AppItem DisplayName="Office 2010" Id="59a52881-a989-479d-af46-f275c6370663" VlmcsdIndex="1" MinActiveClients="10">
 			<KmsItem DisplayName="Office 2010 (Volume)" Id="e85af946-2e25-47b7-83e1-bebcebeac611" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Professional Plus 2010" Id="6f327760-8c5c-417c-9b61-836a98287e0c" Gvlk="VYBBJ-TRJPB-QFQRF-QFT4D-H3GVB" />
 				<SkuItem DisplayName="Office Small Business Basics 2010" Id="ea509e87-07a1-4a45-9edc-eba5a39f36af" Gvlk="D6QFG-VBYP2-XQHM7-J97RH-VVRCK" />
@@ -725,6 +725,8 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Office Visio Standard 2010" Id="9ed833ff-4f92-4f36-b370-8683a4f13275" Gvlk="767HD-QGMWX-8QTDB-9G3R2-KHFGJ" />
 				<SkuItem DisplayName="Office Word 2010" Id="2d0882e7-a4e7-423b-8ccc-70d91e0158b1" Gvlk="HVHB3-C6FV7-KQX9W-YQG79-CRY7T" />
 			</KmsItem>
+		</AppItem>
+		<AppItem DisplayName="Office 2013 and later" VlmcsdIndex="2" Id="0ff1ce15-a989-479d-af46-f275c6370663" MinActiveClients="10">
 			<KmsItem DisplayName="Office 2013 (Volume)" Id="e6a6f1bf-9d40-40c3-aa9f-c77ba21578c0" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Professional Plus 2013" Id="b322da9c-a2e2-4058-9e4e-f59a6970bd69" Gvlk="YC7DK-G2NP3-2QQC3-J6H88-GVGXT" />
 				<SkuItem DisplayName="Office Standard 2013" Id="b13afb38-cd79-4ae5-9f7f-eed058d750ca" Gvlk="KBKQT-2NMXY-JJWGP-M62JB-92CD4" />
