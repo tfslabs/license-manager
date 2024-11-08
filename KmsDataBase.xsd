@@ -3,7 +3,7 @@
 
   <xs:simpleType name="Guid">
     <xs:restriction base="xs:string">
-      <xs:pattern value="([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})|(\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\})"/>
+      <xs:pattern value="([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})|(\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\})"/>
       <xs:minLength value="36"/>
       <xs:maxLength value="38"/>
     </xs:restriction>
@@ -60,6 +60,8 @@
       <xs:enumeration value="EPID_OFFICE2013"/>
       <xs:enumeration value="EPID_OFFICE2016"/>
       <xs:enumeration value="EPID_OFFICE2019"/>
+	  <xs:enumeration value="EPID_OFFICE2021"/>
+	  <xs:enumeration value="EPID_OFFICE2024"/>
       <xs:enumeration value="EPID_WINDOWS_CHINA_GOV"/>
     </xs:restriction>
   </xs:simpleType>

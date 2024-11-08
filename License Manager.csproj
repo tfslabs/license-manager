@@ -386,6 +386,8 @@
     <Resource Include="Data\PKeyConfig\pkconfig_office15pre.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_office15.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_Office15KMSHost.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkeyconfig-office.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkeyconfig-office-kmshost.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_vista.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_win10-csvlk.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_win10.xrm-ms.gz" />
@@ -405,12 +407,10 @@
     <Resource Include="Data\PKeyConfig\pkconfig-vs2013.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig-vs2012.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig-vs2017.xrm-ms.gz" />
-    <Resource Include="Data\PKeyConfig\16299-pkeyconfig-csvlk.xrm-ms.gz" />
-    <Resource Include="Data\PKeyConfig\16299-pkeyconfig.xrm-ms.gz" />
-    <Resource Include="Data\PKeyConfig\pkeyconfig-office.xrm-ms.gz" />
-    <Resource Include="Data\PKeyConfig\pkeyconfig-office-kmshost.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig-vs2019.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig-vs2022.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\16299-pkeyconfig-csvlk.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\16299-pkeyconfig.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\18362-pkeyconfig.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\19041-pkeyconfig-csvlk.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\19041-pkeyconfig-downlevel.xrm-ms.gz" />
@@ -421,6 +421,7 @@
     <Resource Include="Data\PKeyConfig\22621-pkeyconfig.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\26100-pkeyconfig-downlevel.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\26100-pkeyconfig.xrm-ms.gz" />
+
     <None Include="ClassDiagram1.cd" />
     <None Include="pkeyConfig.xsd">
       <SubType>Designer</SubType>

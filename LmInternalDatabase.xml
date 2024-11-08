@@ -1,7 +1,74 @@
 <?xml version="1.0" encoding="Windows-1252"?>
+<!-- LmDatabase Explaination >
+<KmsData
+  Version="2.0"                                          // Version of the KmsData file, currently must be 2.0 (required),
+Author="Hotbird64"                                     // Enter your name here (required)
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  // Loads the xsi namespace (recommended for syntax checking in an XSD capable XML editor)
+xsi:noNamespaceSchemaLocation="KmsDataBase.xsd"        // relative or absolute path of the validation file
+>
+
+<WinBuild
+  BuildNumber="9200"                                      // Windows Build Number
+DisplayName="Windows 8 / Server 2012"                   // A display name for the build number
+PlatformId="5426"                                       // The "Platform ID" for this build number
+UseForEpid="true"                                       // Use this build number for EPid generation. Should be true only for RTM builds that can be Windows servers
+MayBeServer="true"                                      // Should be true for RTM builds that can be Windows servers
+UsesNDR64="true"                                        // Genuine KMS servers use NDR64 for this build
+/>
+
+<CsvlkItem
+  >
+	Id="2e7a9ad1-a849-4b56-babe-17d5a29fe4b4"                // SkuId of the CSVLK (required).
+	DisplayName="Windows Server 2019"                        // Friendly name that should be displayed instead of the Guid (required)
+	IsLab="false"                                            // This is a lab CSVLK that also activates retail Windows > 8 (default false)
+	IsPreview="false"                                        // This is a preview (beta, Non-RTM, etc.) CSVLK (default false)
+	GroupId="206"                                            // GroupId for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don´t have a pkeyconfig for this CSVLK
+	MinKeyId="551000000"                                     // Minimum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don´t have a pkeyconfig for this CSVLK
+	MaxKeyId="570999999"                                     // Maximum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don´t have a pkeyconfig for this CSVLK
+	VlmcsdIndex="0"                                          // Export this CsvlkItem with Index 0 to vlmcsd. (optional)
+	IniFileName="Windows"                                    // Name used in vlmcsd.ini to assign specific EPID (required for all CsvlkItems that have VlmcsdIndex=, optional for others)
+	EPid="03612-00206-568-381813-03-1033-14393.0000-2702018" // If you want a specific EPid, use this. Or omit it to generate a suitable default automatically.
+
+	<Activate
+	  KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148"       // List of KmsItems activated by the CSVLK. The KmsItem must be defined under <AppItem>
+		<KmsItem Id= "...">
+      />
+    
+
+</CsvlkItem>
+
+<AppItem                                                   // Application (Windows, Office 2010 or Office 2013+)
+Id="{55c92734-d682-4d71-983e-d6ec3f16059f}"              // Guid (required, braces are optional).
+DisplayName="Windows"                                    // Friendly name that should be displayed instead of the Guid (required)
+VlmcsdIndex="0"                                          // VlmcsdIndex of CsvlkItem to use if an unknown KmsItem activates with that AppItem (required)
+MinActiveClients="50"                                    // Minimum clients that this AppItem should maintain
+>
+
+<KmsItem                                                   // KmsItem aka KMS Counted Id
+Id="{e1c51358-fe3e-4203-a4a2-3b6b20c9734e}"              // Guid (required, braces are optional).
+DisplayName="Windows 10 (Retail)"                        // Friendly name that should be displayed instead of the Guid (required)
+IsRetail="true"                                          // Indicates that this is a retail product group that can't be activated with a genuine KMS server (optional, default false)
+IsPreview="false"                                        // Indicates that this a beta/preview product group that can't be activated with a genuine KMS server (optional, default false)
+DefaultKmsProtocol="6.0"                                 // Default KMS protocol version that the KMS client uses. Must be "4.0", "5.0" or "6.0" (optional, default 6.0)
+NCountPolicy="25"                                        // Minimum number of active clients required for the activation to succeed (optional, default 25, should be 25 for Windows clients and 5 otherwise)
+CanMapToDefaultCsvlk="true"                              // This KmsItem can be omitted in vlmcsd export because it maps to VlmcsdIndex 0 (optional, default true)
+>
+
+<SkuItem                                      // VOLUME_KMSCLIENT channel SKU ID (makes no sense to add other SKU IDs than VOLUME_KMSCLIENT channel
+Id="{58e97c99-f377-4ef1-81d5-4ad5522b5fd8}" // Guid (required, braces are optional).
+DisplayName="Windows 10 Home"               // Friendly name that should be displayed instead of the Guid (required)
+Gvlk="XXXXX-XXXXX-XXXXX-XXXXX-H8Q99"        // The GVLK key to enable this VOLUME_KMSCLIENT channel (optional, recommended, no default)
+IsGeneratedGvlk="false"                     // If true, indicates that this is a generated GVLK (optional, strongly recommended if a generated GVLK is used, default false)
+/>
+
+</KmsItem>
+</AppItem>
+</KmsData>
+-->
+
 <KmsData
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.0" Author="Hotbird64" xsi:noNamespaceSchemaLocation="KmsDataBase.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.0" Author="Hotbird64 + Shiroi Neko (TheFlightSims Labs)" xsi:noNamespaceSchemaLocation="KmsDataBase.xsd">
 	<WinBuilds>
 		<WinBuild BuildNumber="103" ReleaseDate="1992-04-06T00:00:00Z" DisplayName="Windows 3.1" PlatformId="55041" />
 		<WinBuild BuildNumber="300" ReleaseDate="1993-11-08T00:00:00Z" DisplayName="Windows for Workgroup 3.11" PlatformId="55041" />
@@ -19,25 +86,25 @@
 		<WinBuild BuildNumber="3000" ReleaseDate="2000-09-14T00:00:00Z" DisplayName="Windows ME" PlatformId="55041" />
 		<WinBuild BuildNumber="3790" ReleaseDate="2003-03-28T00:00:00Z" DisplayName="Windows Server 2003 / XP 64-bit" PlatformId="55041" MayBeServer="true" />
 		<WinBuild BuildNumber="5111" ReleaseDate="2001-10-25T00:00:00Z" DisplayName="Windows XP - Beta" PlatformId="55041" />
-		<WinBuild BuildNumber="6000" ReleaseDate="2006-11-30T00:00:00Z" DisplayName="Windows Vista / Server 2008 without SP" PlatformId="55041" MayBeServer="true" />
-		<WinBuild BuildNumber="6001" ReleaseDate="2008-02-04T00:00:00Z" DisplayName="Windows Vista / Server 2008 SP1" PlatformId="55041" MayBeServer="true" />
-		<WinBuild BuildNumber="6002" ReleaseDate="2009-05-26T00:00:00Z" DisplayName="Windows Vista / Server 2008 SP2" PlatformId="55041" MayBeServer="true" />
+		<WinBuild BuildNumber="6000" ReleaseDate="2006-11-30T00:00:00Z" DisplayName="Windows Vista/Windows Server 2008 without SP" PlatformId="55041" MayBeServer="true" />
+		<WinBuild BuildNumber="6001" ReleaseDate="2008-02-04T00:00:00Z" DisplayName="Windows Vista/Windows Server 2008 SP1" PlatformId="55041" MayBeServer="true" />
+		<WinBuild BuildNumber="6002" ReleaseDate="2009-05-26T00:00:00Z" DisplayName="Windows Vista/Windows Server 2008 SP2" PlatformId="55041" MayBeServer="true" />
 		<WinBuild BuildNumber="7224" ReleaseDate="2003-03-28T00:00:00Z" DisplayName="Windows Essential Business Server 2008 R2" PlatformId="55041" MayBeServer="true" />
-		<WinBuild BuildNumber="7600" ReleaseDate="2009-10-22T00:00:00Z" DisplayName="Windows 7 / Server 2008 R2 without SP" PlatformId="55041" MayBeServer="true" />
-		<WinBuild BuildNumber="7601" ReleaseDate="2011-02-22T00:00:00Z" DisplayName="Windows 7 / Server 2008 R2 SP1" PlatformId="55041" MayBeServer="true" />
-		<WinBuild BuildNumber="9200" ReleaseDate="2012-10-26T00:00:00Z" DisplayName="Windows 8 / Server 2012" PlatformId="5426" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="9600" ReleaseDate="2013-10-18T00:00:00Z" DisplayName="Windows 8.1 / Server 2012 R2" PlatformId="6401" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="10240" ReleaseDate="2015-07-29T00:00:00Z" DisplayName="Windows 10 1507" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="10586" ReleaseDate="2015-11-10T00:00:00Z" DisplayName="Windows 10 1511" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="14393" ReleaseDate="2016-08-02T00:00:00Z" DisplayName="Windows 10 1607 / Server 2016" PlatformId="3612" MayBeServer="true" UseForEpid="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="7600" ReleaseDate="2009-10-22T00:00:00Z" DisplayName="Windows 7/Windows Server 2008 R2 without SP" PlatformId="55041" MayBeServer="true" />
+		<WinBuild BuildNumber="7601" ReleaseDate="2011-02-22T00:00:00Z" DisplayName="Windows 7/Windows Server 2008 R2 SP1" PlatformId="55041" MayBeServer="true" />
+		<WinBuild BuildNumber="9200" ReleaseDate="2012-10-26T00:00:00Z" DisplayName="Windows 8/Windows Server 2012" PlatformId="5426" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="9600" ReleaseDate="2013-10-18T00:00:00Z" DisplayName="Windows 8.1/Windows Server 2012 R2" PlatformId="6401" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="10240" ReleaseDate="2015-07-29T00:00:00Z" DisplayName="Windows 10 1507/Windows Server 2012 R2 (Windows 10 based)" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="10586" ReleaseDate="2015-11-10T00:00:00Z" DisplayName="Windows 10 1511/Windows Server 2012 R2 (Windows 10 based)" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="14393" ReleaseDate="2016-08-02T00:00:00Z" DisplayName="Windows 10 1607/Windows Server 2016" PlatformId="3612" MayBeServer="true" UseForEpid="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="15063" ReleaseDate="2017-04-05T00:00:00Z" DisplayName="Windows 10 1703" PlatformId="3612" UsesNDR64="true" />
-		<WinBuild BuildNumber="16299" ReleaseDate="2017-10-17T00:00:00Z" DisplayName="Windows 10 1709" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="17134" ReleaseDate="2018-04-30T00:00:00Z" DisplayName="Windows 10 1803" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="17763" ReleaseDate="2018-10-02T00:00:00Z" DisplayName="Windows 10 1809 / Server 2019" PlatformId="3612" MayBeServer="true" UseForEpid="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="18362" ReleaseDate="2019-03-20T00:00:00Z" DisplayName="Windows 10 1903" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="18363" ReleaseDate="2019-11-12T00:00:00Z" DisplayName="Windows 10 1909" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="19041" ReleaseDate="2020-03-22T00:00:00Z" DisplayName="Windows 10 2004" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="19042" ReleaseDate="2020-09-22T00:00:00Z" DisplayName="Windows 10 20H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="16299" ReleaseDate="2017-10-17T00:00:00Z" DisplayName="Windows 10 1709/Windows Server 1709 Semi-Annual Channel" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="17134" ReleaseDate="2018-04-30T00:00:00Z" DisplayName="Windows 10 1803/Windows Server 1803 Semi-Annual Channel" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="17763" ReleaseDate="2018-10-02T00:00:00Z" DisplayName="Windows 10 1809/Windows Server 2019/Windows Server 1809 Semi-Annual Channel" PlatformId="3612" MayBeServer="true" UseForEpid="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="18362" ReleaseDate="2019-03-20T00:00:00Z" DisplayName="Windows 10 1903/Windows Server 1903 Semi-Annual Channel" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="18363" ReleaseDate="2019-11-12T00:00:00Z" DisplayName="Windows 10 1909/Windows Server 1909 Semi-Annual Channel" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="19041" ReleaseDate="2020-03-22T00:00:00Z" DisplayName="Windows 10 2004/Windows Server 2004 Semi-Annual Channel" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="19042" ReleaseDate="2020-09-22T00:00:00Z" DisplayName="Windows 10 20H2/Windows Server 20H2 Semi-Annual Channel" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="19043" ReleaseDate="2021-04-08T00:00:00Z" DisplayName="Windows 10 21H1" PlatformId="3612" UsesNDR64="true" />
 		<WinBuild BuildNumber="19044" ReleaseDate="2021-11-16T00:00:00Z" DisplayName="Windows 10 21H2" PlatformId="3612" UsesNDR64="true" />
 		<WinBuild BuildNumber="20348" ReleaseDate="2021-08-18T00:00:00Z" DisplayName="Windows Server 2022" PlatformId="3612" MayBeServer="true" UseForEpid="true" UsesNDR64="true" />
@@ -46,10 +113,9 @@
 		<WinBuild BuildNumber="22610" ReleaseDate="2022-09-21T00:00:00Z" DisplayName="Windows 11 22H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="22621" ReleaseDate="2022-09-21T00:00:00Z" DisplayName="Windows 11 22H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="22631" ReleaseDate="2023-09-21T00:00:00Z" DisplayName="Windows 11 23H2" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="25247" ReleaseDate="2022-12-01T00:00:00Z" DisplayName="Windows 11 22H2 Preview" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="25252" ReleaseDate="2022-12-01T19:08:21Z" DisplayName="Windows Server 2022 (22H2) vNext" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="25246" ReleaseDate="2022-12-01T19:08:21Z" DisplayName="Windows Server 2022 (22H2) vNext" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
-		<WinBuild BuildNumber="26040" ReleaseDate="2024-01-26T11:10:00Z" DisplayName="Windows Server 2025 (23H2) vNext" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="25246" ReleaseDate="2023-12-01T19:08:21Z" DisplayName="Windows Server 2022 (23H2) vNext" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
+		<WinBuild BuildNumber="26100" ReleaseDate="2024-01-26T11:10:00Z" DisplayName="Windows 11 24H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 	</WinBuilds>
 	<CsvlkItems>
 		<CsvlkItem DisplayName="Windows Server 2022" VlmcsdIndex="0" GroupId="4573" MinKeyId="30000" MaxKeyId="20029999" IniFileName="Windows" ReleaseDate="2021-08-18T00:00:00Z" EPid="03612-04573-018-246887-03-1033-20348.0000-1862021" Id="661f7658-7035-4b4c-9f35-010682943ec2">
@@ -447,6 +513,9 @@
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
 			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
 		</CsvlkItem>
+		<CsvlkItem DisplayName="Office 2024" VlmcsdIndex="6" GroupId="206" MinKeyId="571000000" MaxKeyId="590999999" IniFileName="Office2024" ReleaseDate="2024-10-01T00:00:00Z" EPid="03612-05024-000-000000-03-1033-26100.0000-2962024" Id="f3d89bbf-c0ec-47ce-a8fa-e5a5f97e447f">
+			<Activate KmsItem="a8973cb5-bf03-0a4c-9cef-703099645ab3" />
+		</CsvlkItem>
 		<CsvlkItem DisplayName="Office 2021" VlmcsdIndex="6" GroupId="206" MinKeyId="571000000" MaxKeyId="590999999" IniFileName="Office2021" ReleaseDate="2021-09-16T00:00:00Z" EPid="03612-00206-586-025264-03-1033-20348.0000-2902021" Id="47f3b983-7c53-4d45-abc6-bcd91e2dd90a">
 			<Activate KmsItem="86d50b16-4808-41af-b83b-b338274318b2" />
 		</CsvlkItem>
@@ -531,9 +600,6 @@
 				<SkuItem DisplayName="Windows 10 Enterprise LTSC 2019" Id="32d2fab3-e4a8-42c2-923b-4bf4fd13e6ee" Gvlk="M7XTQ-FN8P6-TTKYV-9D4CC-J462D" />
 				<SkuItem DisplayName="Windows 10 Enterprise LTSC 2019 N" Id="7103a333-b8c8-49cc-93ce-d37c09687f92" Gvlk="92NFX-8DJQP-P6BBQ-THF9C-7CG2H" />
 			</KmsItem>
-			<KmsItem DisplayName="Windows Multisession Server (Volume, non-server editions)" Id="cbdcb1ba-e093-4c81-a463-10775291fdf9" IsPreview="false" DefaultKmsProtocol="6.0">
-				<SkuItem DisplayName="Windows 10/11 Remote Server" Id="e4db50ea-bda1-4566-b047-0ca50abc6f07" Gvlk="7NBT4-WGBQX-MP4H7-QXFF8-YP3KX" />
-			</KmsItem>
 			<KmsItem DisplayName="Windows 10 China Government" Id="7ba0bf23-d0f5-4072-91d9-d55af5a481b6" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0">
 				<SkuItem DisplayName="Windows 10 Enterprise G" Id="e0b2d383-d112-413f-8a80-97f373a5820c" Gvlk="YYVX9-NTFWV-6MDM3-9PT4T-4M68B" />
 				<SkuItem DisplayName="Windows 10 Enterprise GN" Id="e38454fb-41a4-4f59-a5dc-25080e354730" Gvlk="44RPN-FTY23-9VTTB-MP9BX-T84FV" />
@@ -549,6 +615,7 @@
 				<SkuItem DisplayName="Windows 10/11 Home Single Language" Id="cd918a57-a41b-4c82-8dce-1a538e221a83" Gvlk="7HNRX-D7KGG-3K4RQ-4WPJ4-YTDFH" />
 			</KmsItem>
 			<KmsItem DisplayName="Windows 10/11 (Volume)" Id="58e2134f-8e11-4d17-9cb2-91069c151148" IsPreview="false" DefaultKmsProtocol="6.0">
+				<SkuItem DisplayName="Windows 10/11 Remote Server" Id="e4db50ea-bda1-4566-b047-0ca50abc6f07" Gvlk="7NBT4-WGBQX-MP4H7-QXFF8-YP3KX" />
 				<SkuItem DisplayName="Windows 10/11 Education" Id="e0c42288-980c-4788-a014-c080d2e1926e" Gvlk="NW6C2-QMPVW-D7KKK-3GKT6-VCFB2" />
 				<SkuItem DisplayName="Windows 10/11 Education N" Id="3c102355-d027-42c6-ad23-2e7ef8a02585" Gvlk="2WH4N-8QGBV-H22JP-CT43Q-MDWWJ" />
 				<SkuItem DisplayName="Windows 10/11 Enterprise" Id="73111121-5638-40f6-bc11-f1d7b0d64300" Gvlk="NPPR9-FWDCX-D2C8J-H872K-2YT43" />
@@ -609,10 +676,8 @@
 				<SkuItem DisplayName="Windows Server 2012 R2 Essentials" Id="21db6ba4-9a7b-4a14-9e29-64a60c59301d" Gvlk="KNC87-3J2TX-XB4WP-VCPJV-M4FWM" />
 				<SkuItem DisplayName="Windows Server 2012 R2 Standard" Id="b3ca044e-a358-4d68-9883-aaa2941aca99" Gvlk="D2N9P-3P6X9-2R39C-7RTCD-MDVJX" />
 			</KmsItem>
-			<KmsItem DisplayName="Windows Server Preview" Id="6d5f5270-31ac-433e-b90a-39892923c657" IsPreview="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
-				<SkuItem DisplayName="Windows Server 2016 Datacenter Preview" Id="ba947c44-d19d-4786-b6ae-22770bc94c54" Gvlk="VRDD2-NVGDP-K7QG8-69BR4-TVFHB" />
-			</KmsItem>
 			<KmsItem DisplayName="Windows Server 2016" Id="6e9fc069-257d-4bc4-b4a7-750514d32743" IsPreview="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Windows Server 2016 Datacenter Preview" Id="ba947c44-d19d-4786-b6ae-22770bc94c54" Gvlk="VRDD2-NVGDP-K7QG8-69BR4-TVFHB" />
 				<SkuItem DisplayName="Windows Server 2016 Azure Core" Id="3dbf341b-5f6c-4fa7-b936-699dce9e263f" Gvlk="VP34G-4NPPG-79JTQ-864T4-R3MQX" />
 				<SkuItem DisplayName="Windows Server 2016 Cloud Storage" Id="7b4433f4-b1e7-4788-895a-c45378d38253" Gvlk="QN4C6-GBJD2-FB422-GHWJK-GJG2R" />
 				<SkuItem DisplayName="Windows Server 2016 Datacenter" Id="21c56779-b449-4d20-adfc-eece0e1ad74b" Gvlk="CB7KF-BWN84-R7R2Y-793K2-8XDDG" />
@@ -638,6 +703,11 @@
 				<SkuItem DisplayName="Windows Server 2022 Standard" Id="9bd77860-9b31-4b7b-96ad-2564017315bf" Gvlk="VDYBN-27WPP-V4HQT-9VMD4-VMK7H" />
 				<SkuItem DisplayName="Windows Server 2021 Datacenter (Semi-Annual Channel)" Id="39e69c41-42b4-4a0a-abad-8e3c10a797cc" Gvlk="QFND9-D3Y9C-J3KKY-6RPVP-2DPYV" />
 				<SkuItem DisplayName="Windows Server 2021 Standard (Semi-Annual Channel)" Id="f5e9429c-f50b-4b98-b15c-ef92eb5cff39" Gvlk="67KN8-4FYJW-2487Q-MQ2J7-4C4RG" />
+			</KmsItem>
+			<KmsItem DisplayName="Windows Server 2025" Id="7da35c8b-bd8b-4190-aa8f-62c243c55321" IsPreview="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Windows Server 2025 Standard" Id="7dc26449-db21-4e09-ba37-28f2958506a6" Gvlk="TVRH6-WHNXV-R9WG3-9XRFY-MY832"/>
+				<SkuItem DisplayName="Windows Server 2025 Datacenter" Id="c052f164-cdf6-409a-a0cb-853ba0f0f55a" Gvlk="D764K-2NDRG-47T6Q-P8T8W-YP6DF"/>
+				<SkuItem DisplayName="Windows Server 2025 Datacenter: Azure Edition" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="XGN3F-F394H-FD2MY-PP6FD-8MCRC"/>
 			</KmsItem>
 		</AppItem>
 		<AppItem DisplayName="Office" VlmcsdIndex="2" Id="59a52881-a989-479d-af46-f275c6370663" MinActiveClients="10">
@@ -704,11 +774,11 @@
 				<SkuItem DisplayName="Office Visio Standard 2013 (Pre-Release)" Id="7012cc81-8887-42e9-b17d-4e5e42760f0d" Gvlk="9MKNF-J9XQ6-JV4XB-FJQPY-43F43" />
 				<SkuItem DisplayName="Office Word 2013 (Pre-Release)" Id="de9c7eb6-5a85-420d-9703-fff11bdd4d43" Gvlk="JBGD4-3JNG7-JWWGV-CR6TP-DC62Q" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2016 (Volume, bundled)" Id="661f2993-f126-401e-b6ea-d402e2cfb082" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2016 (Volume, bundled)" Id="661f2993-f126-401e-b6ea-d402e2cfb082" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Standard 2016" Id="dedfa23d-6ed1-45a6-85dc-63cae0546de6" Gvlk="JNRGM-WHDWX-FJJG3-K47QV-DRTFM" />
 				<SkuItem DisplayName="Office Professional Plus 2016" Id="d450596f-894d-49e0-966a-fd39ed4c4c64" Gvlk="XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2016 (Volume, standalone)" Id="b21662c8-c68b-47c3-9d17-5e44caca0f49" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2016 (Volume, standalone)" Id="b21662c8-c68b-47c3-9d17-5e44caca0f49" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access 2016" Id="67c0fc0c-deba-401b-bf8b-9c8ad8395804" Gvlk="GNH9Y-D2J4T-FJHGG-QRVH7-QPFDW" />
 				<SkuItem DisplayName="Office Excel 2016" Id="c3e65d36-141f-4d2f-a303-a842ee756a29" Gvlk="9C2PK-NWTVB-JMPW8-BFT28-7FTBF" />
 				<SkuItem DisplayName="Office Mondo 2016" Id="9caabccb-61b1-4b4b-8bec-d10a3c3ac2ce" Gvlk="HFTND-W9MK4-8B7MJ-B6C4G-XQBR2" />
@@ -728,18 +798,18 @@
 				<SkuItem DisplayName="Office Visio Standard 2016 C2R" Id="361fe620-64f4-41b5-ba77-84f8e079b1f7" Gvlk="NY48V-PPYYH-3F4PX-XJRKJ-W4423" />
 				<SkuItem DisplayName="Office Word 2016" Id="bb11badf-d8aa-470e-9311-20eaf80fe5cc" Gvlk="WXY84-JN2Q9-RBCCQ-3Q3J3-3PFJ6" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Preview, Volume, bundled)" Id="448410fa-5396-44c0-93cb-5a104d81e010" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2019 (Preview, Volume, bundled)" Id="448410fa-5396-44c0-93cb-5a104d81e010" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Professional Plus 2019 C2R Preview" Id="0bc88885-718c-491d-921f-6f214349e79c" Gvlk="VQ9DP-NVHPH-T9HJC-J9PDT-KTQRG" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Preview, Volume, standalone)" Id="616ad227-66d0-4705-aa92-58b40b90f77c" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2019 (Preview, Volume, standalone)" Id="616ad227-66d0-4705-aa92-58b40b90f77c" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Project Pro 2019 C2R Preview" Id="fc7c4d0c-2e85-4bb9-afd4-01ed1476b5e9" Gvlk="XM2V9-DN9HH-QB449-XDGKC-W2RMW" />
 				<SkuItem DisplayName="Office Visio Pro 2019 C2R Preview" Id="500f6619-ef93-4b75-bcb4-82819998a3ca" Gvlk="N2CG9-YD3YK-936X4-3WR82-Q3X4H" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Volume, bundled)" Id="753e6a4c-1fab-4b79-a818-031cf4a93df0" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2019 (Volume, bundled)" Id="753e6a4c-1fab-4b79-a818-031cf4a93df0" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Standard 2019" Id="6912a74b-a5fb-401a-bfdb-2e3ab46f4b02" Gvlk="6NWWJ-YQWMR-QKGCB-6TMB3-9D9HK" />
 				<SkuItem DisplayName="Office Professional Plus 2019" Id="85dd8b5f-eaa4-4af3-a628-cce9e77c9a03" Gvlk="NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2019 (Volume, standalone)" Id="de64f50d-b364-44d0-8cb3-695260f34a8a" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2019 (Volume, standalone)" Id="de64f50d-b364-44d0-8cb3-695260f34a8a" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access 2019" Id="9e9bceeb-e736-4f26-88de-763f87dcc485" Gvlk="9N9PT-27V4Y-VJ2PD-YXFMF-YTFQT" />
 				<SkuItem DisplayName="Office Excel 2019" Id="237854e9-79fc-4497-a0c1-a70969691c6b" Gvlk="TMJWT-YYNMB-3BKTF-644FC-RVXBD" />
 				<SkuItem DisplayName="Office Outlook 2019" Id="c8f8a301-19f5-4132-96ce-2de9d4adbd33" Gvlk="7HD7K-N4PVK-BHBCQ-YWQRW-XW4VK" />
@@ -752,11 +822,11 @@
 				<SkuItem DisplayName="Office Visio Standard 2019" Id="e06d7df3-aad0-419d-8dfb-0ac37e2bdf39" Gvlk="7TQNQ-K3YQQ-3PFH7-CCPPM-X4VQ2" />
 				<SkuItem DisplayName="Office Word 2019" Id="059834fe-a8ea-4bff-b67b-4d006b5447d3" Gvlk="PBX3G-NWMT6-Q7XBW-PYJGG-WXD33" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2021 (Volume, bundled)" Id="5ed793cb-27a6-44c6-be48-84fcebc0fe44" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
-				<SkuItem DisplayName="Office LTSC Professional Plus 2021" Id="fbdb3e18-a8ef-4fb3-9183-dffd60bd0984" Gvlk="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH" />
-				<SkuItem DisplayName="Office LTSC Standard 2021" Id="080a45c5-9f9f-49eb-b4b0-c3c610a5ebd3" Gvlk="KDX7X-BNVR8-TXXGX-4Q7Y8-78VT3" />
+			<KmsItem DisplayName="Office 2021 (Volume, bundled)" Id="5ed793cb-27a6-44c6-be48-84fcebc0fe44" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Microsoft Office LTSC Professional Plus 2021" Id="fbdb3e18-a8ef-4fb3-9183-dffd60bd0984" Gvlk="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH" />
+				<SkuItem DisplayName="Microsoft Office LTSC Standard 2021" Id="080a45c5-9f9f-49eb-b4b0-c3c610a5ebd3" Gvlk="KDX7X-BNVR8-TXXGX-4Q7Y8-78VT3" />
 			</KmsItem>
-			<KmsItem DisplayName="Office 2021 (Volume, standalone)" Id="1dcf7b9e-654a-4d5d-922a-175c1fc487b3" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="4.0" NCountPolicy="5">
+			<KmsItem DisplayName="Office 2021 (Volume, standalone)" Id="1dcf7b9e-654a-4d5d-922a-175c1fc487b3" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
 				<SkuItem DisplayName="Office Access LTSC 2021" Id="1fe429d8-3fa7-4a39-b6f0-03dded42fe14" Gvlk="WM8YG-YNGDD-4JHDC-PG3F4-FC4T4" />
 				<SkuItem DisplayName="Office Excel LTSC 2021" Id="ea71effc-69f1-4925-9991-2f5e319bbc24" Gvlk="NWG3X-87C9K-TC7YY-BC2G7-G6RVC" />
 				<SkuItem DisplayName="Office Outlook LTSC 2021" Id="a5799e4c-f83c-4c6e-9516-dfe9b696150b" Gvlk="C9FM6-3N72F-HFJXB-TM3V9-T86R9" />
@@ -768,6 +838,27 @@
 				<SkuItem DisplayName="Office Visio LTSC Pro 2021" Id="fb61ac9a-1688-45d2-8f6b-0674dbffa33c" Gvlk="KNH8D-FGHT4-T8RK3-CTDYJ-K2HT4" />
 				<SkuItem DisplayName="Office Visio LTSC Standard 2021" Id="72fce797-1884-48dd-a860-b2f6a5efd3ca" Gvlk="MJVNY-BYWPY-CWV6J-2RKRT-4M8QG" />
 				<SkuItem DisplayName="Office Word LTSC 2021" Id="abe28aea-625a-43b1-8e30-225eb8fbd9e5" Gvlk="TN8H9-M34D3-Y64V9-TR72V-X79KV" />
+			</KmsItem>
+			<KmsItem DisplayName="Office 2024 Preview (Volume)" Id="e0ddb267-5757-4d2c-9903-82127cbc082d" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Office LTSC Professional Plus 2024 Preview" Id="fceda083-1203-402a-8ec4-3d7ed9f3648c" Gvlk="2TDPW-NDQ7G-FMG99-DXQ7M-TX3T2" />
+				<SkuItem DisplayName="Office Project Pro LTSC 2024 Preview" Id="aaea0dc8-78e1-4343-9f25-b69b83dd1bce" Gvlk="D9GTG-NP7DV-T6JP3-B6B62-JB89R" />
+				<SkuItem DisplayName="Office Visio LTSC Pro 2024 Preview" Id="4ab4d849-aabc-43fb-87ee-3aed02518891" Gvlk="YW66X-NH62M-G6YFP-B7KCT-WXGKQ" />
+			</KmsItem>
+			<KmsItem DisplayName="Office 2024 (Volume, bundled)" Id="509b80a1-3d70-4da0-b6f9-022a9e93c174" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Office LTSC Professional Plus 2024" Id="8d368fc1-9470-4be2-8d66-90e836cbb051" Gvlk="XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB" />
+				<SkuItem DisplayName="Office LTSC Standard 2024" Id="bbac904f-6a7e-418a-bb4b-24c85da06187" Gvlk="V28N4-JG22K-W66P8-VTMGK-H6HGR" />
+			</KmsItem>
+			<KmsItem DisplayName="Office 2024 (Volume, standalone)" Id="151e3a4a-4be9-4537-a75a-c8da2412c48a" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Office Access LTSC 2024" Id="72e9faa7-ead1-4f3d-9f6e-3abc090a81d7" Gvlk="82FTR-NCHR7-W3944-MGRHM-JMCWD"/>
+				<SkuItem DisplayName="Office Excel LTSC 2024" Id="cbbba2c3-0ff5-4558-846a-043ef9d78559" Gvlk="F4DYN-89BP2-WQTWJ-GR8YC-CKGJG"/>
+				<SkuItem DisplayName="Office Outlook LTSC 2024" Id="bef3152a-8a04-40f2-a065-340c3f23516d" Gvlk="D2F8D-N3Q3B-J28PV-X27HD-RJWB9"/>
+				<SkuItem DisplayName="Office PowerPoint LTSC 2024" Id="b63626a4-5f05-4ced-9639-31ba730a127e" Gvlk="CW94N-K6GJH-9CTXY-MG2VC-FYCWP"/>
+				<SkuItem DisplayName="Office Project Pro LTSC 2024" Id="f510af75-8ab7-4426-a236-1bfb95c34ff8" Gvlk="FQQ23-N4YCY-73HQ3-FM9WC-76HF4"/>
+				<SkuItem DisplayName="Office Project Standard LTSC 2024" Id="9f144f27-2ac5-40b9-899d-898c2b8b4f81" Gvlk="PD3TT-NTHQQ-VC7CY-MFXK3-G87F8"/>
+				<SkuItem DisplayName="Office Skype for Business LTSC 2024" Id="0002290a-2091-4324-9e53-3cfe28884cde" Gvlk="4NKHF-9HBQF-Q3B6C-7YV34-F64P3"/>
+				<SkuItem DisplayName="Office Visio LTSC Pro 2024" Id="fa187091-8246-47b1-964f-80a0b1e5d69a" Gvlk="B7TN8-FJ8V3-7QYCP-HQPMV-YY89G"/>
+				<SkuItem DisplayName="Office Visio LTSC Standard 2024" Id="923fa470-aa71-4b8b-b35c-36b79bf9f44b" Gvlk="JMMVY-XFNQC-KK4HK-9H7R3-WQQTV"/>
+				<SkuItem DisplayName="Offce Word LTSC 2024" Id="d0eded01-0881-4b37-9738-190400095098" Gvlk="MQ84N-7VYDM-FXV7C-6K7CC-VFW9J"/>
 			</KmsItem>
 		</AppItem>
 	</AppItems>
