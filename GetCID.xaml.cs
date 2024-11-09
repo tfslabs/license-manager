@@ -1,14 +1,53 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using HGM.Hotbird64.LicenseManager.Contracts;
+using HGM.Hotbird64.LicenseManager.Controls;
+using HGM.Hotbird64.LicenseManager.Extensions;
+using HGM.Hotbird64.LicenseManager.Model;
+using HGM.Hotbird64.Vlmcs;
 
 namespace HGM.Hotbird64.LicenseManager
 {
-    public partial class GetCID : Window
+    public partial class GetCID : IHaveNotifyOfPropertyChange
     {
         internal LicenseMachine Machine;
+        public bool IsClosed { get; private set; }
+        public static ProductKeyConfiguration PKeyConfig => ProductBrowser.PKeyConfig;
+        public static IList<PKeyConfigFile> PKeyConfigFiles => ProductBrowser.PKeyConfigFiles;
+        public static ISet<ProductKeyConfigurationConfigurationsConfiguration> KeyConfigs => ((ProductKeyConfigurationConfigurations)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationConfigurations)).Configuration;
+        public static ISet<ProductKeyConfigurationPublicKeysPublicKey> PublicKeys => ((ProductKeyConfigurationPublicKeys)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationPublicKeys)).PublicKey;
+        public static ISet<ProductKeyConfigurationKeyRangesKeyRange> KeyRanges => ((ProductKeyConfigurationKeyRanges)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationKeyRanges)).KeyRange;
+        public static IList<ProductKeyConfigurationConfigurationsConfiguration> CsvlkConfigs;
+        public static IList<ProductKeyConfigurationKeyRangesKeyRange> CsvlkRanges;
+        public static IKmsProductCollection<SkuItem> ProductList => KmsLists.SkuItemList;
+        public static IKmsProductCollection<AppItem> ApplicationList => KmsLists.AppItemList;
+        public static IKmsProductCollection<KmsItem> KmsProductList => KmsLists.KmsItemList;
+        public static RoutedUICommand CheckEpid, AutoSizeWindow;
+        public static InputGestureCollection CtrlE = new InputGestureCollection();
+        public static InputGestureCollection CtrlW = new InputGestureCollection();
+        public static CultureInfo OsSystemLocale;
+
+        static GetCID()
+        {
+            CsvlkConfigs = KeyConfigs.Where(c => c.ProductKeyType == "Volume:CSVLK").ToList();
+            IEnumerable<KmsGuid> csvlkConfigIds = CsvlkConfigs.Select(c => c.ActConfigGuid);
+            CsvlkRanges = KeyRanges.Where(r => csvlkConfigIds.Contains(r.RefActConfigGuid)).ToList();
+            CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
+            CtrlW.Add(new KeyGesture(Key.W, ModifierKeys.Control));
+            CheckEpid = new RoutedUICommand("Get Info", nameof(CheckEpid), typeof(ScalableWindow), CtrlE);
+            AutoSizeWindow = new RoutedUICommand("Auto Size Window", nameof(AutoSizeWindow), typeof(ScalableWindow), CtrlW);
+        }
 
         public GetCID()
         {
@@ -22,52 +61,48 @@ namespace HGM.Hotbird64.LicenseManager
                     MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
             }
-        }
 
-        private static void OpenUrlContributor(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            Loaded += (s, e) =>
             {
-                FileName = "https://github.com/anhvlt-2k6",
-                UseShellExecute = true
-            });
+                License.PropertyChanged += License_PropertyChanged;
+            };
+
+            Unloaded += (s, e) =>
+            {
+                License.PropertyChanged -= License_PropertyChanged;
+            };
         }
 
         private static bool CheckConnection()
         {
-            bool isInternetTrouble = true;
-            string[] GetCIDTargets =
-{
-                "http://www.microsoft.com/BatchActivationService/BatchActivate",
-                "https://activation.sls.microsoft.com/BatchActivation/BatchActivation.asmx",
-                "http://schemas.xmlsoap.org/soap/envelope/",
-                "http://www.microsoft.com/BatchActivationService",
-                "http://www.microsoft.com/DRM/SL/BatchActivationRequest/1.0",
-                "http://www.microsoft.com/DRM/SL/BatchActivationResponse/1.0"
-            };
-
-            foreach (var Target in GetCIDTargets)
+            bool isInternetTrouble = false;
+            string[] GetCIDTargets = { "www.microsoft.com", "activation.sls.microsoft.com" };
+            foreach (var target in GetCIDTargets)
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Target);
-                    request.Method = "HEAD";
-                    request.Timeout = 1000;
-
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    IPHostEntry hostEntry = Dns.GetHostEntry(target);
+                    if (hostEntry.AddressList.Length > 0)
                     {
-                        isInternetTrouble |= response.StatusCode == HttpStatusCode.OK;
+                        using (var ping = new Ping())
+                        {
+                            var reply = ping.Send(hostEntry.AddressList[0]);
+                            if (reply.Status == IPStatus.Success)
+                            {
+                                isInternetTrouble = true;
+                                break;
+                            }
+                        }
                     }
                 }
                 catch
                 {
-                    isInternetTrouble &= false;
+                    isInternetTrouble = false;
                 }
             }
 
             return isInternetTrouble;
         }
-
 
         internal bool IsProgressBarRunning
         {
@@ -79,21 +114,22 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        private void ProductList(object sender, RoutedEventArgs e) { }
+        private void Button_GetCID_Clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         public bool ControlsEnabled
         {
             set => EpidBox.IsEnabled =
-                     ActStatus.IsEnabled =
-                        ProductListComboxBox.IsEnabled =
+                     TextBoxLicenseStatusReason.IsEnabled =
+                        ComboBoxProductId.IsEnabled =
                             PhoneInstallationIdBox.IsEnabled = value;
         }
 
-
-        private async void GetCID_Loaded(object sender, RoutedEventArgs e)
+        private async Task Refresh()
         {
             ControlsEnabled = false;
-            TextBoxInfoText.Text = string.Empty;
             try
             {
                 try
@@ -102,10 +138,11 @@ namespace HGM.Hotbird64.LicenseManager
                     await Task.Run(() =>
                     {
                         Machine.RefreshLicenses();
-                        Machine.GetSystemInfo();
                     });
 
+                    FillLicenseComboBox();
                     IsProgressBarRunning = false;
+                    GetCIDLabelStatus.Text = "Ready";
                 }
                 catch (Exception ex)
                 {
@@ -113,8 +150,6 @@ namespace HGM.Hotbird64.LicenseManager
                     IsProgressBarRunning = false;
                     MessageBox.Show(this, ex.Message, "Error getting License information", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                GetCIDLabelStatus.Text = "Ready";
             }
             finally
             {
@@ -122,18 +157,115 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
+        private async void GetCID_Loaded(object sender, RoutedEventArgs e)
+        {
+            await Task.Run(() => Machine = new LicenseMachine());
+            OsSystemLocale = (Machine?.SysInfo?.OsInfo.Locale != null) ? Machine.SysInfo.OsInfo.Locale : OsSystemLocale;
+            GetCIDLabelStatus.Text = "Gathering Data...";
+            await Refresh();
+        }
+
+
+
         private void SelectedProductChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ProductListComboxBox.SelectedIndex < 0)
+#if DEBUG
+            GetCIDLabelStatus.Text = "Fetching...";
+#endif
+            if (ComboBoxProductId.SelectedIndex < 0)
             {
                 return;
             }
 
-            LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ProductListComboxBox.SelectedIndex];
+            LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ComboBoxProductId.SelectedIndex];
 
             WmiProperty w = new WmiProperty("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
+            w.DisplayPropertyAsLicenseStatus(new Control[] { TextBoxLicenseStatusReason }, TextBoxLicenseStatusReason);
 
-            w.DisplayPropertyAsLicenseStatus(new Control[] { ActStatus }, ActStatus);
+            GetCIDLabelStatus.Text = "Ready";
         }
+
+        private LicenseModel license = new LicenseModel();
+        public LicenseModel License
+        {
+            get => license;
+            set => this.SetProperty(ref license, value);
+        }
+
+        private void FillLicenseComboBox()
+        {
+            bool foundItem = false;
+            int index = 0;
+
+            ComboBoxProductId.Items.Clear();
+
+            foreach (LicenseMachine.ProductLicense l in Machine.ProductLicenseList)
+            {
+                string description = l.License["Description"].ToString();
+                string name = l.License["Name"].ToString();
+                ComboBoxProductId.Items.Add
+                (
+                  description.Substring(0, Math.Min(100, description.Length)) +
+                  ": " +
+                  name.Substring(0, Math.Min(100, name.Length))
+                );
+                index++;
+            }
+
+            if (!foundItem)
+            {
+                ComboBoxProductId.SelectedIndex = 0;
+            }
+        }
+
+        private void License_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyOfPropertyChange(nameof(License));
+        }
+
+        private int selectedProductIndex = -1;
+        public int SelectedProductIndex
+        {
+            get => selectedProductIndex;
+            set => this.SetProperty(ref selectedProductIndex, value, postAction: () =>
+            {
+                try
+                {
+                    License.LicenseProvider = Machine.LicenseProvidersList[Machine.ProductLicenseList[value].ServiceIndex];
+                    License.SelectedLicense = Machine.ProductLicenseList[value];
+                }
+                catch (Exception)
+                {
+                    //ignored because of the useless of that
+                }
+            });
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            string text = (sender as WmiPropertyBox)?.Box.Text;
+
+            if (text == null || (!Regex.IsMatch(text, PidGen.EpidPattern) && !Regex.IsMatch(text, App.GuidPattern)))
+            {
+                return;
+            }
+
+            e.CanExecute = true;
+        }
+
+        /*
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ProductBrowser productBrowser = new ProductBrowser(this, ((WmiPropertyBox)sender).Box.Text) { Icon = this.GenerateImage(new Icons.QueryKey(), 16, 16) };
+            productBrowser.Show();
+        }*/
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) { }
     }
 }

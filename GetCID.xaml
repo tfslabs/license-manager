@@ -7,49 +7,49 @@
 	xmlns:ctrls="clr-namespace:HGM.Hotbird64.LicenseManager.Controls"
 	xmlns:co="clr-namespace:HGM.Hotbird64.LicenseManager.WPF.Converters"
 	xmlns:local="clr-namespace:HGM.Hotbird64.LicenseManager"
+    xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     mc:Ignorable="d"  
     Loaded="GetCID_Loaded"
     Title="Get Confirmation ID (Online)"
-    Height="450"
-    Width="550">
-    <Grid>
+    Height="480"
+    Width="580"
+    d:DataContext="{d:DesignInstance Type=local:GetCID, IsDesignTimeCreatable=True}"
+    DataContext="{Binding RelativeSource={RelativeSource 'Self'}}"
+    ResizeMode="NoResize" Focusable="False" SizeToContent="WidthAndHeight">
+    <Grid Width="550" Height="434" HorizontalAlignment="Center" VerticalAlignment="Center">
         <ComboBox
-            x:Name="ProductListComboxBox"
+            x:Name="ComboBoxProductId"
             Margin="10,5,10,405"
             IsReadOnly="True"
-            SelectedIndex="{Binding ProductListComboxBox}"
+            SelectedIndex="{Binding SelectedProductIndex}"
             SelectionChanged="SelectedProductChanged"
             Width="530"
-            RenderTransformOrigin="0.504,-3.026" />
-        <Grid HorizontalAlignment="Center" Margin="0,35,0,373" Width="530">
-            <Label Visibility="{Binding Visibility, ElementName=PhoneInstallationIdBox}" HorizontalAlignment="Left" Content="Phone IID" />
+            RenderTransformOrigin="0.504,-3.026" Height="24" />
+        <Grid Margin="10,34,10,374" Width="530" Height="26">
+            <Label Visibility="{Binding Visibility, ElementName=PhoneInstallationIdBox}" HorizontalAlignment="Left" Content="Phone IID" Width="62" Height="26" />
             <ctrls:WmiPropertyBox
                 x:Name="PhoneInstallationIdBox"
                 Converter="{co:WmiPhoneInstallationId}"
                 PropertyName="OfflineInstallationId"
                 Margin="100,0,0,0"
-                WmiProperty="{Binding License}">
-                <ctrls:WmiPropertyBox.CommandBindings>
-                    <CommandBinding
-                                        CanExecute="CommandBinding_CanExecute"
-                                        Command="{x:Static local:MainWindow.CheckEpid}"
-                                        Executed="CommandBinding_Executed" />
-                </ctrls:WmiPropertyBox.CommandBindings>
-            </ctrls:WmiPropertyBox>
+                WmiProperty="{Binding License}" Width="430" Height="18" />
         </Grid>
-        <Grid HorizontalAlignment="Center" Margin="0,66,0,342" Width="530">
-            <Label Visibility="{Binding Visibility, ElementName=EpidBox}" HorizontalAlignment="Left" Content="Extended PID" />
+        <Grid HorizontalAlignment="Center" Margin="0,65,0,343" Width="530" Height="26">
+            <Label Visibility="{Binding Visibility, ElementName=EpidBox}" HorizontalAlignment="Left" Content="Extended PID" Width="80" Height="26" />
             <ctrls:WmiPropertyBox
-                x:Name="EpidBox"
-                Converter="{co:WmiProperty}"
-                PropertyName="ProductKeyID"
-                WmiProperty="{Binding License}"
-                Margin="100,0,0,0">
+                      x:Name="EpidBox"
+                      Grid.Row="5"
+                      Grid.Column="1"
+                      Converter="{co:WmiProperty}"
+                      PropertyName="ProductKeyID"
+                      WmiProperty="{Binding License}"
+                Margin="100,0,0,0" Width="430" Height="18">
                 <ctrls:WmiPropertyBox.CommandBindings>
                     <CommandBinding
-                        CanExecute="CommandBinding_CanExecute"
-                        Command="{x:Static local:MainWindow.CheckEpid}"
-                        Executed="CommandBinding_Executed" />
+                              CanExecute="CommandBinding_CanExecute"
+                              Command="{x:Static local:MainWindow.CheckEpid}"
+                              Executed="CommandBinding_Executed" />
                 </ctrls:WmiPropertyBox.CommandBindings>
                 <ctrls:WmiPropertyBox.ContextMenu>
                     <ContextMenu>
@@ -58,30 +58,33 @@
                 </ctrls:WmiPropertyBox.ContextMenu>
             </ctrls:WmiPropertyBox>
         </Grid>
-        <Grid HorizontalAlignment="Center" Margin="0,97,0,311" Width="530">
-            <Label Visibility="{Binding Visibility, ElementName=ActStatus}" HorizontalAlignment="Left" Content="License Status" />
+        <Grid HorizontalAlignment="Center" Margin="0,96,0,312" Width="530" Height="26">
+            <Label Visibility="{Binding Visibility, ElementName=TextBoxLicenseStatusReason}" HorizontalAlignment="Left" Content="License Status" Width="84" Height="26" />
             <TextBox
-                x:Name="ActStatus"
+                x:Name="TextBoxLicenseStatusReason"
                 Style="{StaticResource StandardTextBox}"
                 Margin="100,0,0,0"
-                VerticalAlignment="Center" />
+                VerticalAlignment="Center" Width="430" Height="18" />
         </Grid>
         <Button
             Name="GetCIDButton"
-            Margin="480,128,10,0"
+            Margin="480,127,10,0"
             VerticalAlignment="Top"
-            Click="Button_GetCID_Clicked">
-            <TextBlock Margin="5,2,5,2" VerticalAlignment="Center">Get CID</TextBlock>
+            Click="Button_GetCID_Clicked"
+            Width="60" Height="24">
+            <TextBlock Margin="5,2,5,2" VerticalAlignment="Center">
+                Get CID
+            </TextBlock>
         </Button>
-        <Grid HorizontalAlignment="Center" Margin="0,157,0,251" Width="530">
-            <Label Visibility="{Binding Visibility, ElementName=CIDCode}" HorizontalAlignment="Left" Content="Confirmation ID" />
-            <ctrls:WmiPropertyBox
+        <Grid HorizontalAlignment="Center" Margin="0,156,0,252" Width="530" Height="26">
+            <Label Visibility="{Binding Visibility, ElementName=CIDCode}" HorizontalAlignment="Left" Content="Confirmation ID" Width="94" Height="26" />
+            <TextBox
                 x:Name="CIDCode"
-                PropertyName="OfflineInstallationId"
+                Style="{StaticResource StandardTextBox}"
                 Margin="100,0,0,0"
-                WmiProperty="{Binding License}" />
+                VerticalAlignment="Center" Width="430" Height="18" />
         </Grid>
-        <GroupBox Header="Confirmation ID Logging" Margin="5,186,5,44">
+        <GroupBox Header="Confirmation ID Logging" Margin="5,187,5,43" Width="540" Height="204">
             <Grid VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -94,39 +97,23 @@
                          AcceptsReturn="True"
                          TextWrapping="Wrap"
                          VerticalAlignment="Stretch"
-                         VerticalScrollBarVisibility="Auto" />
+                         VerticalScrollBarVisibility="Auto" Width="518" Height="171" />
             </Grid>
         </GroupBox>
-        <Grid Margin="0,392,0,0">
-            <Rectangle Fill="#f0f0f0" />
-            <Grid Margin="10,4,10,20">
-                <TextBlock
-                    x:Name="GetCIDLabelStatus"
-                    HorizontalAlignment="Left" Width="85">
-					<Run Text="Initializing..." />
-                </TextBlock>
-                <ProgressBar
-                    x:Name="GetCIDProgressBar"
-                    Margin="85,0,0,0"
-                    IsIndeterminate="True"
-                    Visibility="Visible"
-                    Height="16"
-                    VerticalAlignment="Center" />
-            </Grid>
-            <Button HorizontalAlignment="Left" Height="16" Margin="10,23,0,0" VerticalAlignment="Top" Width="179" Background="Transparent" BorderBrush="Transparent" Click="OpenUrlContributor">
-                <Grid>
-                    <TextBlock 
-                        HorizontalAlignment="Left"
-                        Width="159"
-                        Margin="17,1,0,0" 
-                        FontSize="6"
-                        VerticalAlignment="Center" 
-                        Text="Powered by Confirmation ID Online, by Vo Luu Tuong Anh" 
-                        TextWrapping="Wrap" 
-                        Height="8" />
-                    <Image Source="Icons/64/anhvlt-avatar.png" Margin="0,0,160,0" />
-                </Grid>
-            </Button>
+        <Grid Margin="0,410,0,0" Width="550" Height="24">
+            <Rectangle Fill="#f0f0f0" Width="550" Height="24" />
+            <ProgressBar
+                x:Name="GetCIDProgressBar"
+                Margin="95,0,10,0"
+                IsIndeterminate="True"
+                Visibility="Visible"
+                Height="16"
+                VerticalAlignment="Center" Width="445" />
+            <TextBlock
+                x:Name="GetCIDLabelStatus"
+                HorizontalAlignment="Left" Width="85" Margin="5,3,0,3" Height="18">
+				<Run Text="Initializing..." />
+            </TextBlock>
         </Grid>
     </Grid>
 </Window>
