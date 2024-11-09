@@ -258,14 +258,5 @@ namespace HGM.Hotbird64.LicenseManager
 
             e.CanExecute = true;
         }
-
-        /*
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            ProductBrowser productBrowser = new ProductBrowser(this, ((WmiPropertyBox)sender).Box.Text) { Icon = this.GenerateImage(new Icons.QueryKey(), 16, 16) };
-            productBrowser.Show();
-        }*/
-
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) { }
     }
 }

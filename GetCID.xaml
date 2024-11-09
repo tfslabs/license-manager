@@ -45,17 +45,6 @@
                       PropertyName="ProductKeyID"
                       WmiProperty="{Binding License}"
                 Margin="100,0,0,0" Width="430" Height="18">
-                <ctrls:WmiPropertyBox.CommandBindings>
-                    <CommandBinding
-                              CanExecute="CommandBinding_CanExecute"
-                              Command="{x:Static local:MainWindow.CheckEpid}"
-                              Executed="CommandBinding_Executed" />
-                </ctrls:WmiPropertyBox.CommandBindings>
-                <ctrls:WmiPropertyBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Command="{x:Static local:MainWindow.CheckEpid}" />
-                    </ContextMenu>
-                </ctrls:WmiPropertyBox.ContextMenu>
             </ctrls:WmiPropertyBox>
         </Grid>
         <Grid HorizontalAlignment="Center" Margin="0,96,0,312" Width="530" Height="26">
