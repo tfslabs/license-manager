@@ -116,7 +116,27 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void Button_GetCID_Clicked(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                string installationId = PhoneInstallationIdBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace(" ", "").Trim();
+                string epid = EpidBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Trim();
+#if DEBUG
+                TextBoxInfoText.AppendText("Debugging mode is enabled.\n" +
+                                           $"Your selected Installation ID: {installationId}\n" +
+                                           $"Your selected Extended Product ID: {epid}\n\n");
+#endif
+                string confirmationId = ActivationHelper.CallWebService(1, installationId, epid);
+                TextBoxInfoText.AppendText($"Your confirmation ID is: {confirmationId}");
 
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                MessageBox.Show("Error:\n\n" + ex.ToString(), "Get CID Error", MessageBoxButton.OK, MessageBoxImage.Error);
+#else
+                MessageBox.Show("Error:\n\n" + ex.HResult, "Get CID Error", MessageBoxButton.OK, MessageBoxImage.Error);
+#endif
+            }
         }
 
         public bool ControlsEnabled
