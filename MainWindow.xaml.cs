@@ -1,28 +1,28 @@
-﻿using System;
+﻿using HGM.Hotbird64.LicenseManager.Contracts;
+using HGM.Hotbird64.LicenseManager.Controls;
+using HGM.Hotbird64.LicenseManager.Extensions;
+using HGM.Hotbird64.LicenseManager.Model;
+using HGM.Hotbird64.Vlmcs;
+using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using Microsoft.Win32;
-using System.Threading;
 using System.Reflection;
-using System.Xml.Schema;
-using HGM.Hotbird64.Vlmcs;
-using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Security.Principal;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Runtime.CompilerServices;
-using HGM.Hotbird64.LicenseManager.Model;
-using System.Windows.Controls.Primitives;
-using HGM.Hotbird64.LicenseManager.Controls;
-using HGM.Hotbird64.LicenseManager.Contracts;
-using HGM.Hotbird64.LicenseManager.Extensions;
+using System.Xml.Schema;
 
 namespace HGM.Hotbird64.LicenseManager
 {
@@ -1487,6 +1487,12 @@ namespace HGM.Hotbird64.LicenseManager
         {
             ProductBrowser productBrowser = new ProductBrowser(this, null) { Icon = this.GenerateImage(new Icons.QueryKey(), 16, 16) };
             productBrowser.Show();
+        }
+
+        private void MenuItem_GetCID_Click(object sender, RoutedEventArgs e)
+        {
+            GetCID getCIDWindow = new GetCID();
+            getCIDWindow.Show();
         }
 
         private void MenuItemInstallKmsKey_Click(object sender, RoutedEventArgs e)

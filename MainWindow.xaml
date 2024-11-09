@@ -11,8 +11,7 @@
     x:Name="MainWindowName"
     Title="License Manager"
     Height="Auto"
-    d:DataContext="{d:DesignInstance Type=local:MainWindow,
-                                     IsDesignTimeCreatable=True}"
+    d:DataContext="{d:DesignInstance Type=local:MainWindow, IsDesignTimeCreatable=True}"
     DataContext="{Binding RelativeSource={RelativeSource 'Self'}}"
     Loaded="MainWindow_Loaded"
     SizeChanged="Window_SizeChanged"
@@ -84,10 +83,19 @@
                         <MenuItem
                             x:Name="MenuItemCheckEpid"
                             Click="MenuItem_CheckEpid_Click"
-                            Header="_Product Finder / Key Checker"
+                            Header="_Product Finder/Key Checker"
                             ToolTip="Finds a product in the database by entering an SKU ID, an EPID or a Product Key">
                             <MenuItem.Icon>
                                 <icons:QueryKey Width="16" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem
+                            x:Name="GetConfirmationID"
+                            Click="MenuItem_GetCID_Click"
+                            Header="_Get Confirmation ID"
+                            ToolTip="Activate Windows and Office products by getting the Confirmation ID from Microsoft Support Service.">
+                            <MenuItem.Icon>
+                                <icons:Windows Width="16" />
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>

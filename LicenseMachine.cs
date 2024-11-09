@@ -1092,7 +1092,7 @@ namespace HGM.Hotbird64.LicenseManager
                 throw;
             }
         }
-        
+
         private void InvokeProductMethod(int productIndex, string method, params object[] inParams) => InvokeProductMethod(ProductLicenseList[productIndex], method, inParams);
 
         private void InvokeProductMethod(ProductLicense productLicense, string method, params object[] inParams)

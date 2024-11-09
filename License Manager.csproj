@@ -153,6 +153,10 @@
     <Compile Include="Extensions\PropertyChangeBase.cs" />
     <Compile Include="Extensions\Wmi.cs" />
     <Compile Include="Extensions\Wpf.cs" />
+    <Compile Include="GetCID.xaml.cs">
+      <DependentUpon>GetCID.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GetCIDBackend.cs" />
     <Compile Include="Icons\multi\ClientComputer.xaml.cs">
       <DependentUpon>ClientComputer.xaml</DependentUpon>
     </Compile>
@@ -266,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExportIds.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GetCID.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -499,6 +507,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\64\anhvlt-avatar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
