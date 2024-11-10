@@ -1,4 +1,9 @@
-﻿using System;
+﻿using HGM.Hotbird64.LicenseManager.Contracts;
+using HGM.Hotbird64.LicenseManager.Controls;
+using HGM.Hotbird64.LicenseManager.Extensions;
+using HGM.Hotbird64.LicenseManager.Model;
+using HGM.Hotbird64.Vlmcs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -11,15 +16,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using HGM.Hotbird64.LicenseManager.Contracts;
-using HGM.Hotbird64.LicenseManager.Controls;
-using HGM.Hotbird64.LicenseManager.Extensions;
-using HGM.Hotbird64.LicenseManager.Model;
-using HGM.Hotbird64.Vlmcs;
+using System.Windows.Media;
 
 namespace HGM.Hotbird64.LicenseManager
 {
-    public partial class GetCID : IHaveNotifyOfPropertyChange
+    public partial class GetCID : Window, IHaveNotifyOfPropertyChange
     {
         internal LicenseMachine Machine;
         public bool IsClosed { get; private set; }
@@ -28,21 +29,13 @@ namespace HGM.Hotbird64.LicenseManager
         public static ISet<ProductKeyConfigurationConfigurationsConfiguration> KeyConfigs => ((ProductKeyConfigurationConfigurations)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationConfigurations)).Configuration;
         public static ISet<ProductKeyConfigurationPublicKeysPublicKey> PublicKeys => ((ProductKeyConfigurationPublicKeys)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationPublicKeys)).PublicKey;
         public static ISet<ProductKeyConfigurationKeyRangesKeyRange> KeyRanges => ((ProductKeyConfigurationKeyRanges)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationKeyRanges)).KeyRange;
-        public static IList<ProductKeyConfigurationConfigurationsConfiguration> CsvlkConfigs;
-        public static IList<ProductKeyConfigurationKeyRangesKeyRange> CsvlkRanges;
-        public static IKmsProductCollection<SkuItem> ProductList => KmsLists.SkuItemList;
-        public static IKmsProductCollection<AppItem> ApplicationList => KmsLists.AppItemList;
-        public static IKmsProductCollection<KmsItem> KmsProductList => KmsLists.KmsItemList;
         public static RoutedUICommand CheckEpid, AutoSizeWindow;
-        public static InputGestureCollection CtrlE = new InputGestureCollection();
-        public static InputGestureCollection CtrlW = new InputGestureCollection();
+        public static InputGestureCollection CtrlE = [];
+        public static InputGestureCollection CtrlW = [];
         public static CultureInfo OsSystemLocale;
 
         static GetCID()
         {
-            CsvlkConfigs = KeyConfigs.Where(c => c.ProductKeyType == "Volume:CSVLK").ToList();
-            IEnumerable<KmsGuid> csvlkConfigIds = CsvlkConfigs.Select(c => c.ActConfigGuid);
-            CsvlkRanges = KeyRanges.Where(r => csvlkConfigIds.Contains(r.RefActConfigGuid)).ToList();
             CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
             CtrlW.Add(new KeyGesture(Key.W, ModifierKeys.Control));
             CheckEpid = new RoutedUICommand("Get Info", nameof(CheckEpid), typeof(ScalableWindow), CtrlE);
@@ -52,7 +45,6 @@ namespace HGM.Hotbird64.LicenseManager
         public GetCID()
         {
             InitializeComponent();
-
             if (CheckConnection() == false)
             {
                 MessageBox.Show(
@@ -100,7 +92,6 @@ namespace HGM.Hotbird64.LicenseManager
                     isInternetTrouble = false;
                 }
             }
-
             return isInternetTrouble;
         }
 
@@ -118,6 +109,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             try
             {
+                TextBoxInfoText.Clear();
                 string installationId = PhoneInstallationIdBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace(" ", "").Trim();
                 string epid = EpidBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Trim();
 #if DEBUG
@@ -125,16 +117,120 @@ namespace HGM.Hotbird64.LicenseManager
                                            $"Your selected Installation ID: {installationId}\n" +
                                            $"Your selected Extended Product ID: {epid}\n\n");
 #endif
-                string confirmationId = ActivationHelper.CallWebService(1, installationId, epid);
-                TextBoxInfoText.AppendText($"Your confirmation ID is: {confirmationId}");
-
+                IsProgressBarRunning = true;
+                GetCIDLabelStatus.Text = "Processing...";
+                string confirmationId = ActivationHelper.CallWebService(installationId, epid);
+                if (confirmationId.StartsWith("Error:"))
+                {
+                    switch (confirmationId)
+                    {
+                        case "Error: 0x194":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x194:" +
+#endif
+                                "The remote server returned an unexpected response."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "The remote server returned an unexpected response.";
+                            break;
+                        case "Error: 0x19D":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x19D:" +
+#endif
+                                "The remote server returned an unexpected response."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "The remote server returned an unexpected response.";
+                            break;
+                        case "Error: 0x7F":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x7F:" +
+#endif
+                                "The Multiple Activation Key has exceeded its limit."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "The Multiple Activation Key has exceeded its limit.";
+                            break;
+                        case "Error: 0x67":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x67:" +
+#endif
+                                "The product key has been blocked."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "The product key has been blocked.";
+                            break;
+                        case "Error: 0x68":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x68:" +
+#endif
+                                "Invalid product key."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "Invalid product key.";
+                            break;
+                        case "Error: 0x86":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x86:" +
+#endif
+                                "Invalid key type."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "Invalid key type.";
+                            break;
+                        case "Error: 0x90":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x90:" +
+#endif
+                                "Please check the Installation ID and try again."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "Please check the Installation ID and try again.";
+                            break;
+                        case "Error: 0x2F78":
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                "0x2F78:" +
+#endif
+                                "The remote server returned an unrecognized response."
+                                );
+                            CIDCode.Background = new SolidColorBrush(Colors.Red);
+                            CIDCode.Text = "Please check the Installation ID and try again.";
+                            break;
+                        default:
+                            TextBoxInfoText.AppendText(
+#if DEBUG
+                                $"{confirmationId}: " +
+#endif
+                                "The remote server reported an unknown error."
+                                );
+                            break;
+                    }
+                }
+                else
+                {
+                    TextBoxInfoText.AppendText($"Your confirmation ID is: {confirmationId}");
+                    CIDCode.Background = new SolidColorBrush(Colors.LightGreen);
+                    CIDCode.Text = confirmationId;
+                }
+                IsProgressBarRunning = false;
+                GetCIDLabelStatus.Text = "Completed";
             }
             catch (Exception ex)
             {
 #if DEBUG
                 MessageBox.Show("Error:\n\n" + ex.ToString(), "Get CID Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                GetCIDLabelStatus.Text = $"Error: {ex.HResult}";
 #else
                 MessageBox.Show("Error:\n\n" + ex.HResult, "Get CID Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                GetCIDLabelStatus.Text = "Error";
 #endif
             }
         }
@@ -185,8 +281,6 @@ namespace HGM.Hotbird64.LicenseManager
             await Refresh();
         }
 
-
-
         private void SelectedProductChanged(object sender, SelectionChangedEventArgs e)
         {
 #if DEBUG
@@ -201,7 +295,9 @@ namespace HGM.Hotbird64.LicenseManager
 
             WmiProperty w = new WmiProperty("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
             w.DisplayPropertyAsLicenseStatus(new Control[] { TextBoxLicenseStatusReason }, TextBoxLicenseStatusReason);
-
+            TextBoxInfoText.Clear();
+            CIDCode.Clear();
+            CIDCode.Background = new SolidColorBrush(Colors.Transparent);
             GetCIDLabelStatus.Text = "Ready";
         }
 

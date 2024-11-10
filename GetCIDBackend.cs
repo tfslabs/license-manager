@@ -8,10 +8,9 @@ using System.Xml.Linq;
 
 namespace HGM.Hotbird64.LicenseManager
 {
-    public static class ActivationHelper
+    public partial class ActivationHelper
     {
-        // Key for HMAC/SHA256 signature.
-        private static readonly byte[] MacKey = new byte[64] {
+        private static readonly byte[] MacKey = [
             254,  49, 152, 117, 251,  72, 132, 134,
             156, 243, 241, 206, 153, 168, 144, 100,
             171,  87,  31, 202,  71,   4,  80,  88,
@@ -20,12 +19,9 @@ namespace HGM.Hotbird64.LicenseManager
             0,     0,   0,   0,   0,   0,   0,   0,
             0,     0,   0,   0,   0,   0,   0,   0,
             0,     0,   0,   0,   0,   0,   0,   0
-        };
-
+        ];
         private const string Action = "http://www.microsoft.com/BatchActivationService/BatchActivate";
-
-        private static readonly Uri Uri = new Uri("https://activation.sls.microsoft.com/BatchActivation/BatchActivation.asmx");
-
+        private static readonly Uri Uri = new("https://activation.sls.microsoft.com/BatchActivation/BatchActivation.asmx");
         private static readonly XNamespace SoapSchemaNs = "http://schemas.xmlsoap.org/soap/envelope/";
         private static readonly XNamespace XmlSchemaInstanceNs = "http://www.w3.org/2001/XMLSchema-instance";
         private static readonly XNamespace XmlSchemaNs = "http://www.w3.org/2001/XMLSchema";
@@ -33,26 +29,22 @@ namespace HGM.Hotbird64.LicenseManager
         private static readonly XNamespace BatchActivationRequestNs = "http://www.microsoft.com/DRM/SL/BatchActivationRequest/1.0";
         private static readonly XNamespace BatchActivationResponseNs = "http://www.microsoft.com/DRM/SL/BatchActivationResponse/1.0";
 
-        public static string CallWebService(int requestType, string installationId, string extendedProductId)
+        public static string CallWebService(string installationId, string extendedProductId)
         {
-            XDocument soapRequest = CreateSoapRequest(requestType, installationId, extendedProductId);
+            XDocument soapRequest = CreateSoapRequest(installationId, extendedProductId);
             HttpWebRequest webRequest = CreateWebRequest(soapRequest);
-            XDocument soapResponse = new XDocument();
+            XDocument soapResponse = new();
 
             try
             {
                 IAsyncResult asyncResult = webRequest.BeginGetResponse(null, null);
                 asyncResult.AsyncWaitHandle.WaitOne();
-
-                // Read data from the response stream.
                 using (WebResponse webResponse = webRequest.EndGetResponse(asyncResult))
-                using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
+                using (StreamReader streamReader = new(webResponse.GetResponseStream()))
                 {
                     soapResponse = XDocument.Parse(streamReader.ReadToEnd());
                 }
-
                 return ParseSoapResponse(soapResponse);
-
             }
             catch
             {
@@ -60,10 +52,10 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        private static XDocument CreateSoapRequest(int requestType, string installationId, string extendedProductId)
+        private static XDocument CreateSoapRequest(string installationId, string extendedProductId)
         {
-            // Create an activation request.           
-            XElement activationRequest = new XElement(BatchActivationRequestNs + "ActivationRequest",
+            int requestType = 1;
+            XElement activationRequest = new(BatchActivationRequestNs + "ActivationRequest",
                 new XElement(BatchActivationRequestNs + "VersionNumber", "2.0"),
                 new XElement(BatchActivationRequestNs + "RequestType", requestType),
                 new XElement(BatchActivationRequestNs + "Requests",
@@ -72,18 +64,12 @@ namespace HGM.Hotbird64.LicenseManager
                         requestType == 1 ? new XElement(BatchActivationRequestNs + "IID", installationId) : null)
                 )
             );
-
-            // Get the unicode byte array of activationRequest and convert it to Base64.
             byte[] bytes = Encoding.Unicode.GetBytes(activationRequest.ToString());
             string requestXml = Convert.ToBase64String(bytes);
-
-            XDocument soapRequest = new XDocument();
-
-            using (HMACSHA256 hMACSHA = new HMACSHA256(MacKey))
+            XDocument soapRequest = new();
+            using (HMACSHA256 hMACSHA = new(MacKey))
             {
-                // Convert the HMAC hashed data to Base64.
                 string digest = Convert.ToBase64String(hMACSHA.ComputeHash(bytes));
-
                 soapRequest = new XDocument(
                 new XDeclaration("1.0", "UTF-8", "no"),
                 new XElement(SoapSchemaNs + "Envelope",
@@ -99,9 +85,7 @@ namespace HGM.Hotbird64.LicenseManager
                         )
                     )
                 ));
-
             }
-
             return soapRequest;
         }
 
@@ -113,17 +97,10 @@ namespace HGM.Hotbird64.LicenseManager
             webRequest.Headers.Add("SOAPAction", Action);
             webRequest.Host = "activation.sls.microsoft.com";
             webRequest.Method = "POST";
-
             try
             {
-                // Insert SOAP envelope
-                using (Stream stream = webRequest.GetRequestStream())
-                {
-                    soapRequest.Save(stream);
-                }
-
+                using (Stream stream = webRequest.GetRequestStream()) { soapRequest.Save(stream); }
                 return webRequest;
-
             }
             catch
             {
@@ -135,12 +112,12 @@ namespace HGM.Hotbird64.LicenseManager
         {
             if (soapResponse == null)
             {
-                throw new ArgumentNullException(nameof(soapResponse), "The remote server returned an unexpected response.");
+                return "Error: 0x194";
             }
 
             if (!soapResponse.Descendants(BatchActivationServiceNs + "ResponseXml").Any())
             {
-                throw new Exception("The remote server returned an unexpected response");
+                return "Error: 0x19D";
             }
 
             try
@@ -150,47 +127,24 @@ namespace HGM.Hotbird64.LicenseManager
                 if (responseXml.Descendants(BatchActivationResponseNs + "ErrorCode").Any())
                 {
                     string errorCode = responseXml.Descendants(BatchActivationResponseNs + "ErrorCode").First().Value;
-
-                    switch (errorCode)
-                    {
-                        case "0x7F":
-                            throw new Exception("The Multiple Activation Key has exceeded its limit");
-
-                        case "0x67":
-                            throw new Exception("The product key has been blocked");
-
-                        case "0x68":
-                            throw new Exception("Invalid product key");
-
-                        case "0x86":
-                            throw new Exception("Invalid key type");
-
-                        case "0x90":
-                            throw new Exception("Please check the Installation ID and try again");
-
-                        default:
-                            throw new Exception(string.Format("The remote server reported an error ({0})", errorCode));
-                    }
-
+                    return $"Error: {errorCode}";
                 }
                 else if (responseXml.Descendants(BatchActivationResponseNs + "ResponseType").Any())
                 {
                     string responseType = responseXml.Descendants(BatchActivationResponseNs + "ResponseType").First().Value;
-
                     switch (responseType)
                     {
                         case "1":
                             string confirmationId = responseXml.Descendants(BatchActivationResponseNs + "CID").First().Value;
                             return confirmationId;
-
                         default:
-                            throw new Exception("The remote server returned an unrecognized response");
+                            return "Error: 0x2F78";
                     }
 
                 }
                 else
                 {
-                    throw new Exception("The remote server returned an unrecognized response");
+                    return "Error: 0x2F78";
                 }
 
             }
