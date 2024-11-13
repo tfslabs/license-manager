@@ -34,6 +34,46 @@ namespace HGM.Hotbird64.LicenseManager
         public static InputGestureCollection CtrlW = [];
         public static CultureInfo OsSystemLocale;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void License_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyOfPropertyChange(nameof(License));
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            string text = (sender as WmiPropertyBox)?.Box.Text;
+
+            if (text == null || (!Regex.IsMatch(text, PidGen.EpidPattern) && !Regex.IsMatch(text, App.GuidPattern)))
+            {
+                return;
+            }
+
+            e.CanExecute = true;
+        }
+
+        private int selectedProductIndex = -1;
+        public int SelectedProductIndex
+        {
+            get => selectedProductIndex;
+            set => this.SetProperty(ref selectedProductIndex, value, postAction: () =>
+            {
+                try
+                {
+                    License.LicenseProvider = Machine.LicenseProvidersList[Machine.ProductLicenseList[value].ServiceIndex];
+                    License.SelectedLicense = Machine.ProductLicenseList[value];
+                }
+                catch (Exception)
+                {
+                    //ignored because of the useless of that
+                }
+            });
+        }
         static GetCID()
         {
             CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
@@ -45,7 +85,7 @@ namespace HGM.Hotbird64.LicenseManager
         public GetCID()
         {
             InitializeComponent();
-            if (CheckConnection() == false)
+            if (!CheckConnection())
             {
                 MessageBox.Show(
                     "Your Internet connection to the Microsoft Customer Service is not stable. Confirmation ID may not get.",
@@ -65,10 +105,18 @@ namespace HGM.Hotbird64.LicenseManager
             };
         }
 
+        public bool ControlsEnabled
+        {
+            set => EpidBox.IsEnabled =
+                     TextBoxLicenseStatusReason.IsEnabled =
+                        ComboBoxProductId.IsEnabled =
+                            PhoneInstallationIdBox.IsEnabled = value;
+        }
+
         private static bool CheckConnection()
         {
             bool isInternetTrouble = false;
-            string[] GetCIDTargets = { "www.microsoft.com", "activation.sls.microsoft.com" };
+            string[] GetCIDTargets = ["www.microsoft.com", "activation.sls.microsoft.com"];
             foreach (var target in GetCIDTargets)
             {
                 try
@@ -76,14 +124,12 @@ namespace HGM.Hotbird64.LicenseManager
                     IPHostEntry hostEntry = Dns.GetHostEntry(target);
                     if (hostEntry.AddressList.Length > 0)
                     {
-                        using (var ping = new Ping())
+                        using var ping = new Ping();
+                        var reply = ping.Send(hostEntry.AddressList[0]);
+                        if (reply.Status == IPStatus.Success)
                         {
-                            var reply = ping.Send(hostEntry.AddressList[0]);
-                            if (reply.Status == IPStatus.Success)
-                            {
-                                isInternetTrouble = true;
-                                break;
-                            }
+                            isInternetTrouble = true;
+                            break;
                         }
                     }
                 }
@@ -110,8 +156,12 @@ namespace HGM.Hotbird64.LicenseManager
             try
             {
                 TextBoxInfoText.Clear();
-                string installationId = PhoneInstallationIdBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace(" ", "").Trim();
-                string epid = EpidBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Trim();
+                string installationId = string.Concat(PhoneInstallationIdBox.ToString()
+                    .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
+                string epid = string.Concat(EpidBox.ToString()
+                    .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "")
+                    .Where(c => char.IsDigit(c) || c == '.' || c == '-'))
+                    .Trim();
 #if DEBUG
                 TextBoxInfoText.AppendText("Debugging mode is enabled.\n" +
                                            $"Your selected Installation ID: {installationId}\n" +
@@ -127,7 +177,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x194":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x194:" +
+                                "0x194: " +
 #endif
                                 "The remote server returned an unexpected response."
                                 );
@@ -137,7 +187,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x19D":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x19D:" +
+                                "0x19D: " +
 #endif
                                 "The remote server returned an unexpected response."
                                 );
@@ -147,7 +197,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x7F":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x7F:" +
+                                "0x7F: " +
 #endif
                                 "The Multiple Activation Key has exceeded its limit."
                                 );
@@ -157,7 +207,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x67":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x67:" +
+                                "0x67: " +
 #endif
                                 "The product key has been blocked."
                                 );
@@ -167,7 +217,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x68":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x68:" +
+                                "0x68: " +
 #endif
                                 "Invalid product key."
                                 );
@@ -177,7 +227,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x86":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x86:" +
+                                "0x86: " +
 #endif
                                 "Invalid key type."
                                 );
@@ -187,7 +237,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x90":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x90:" +
+                                "0x90: " +
 #endif
                                 "Please check the Installation ID and try again."
                                 );
@@ -197,7 +247,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case "Error: 0x2F78":
                             TextBoxInfoText.AppendText(
 #if DEBUG
-                                "0x2F78:" +
+                                "0x2F78: " +
 #endif
                                 "The remote server returned an unrecognized response."
                                 );
@@ -233,14 +283,6 @@ namespace HGM.Hotbird64.LicenseManager
                 GetCIDLabelStatus.Text = "Error";
 #endif
             }
-        }
-
-        public bool ControlsEnabled
-        {
-            set => EpidBox.IsEnabled =
-                     TextBoxLicenseStatusReason.IsEnabled =
-                        ComboBoxProductId.IsEnabled =
-                            PhoneInstallationIdBox.IsEnabled = value;
         }
 
         private async Task Refresh()
@@ -279,6 +321,8 @@ namespace HGM.Hotbird64.LicenseManager
             OsSystemLocale = (Machine?.SysInfo?.OsInfo.Locale != null) ? Machine.SysInfo.OsInfo.Locale : OsSystemLocale;
             GetCIDLabelStatus.Text = "Gathering Data...";
             await Refresh();
+            ComboBoxProductId.Items.Add("USER_CONTROL: Enter manually");
+
         }
 
         private void SelectedProductChanged(object sender, SelectionChangedEventArgs e)
@@ -286,22 +330,27 @@ namespace HGM.Hotbird64.LicenseManager
 #if DEBUG
             GetCIDLabelStatus.Text = "Fetching...";
 #endif
-            if (ComboBoxProductId.SelectedIndex < 0)
+            if (ComboBoxProductId.SelectedIndex == -1) return; //-1 for unselected
+
+            if (ComboBoxProductId.SelectedIndex == ComboBoxProductId.Items.Count - 1)
             {
-                return;
+                PhoneInstallationIdBox.IsReadOnly = EpidBox.IsReadOnly = false;
+                TextBoxLicenseStatusReason.Text = "Not available in manual mode.";
             }
-
-            LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ComboBoxProductId.SelectedIndex];
-
-            WmiProperty w = new WmiProperty("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
-            w.DisplayPropertyAsLicenseStatus(new Control[] { TextBoxLicenseStatusReason }, TextBoxLicenseStatusReason);
+            else
+            {
+                PhoneInstallationIdBox.IsReadOnly = EpidBox.IsReadOnly = true;
+                LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ComboBoxProductId.SelectedIndex];
+                WmiProperty w = new("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
+                w.DisplayPropertyAsLicenseStatus([TextBoxLicenseStatusReason], TextBoxLicenseStatusReason);
+            }
             TextBoxInfoText.Clear();
             CIDCode.Clear();
             CIDCode.Background = new SolidColorBrush(Colors.Transparent);
             GetCIDLabelStatus.Text = "Ready";
         }
 
-        private LicenseModel license = new LicenseModel();
+        private LicenseModel license = new();
         public LicenseModel License
         {
             get => license;
@@ -332,47 +381,6 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 ComboBoxProductId.SelectedIndex = 0;
             }
-        }
-
-        private void License_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            NotifyOfPropertyChange(nameof(License));
-        }
-
-        private int selectedProductIndex = -1;
-        public int SelectedProductIndex
-        {
-            get => selectedProductIndex;
-            set => this.SetProperty(ref selectedProductIndex, value, postAction: () =>
-            {
-                try
-                {
-                    License.LicenseProvider = Machine.LicenseProvidersList[Machine.ProductLicenseList[value].ServiceIndex];
-                    License.SelectedLicense = Machine.ProductLicenseList[value];
-                }
-                catch (Exception)
-                {
-                    //ignored because of the useless of that
-                }
-            });
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            string text = (sender as WmiPropertyBox)?.Box.Text;
-
-            if (text == null || (!Regex.IsMatch(text, PidGen.EpidPattern) && !Regex.IsMatch(text, App.GuidPattern)))
-            {
-                return;
-            }
-
-            e.CanExecute = true;
         }
     }
 }

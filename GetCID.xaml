@@ -33,7 +33,7 @@
                 Converter="{co:WmiPhoneInstallationId}"
                 PropertyName="OfflineInstallationId"
                 Margin="100,0,0,0"
-                WmiProperty="{Binding License}" Width="430" Height="18" />
+                WmiProperty="{Binding License}" Width="430" Height="18" IsReadOnly="True"/>
         </Grid>
         <Grid HorizontalAlignment="Center" Margin="0,65,0,343" Width="530" Height="26">
             <Label Visibility="{Binding Visibility, ElementName=EpidBox}" HorizontalAlignment="Left" Content="Extended PID" Width="80" Height="26" />
@@ -44,6 +44,7 @@
                       Converter="{co:WmiProperty}"
                       PropertyName="ProductKeyID"
                       WmiProperty="{Binding License}"
+                      IsReadOnly="True"
                 Margin="100,0,0,0" Width="430" Height="18">
             </ctrls:WmiPropertyBox>
         </Grid>

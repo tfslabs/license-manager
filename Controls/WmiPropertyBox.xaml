@@ -11,5 +11,8 @@
              d:DesignHeight="50" d:DesignWidth="800"
              VerticalAlignment="Center"
              >
-    <TextBox x:Name="Box" Style="{StaticResource StandardTextBox}" x:FieldModifier="public" />
+    <TextBox x:Name="Box" 
+             Style="{StaticResource StandardTextBox}" 
+             x:FieldModifier="public" 
+             Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" IsReadOnly="True"/>
 </UserControl>
