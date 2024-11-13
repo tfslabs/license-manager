@@ -51,7 +51,7 @@ namespace HGM.Hotbird64.LicenseManager
                 throw;
             }
         }
-
+        
         private static XDocument CreateSoapRequest(string installationId, string extendedProductId)
         {
             int requestType = 1;

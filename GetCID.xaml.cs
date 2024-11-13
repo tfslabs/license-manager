@@ -311,6 +311,11 @@ namespace HGM.Hotbird64.LicenseManager
             }
             finally
             {
+                if (ComboBoxProductId.Items.Cast<object>().Last() != "USER_CONTROL: Enter manually")
+                {
+                    ComboBoxProductId.Items.Add("USER_CONTROL: Enter manually");
+                }
+
                 ControlsEnabled = true;
             }
         }
@@ -321,8 +326,6 @@ namespace HGM.Hotbird64.LicenseManager
             OsSystemLocale = (Machine?.SysInfo?.OsInfo.Locale != null) ? Machine.SysInfo.OsInfo.Locale : OsSystemLocale;
             GetCIDLabelStatus.Text = "Gathering Data...";
             await Refresh();
-            ComboBoxProductId.Items.Add("USER_CONTROL: Enter manually");
-
         }
 
         private void SelectedProductChanged(object sender, SelectionChangedEventArgs e)
@@ -381,6 +384,12 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 ComboBoxProductId.SelectedIndex = 0;
             }
+        }
+
+        private async void Refresh_Click(object sender, EventArgs e)
+        {
+            GetCIDLabelStatus.Text = "Gathering Data...";
+            await Refresh();
         }
     }
 }

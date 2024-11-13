@@ -637,13 +637,13 @@ namespace HGM.Hotbird64.LicenseManager
 
         public static readonly string[] RequiredProperties = new[]
         {
-      "Name", "Description","ID", "GracePeriodRemaining", "OfflineInstallationId", "LicenseStatus","LicenseStatusReason","PartialProductKey",
-      "ProductKeyChannel","GenuineStatus","EvaluationEndDate","ApplicationID","ProductKeyID","KeyManagementServicePort","KeyManagementServiceLookupDomain","KeyManagementServiceMachine",
-      "DiscoveredKeyManagementServiceMachinePort","DiscoveredKeyManagementServiceMachineName","DiscoveredKeyManagementServiceMachineIpAddress","KeyManagementServiceProductKeyID",
-      "VLRenewalInterval","VLActivationInterval","VLActivationTypeEnabled","IsKeyManagementServiceMachine","RequiredClientCount","KeyManagementServiceCurrentCount",
-      "KeyManagementServiceTotalRequests","KeyManagementServiceFailedRequests","KeyManagementServiceUnlicensedRequests","KeyManagementServiceLicensedRequests",
-      "KeyManagementServiceNonGenuineGraceRequests","KeyManagementServiceNotificationRequests","KeyManagementServiceOOBGraceRequests","KeyManagementServiceOOTGraceRequests","ExtendedGrace",
-    };
+          "Name", "Description","ID", "GracePeriodRemaining", "OfflineInstallationId", "LicenseStatus","LicenseStatusReason","PartialProductKey",
+          "ProductKeyChannel","GenuineStatus","EvaluationEndDate","ApplicationID","ProductKeyID","KeyManagementServicePort","KeyManagementServiceLookupDomain","KeyManagementServiceMachine",
+          "DiscoveredKeyManagementServiceMachinePort","DiscoveredKeyManagementServiceMachineName","DiscoveredKeyManagementServiceMachineIpAddress","KeyManagementServiceProductKeyID",
+          "VLRenewalInterval","VLActivationInterval","VLActivationTypeEnabled","IsKeyManagementServiceMachine","RequiredClientCount","KeyManagementServiceCurrentCount",
+          "KeyManagementServiceTotalRequests","KeyManagementServiceFailedRequests","KeyManagementServiceUnlicensedRequests","KeyManagementServiceLicensedRequests",
+          "KeyManagementServiceNonGenuineGraceRequests","KeyManagementServiceNotificationRequests","KeyManagementServiceOOBGraceRequests","KeyManagementServiceOOTGraceRequests","ExtendedGrace",
+        };
 
 
         public void RefreshLicenses()

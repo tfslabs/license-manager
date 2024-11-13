@@ -1,5 +1,4 @@
 ﻿<Window
-    x:Class="HGM.Hotbird64.LicenseManager.GetCID"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,24 +8,26 @@
 	xmlns:local="clr-namespace:HGM.Hotbird64.LicenseManager"
     xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:Icons="clr-namespace:HGM.Hotbird64.Icons"
+    x:Class="HGM.Hotbird64.LicenseManager.GetCID"
     mc:Ignorable="d"  
     Loaded="GetCID_Loaded"
     Title="Get Confirmation ID (Online)"
     Height="480"
     Width="580"
-    d:DataContext="{d:DesignInstance Type=local:GetCID, IsDesignTimeCreatable=True}"
-    DataContext="{Binding RelativeSource={RelativeSource 'Self'}}"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type local:GetCID}}"
+    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
     ResizeMode="NoResize" Focusable="False" SizeToContent="WidthAndHeight">
     <Grid Width="550" Height="434" HorizontalAlignment="Center" VerticalAlignment="Center">
         <ComboBox
             x:Name="ComboBoxProductId"
-            Margin="10,5,10,405"
+            Margin="10,23,10,387"
             IsReadOnly="True"
             SelectedIndex="{Binding SelectedProductIndex}"
             SelectionChanged="SelectedProductChanged"
             Width="530"
             RenderTransformOrigin="0.504,-3.026" Height="24" />
-        <Grid Margin="10,34,10,374" Width="530" Height="26">
+        <Grid Margin="10,52,10,356" Width="530" Height="26">
             <Label Visibility="{Binding Visibility, ElementName=PhoneInstallationIdBox}" HorizontalAlignment="Left" Content="Phone IID" Width="62" Height="26" />
             <ctrls:WmiPropertyBox
                 x:Name="PhoneInstallationIdBox"
@@ -35,7 +36,7 @@
                 Margin="100,0,0,0"
                 WmiProperty="{Binding License}" Width="430" Height="18" IsReadOnly="True"/>
         </Grid>
-        <Grid HorizontalAlignment="Center" Margin="0,65,0,343" Width="530" Height="26">
+        <Grid HorizontalAlignment="Center" Margin="0,83,0,325" Width="530" Height="26">
             <Label Visibility="{Binding Visibility, ElementName=EpidBox}" HorizontalAlignment="Left" Content="Extended PID" Width="80" Height="26" />
             <ctrls:WmiPropertyBox
                       x:Name="EpidBox"
@@ -45,10 +46,9 @@
                       PropertyName="ProductKeyID"
                       WmiProperty="{Binding License}"
                       IsReadOnly="True"
-                Margin="100,0,0,0" Width="430" Height="18">
-            </ctrls:WmiPropertyBox>
+                Margin="100,0,0,0" Width="430" Height="18"/>
         </Grid>
-        <Grid HorizontalAlignment="Center" Margin="0,96,0,312" Width="530" Height="26">
+        <Grid HorizontalAlignment="Center" Margin="0,114,0,294" Width="530" Height="26">
             <Label Visibility="{Binding Visibility, ElementName=TextBoxLicenseStatusReason}" HorizontalAlignment="Left" Content="License Status" Width="84" Height="26" />
             <TextBox
                 x:Name="TextBoxLicenseStatusReason"
@@ -57,16 +57,14 @@
                 VerticalAlignment="Center" Width="430" Height="18" />
         </Grid>
         <Button
-            Name="GetCIDButton"
-            Margin="480,127,10,0"
+            x:Name="GetCIDButton"
+            Margin="480,140,10,0"
             VerticalAlignment="Top"
             Click="Button_GetCID_Clicked"
             Width="60" Height="24">
-            <TextBlock Margin="5,2,5,2" VerticalAlignment="Center">
-                Get CID
-            </TextBlock>
+            <TextBlock Margin="5,2,5,2" VerticalAlignment="Center"><Run Text="Get CID"/></TextBlock>
         </Button>
-        <Grid HorizontalAlignment="Center" Margin="0,156,0,252" Width="530" Height="26">
+        <Grid HorizontalAlignment="Center" Margin="0,169,0,239" Width="530" Height="26">
             <Label Visibility="{Binding Visibility, ElementName=CIDCode}" HorizontalAlignment="Left" Content="Confirmation ID" Width="94" Height="26" />
             <TextBox
                 x:Name="CIDCode"
@@ -74,7 +72,7 @@
                 Margin="100,0,0,0"
                 VerticalAlignment="Center" Width="430" Height="18" />
         </Grid>
-        <GroupBox Header="Confirmation ID Logging" Margin="5,187,5,43" Width="540" Height="204">
+        <GroupBox Header="Confirmation ID Logging" Margin="5,200,5,29" Width="540">
             <Grid VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -101,9 +99,14 @@
                 VerticalAlignment="Center" Width="445" />
             <TextBlock
                 x:Name="GetCIDLabelStatus"
-                HorizontalAlignment="Left" Width="85" Margin="5,3,0,3" Height="18">
-				<Run Text="Initializing..." />
-            </TextBlock>
+                HorizontalAlignment="Left" Width="85" Margin="5,3,0,3" Height="18"><Run Text="Initializing..." /></TextBlock>
         </Grid>
+        <Menu IsMainMenu="True" Margin="0,0,0,416">
+            <MenuItem x:Name="MenuItemFile" Header="_View">
+                <MenuItem
+                    Click="Refresh_Click"
+                    Header="_Refresh" />
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

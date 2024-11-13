@@ -66,7 +66,10 @@ namespace HGM.Hotbird64.LicenseManager.Controls
                     ContextMenu = null;
                 }
 
+                Box.ContextMenu.Items.Add(new MenuItem { Command = ApplicationCommands.Cut });
                 Box.ContextMenu.Items.Add(new MenuItem { Command = ApplicationCommands.Copy });
+                Box.ContextMenu.Items.Add(new MenuItem { Command = ApplicationCommands.Undo });
+                Box.ContextMenu.Items.Add(new MenuItem { Command = ApplicationCommands.Redo });
                 Box.ContextMenu.Items.Add(new MenuItem { Command = ApplicationCommands.SelectAll });
             };
         }
