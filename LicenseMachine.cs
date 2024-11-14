@@ -743,7 +743,7 @@ namespace HGM.Hotbird64.LicenseManager
         private void ReEstablishConnection(Exception ex)
         {
 #if DEBUG
-            MessageBox.Show("RECONNECTING DUE TO ACCESS DENIED BUG\r\n\r\n" + ex.Message, "FUCK!", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("RECONNECTING DUE TO ACCESS DENIED BUG\r\n\r\n" + ex.Message, "?!", MessageBoxButton.OK, MessageBoxImage.Error);
 #endif
             string temp = @"\\" + computerName + @"\root\cimv2";
             scope = new ManagementScope(temp, credentials);
@@ -773,7 +773,6 @@ namespace HGM.Hotbird64.LicenseManager
 
             return result;
         }
-
 
         public string InstallProductKey(string key)
         {
@@ -1112,6 +1111,7 @@ namespace HGM.Hotbird64.LicenseManager
             InvokeMethod(licenseProvider.LicenseClassName, "Version", licenseProvider.Version, method, inParams);
         }
 
+        public void InstallConfirmationID(int productIndex, string iid, string cid) => InvokeProductMethod(productIndex, "UninstallProductKey", [iid, cid]);
         private void InvokeServiceMethod(int providerIndex, string method, params object[] inParams) => InvokeServiceMethod(LicenseProvidersList[providerIndex], method, inParams);
         public void Activate(int productIndex) => InvokeProductMethod(productIndex, "Activate", null);
         public void UninstallProductKey(int productIndex) => InvokeProductMethod(productIndex, "UninstallProductKey", null);

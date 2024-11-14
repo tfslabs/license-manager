@@ -58,13 +58,13 @@
         </Grid>
         <Button
             x:Name="GetCIDButton"
-            Margin="480,140,10,0"
+            Margin="480,145,10,0"
             VerticalAlignment="Top"
             Click="Button_GetCID_Clicked"
             Width="60" Height="24">
             <TextBlock Margin="5,2,5,2" VerticalAlignment="Center"><Run Text="Get CID"/></TextBlock>
         </Button>
-        <Grid HorizontalAlignment="Center" Margin="0,169,0,239" Width="530" Height="26">
+        <Grid HorizontalAlignment="Center" Margin="0,174,0,234" Width="530" Height="26">
             <Label Visibility="{Binding Visibility, ElementName=CIDCode}" HorizontalAlignment="Left" Content="Confirmation ID" Width="94" Height="26" />
             <TextBox
                 x:Name="CIDCode"
@@ -108,5 +108,12 @@
                     Header="_Refresh" />
             </MenuItem>
         </Menu>
+        <Button
+            x:Name="InstallCID"
+            Margin="407,145,75,0"
+            VerticalAlignment="Top"
+            Click="Button_InstallCID_Clicked" Height="24">
+            <TextBlock Margin="5,2,5,2" VerticalAlignment="Center"><Run Text="Install CID"/></TextBlock>
+        </Button>
     </Grid>
 </Window>

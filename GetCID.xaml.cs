@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -107,10 +108,15 @@ namespace HGM.Hotbird64.LicenseManager
 
         public bool ControlsEnabled
         {
-            set => EpidBox.IsEnabled =
-                     TextBoxLicenseStatusReason.IsEnabled =
-                        ComboBoxProductId.IsEnabled =
-                            PhoneInstallationIdBox.IsEnabled = value;
+            set
+            {
+                EpidBox.IsEnabled =
+                   InstallCID.IsEnabled =
+                      ComboBoxProductId.IsEnabled =
+                        TextBoxLicenseStatusReason.IsEnabled =
+                           PhoneInstallationIdBox.IsEnabled = value;
+
+            }
         }
 
         private static bool CheckConnection()
@@ -148,6 +154,58 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 GetCIDProgressBar.IsIndeterminate = value;
                 GetCIDProgressBar.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private async void Button_InstallCID_Clicked(object sender, RoutedEventArgs e)
+        {
+            TextBoxInfoText.AppendText("\nInstalling Confirmation ID...\n");
+            int index = ComboBoxProductId.SelectedIndex;
+
+            if (MessageBox.Show
+                (
+                  this,
+                  "Are you sure you want to install Confirmation ID for " + Machine.ProductLicenseList[index].License["Description"] + "?",
+                  "Warning",
+                  MessageBoxButton.YesNo,
+                  MessageBoxImage.Warning
+                )
+                != MessageBoxResult.Yes)
+            {
+                e.Handled = false;
+                return;
+            }
+
+            string installationId = string.Concat(PhoneInstallationIdBox.ToString()
+                    .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
+            string confirmationId = string.Concat(CIDCode.ToString().Trim());
+
+            IsProgressBarRunning = true;
+            ControlsEnabled = false;
+            GetCIDLabelStatus.Text = "Installing CID";
+
+            try
+            {
+                await Task.Run(() => Machine.InstallConfirmationID(index, installationId, confirmationId));
+
+                new Thread(() => Dispatcher.Invoke(() => MessageBox.Show
+                (
+                  this,
+                  "Confirmation ID has been installed successfully",
+                  "Success",
+                  MessageBoxButton.OK,
+                  MessageBoxImage.Information
+                ))).Start();
+
+                Refresh_Click(sender, e);
+            }
+            catch (Exception ex)
+            {
+                GetCIDLabelStatus.Text = "Key uninstall error";
+                IsProgressBarRunning = false;
+                MessageBox.Show(this, "The Product key could not be uninstalled: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ControlsEnabled = true;
+                GetCIDLabelStatus.Text = "Ready";
             }
         }
 
@@ -269,6 +327,14 @@ namespace HGM.Hotbird64.LicenseManager
                     TextBoxInfoText.AppendText($"Your confirmation ID is: {confirmationId}");
                     CIDCode.Background = new SolidColorBrush(Colors.LightGreen);
                     CIDCode.Text = confirmationId;
+                    if (ComboBoxProductId.Items[ComboBoxProductId.SelectedIndex] == "USER_CONTROL: Enter manually")
+                    {
+                        InstallCID.IsEnabled = false;
+                    }
+                    else
+                    {
+                        InstallCID.IsEnabled = true;
+                    }
                 }
                 IsProgressBarRunning = false;
                 GetCIDLabelStatus.Text = "Completed";
@@ -315,7 +381,7 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     ComboBoxProductId.Items.Add("USER_CONTROL: Enter manually");
                 }
-
+                InstallCID.IsEnabled = false;
                 ControlsEnabled = true;
             }
         }
@@ -350,6 +416,7 @@ namespace HGM.Hotbird64.LicenseManager
             TextBoxInfoText.Clear();
             CIDCode.Clear();
             CIDCode.Background = new SolidColorBrush(Colors.Transparent);
+            InstallCID.IsEnabled = false;
             GetCIDLabelStatus.Text = "Ready";
         }
 
