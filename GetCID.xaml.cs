@@ -326,7 +326,7 @@ namespace HGM.Hotbird64.LicenseManager
                     TextBoxInfoText.AppendText($"Your confirmation ID is: {confirmationId}");
                     CIDCode.Background = new SolidColorBrush(Colors.LightGreen);
                     CIDCode.Text = confirmationId;
-                    if (ComboBoxProductId.Items[ComboBoxProductId.SelectedIndex] == "USER_CONTROL: Enter manually")
+                    if ((string)ComboBoxProductId.Items[ComboBoxProductId.SelectedIndex] == "USER_CONTROL: Enter manually")
                     {
                         InstallCID.IsEnabled = false;
                     }
@@ -376,7 +376,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             finally
             {
-                if (ComboBoxProductId.Items.Cast<object>().Last() != "USER_CONTROL: Enter manually")
+                if ((string)ComboBoxProductId.Items.Cast<object>().Last() != "USER_CONTROL: Enter manually")
                 {
                     ComboBoxProductId.Items.Add("USER_CONTROL: Enter manually");
                 }
