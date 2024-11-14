@@ -111,7 +111,6 @@ namespace HGM.Hotbird64.LicenseManager
             set
             {
                 EpidBox.IsEnabled =
-                   InstallCID.IsEnabled =
                       ComboBoxProductId.IsEnabled =
                         TextBoxLicenseStatusReason.IsEnabled =
                            PhoneInstallationIdBox.IsEnabled = value;
@@ -457,6 +456,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             GetCIDLabelStatus.Text = "Gathering Data...";
             await Refresh();
+
         }
     }
 }
