@@ -423,6 +423,7 @@
     <Resource Include="Data\PKeyConfig\pkconfig_winemb8.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_winNext-csvlk.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_winNext.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig_winemb7.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_winPosReady7.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_winThinPC.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig_win8.1Update.xrm-ms.gz" />
@@ -445,6 +446,7 @@
     <Resource Include="Data\PKeyConfig\22621-pkeyconfig.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\26100-pkeyconfig-downlevel.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\26100-pkeyconfig.xrm-ms.gz" />
+	<Resource Include="Data\PKeyConfig\26100-pkeyconfig-csvlk.xrm-ms.gz" />
     <None Include="ClassDiagram1.cd" />
     <None Include="pkeyConfig.xsd">
       <SubType>Designer</SubType>
