@@ -108,8 +108,7 @@ namespace HGM.Hotbird64.LicenseManager
             /*
              * Windows 8 (all editions) and Windows Server 2012
              */ 
-            new PKeyConfigFile {BaseFileName="pkconfig_win8", DisplayName="Windows 8 Embedded (No server upgraded)" },
-            new PKeyConfigFile {BaseFileName="pkconfig_winemb8", DisplayName="Windows 8/Windows 8 Embedded/Windows Server 2012" },
+            new PKeyConfigFile {BaseFileName="pkconfig_win8", DisplayName="Windows 8/Windows 8 Embedded/Windows Server 2012" },
             new PKeyConfigFile {BaseFileName="pkconfig_win8-csvlk", DisplayName="Windows 8/Windows 8 Embedded/Windows Server 2012 KMS Host" }, //KMS Host
 
             /*
@@ -123,19 +122,19 @@ namespace HGM.Hotbird64.LicenseManager
              * Windows Server 2019, Windows Server 2022, Windows Server 2025
              * 
              */
-            new PKeyConfigFile {BaseFileName="pkconfig_win10", DisplayName="Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next" },
-            new PKeyConfigFile {BaseFileName="pkconfig_win10_anniversary", DisplayName="Windows 10 Pre-Release/Windows 10 1607/Windows Server 2012 Next/Windows Server 2016" },
-            new PKeyConfigFile {BaseFileName="16299-pkeyconfig", DisplayName="Windows 10 (1709, 1803)/Windows Server (1709, 1803)/Windows Server 2016" },
-            new PKeyConfigFile {BaseFileName="18362-pkeyconfig", DisplayName="Windows 10 SAC/Windows 11 SAC/Windows Server SAC (1809 to 20H2)/Windows Server 2019" },
+            new PKeyConfigFile {BaseFileName="pkconfig_win10", DisplayName="Windows 10/Windows 11/Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next" },
+            new PKeyConfigFile {BaseFileName="pkconfig_win10_anniversary", DisplayName="Windows 10 Preview/Windows 10 1607/Windows Server 2012 R2 Next/Windows Server 2016" },
+            new PKeyConfigFile {BaseFileName="16299-pkeyconfig", DisplayName="Windows 10 LTSC, Government (1709, 1803)/Windows 11 LTSC, Government/Windows Server (1709, 1803)/Windows Server 2016" },
+            new PKeyConfigFile {BaseFileName="18362-pkeyconfig", DisplayName="Windows 10 (LTSC, SAC)/Windows 11 (LTSC, SAC)/Windows Server SAC (1809 to 20H2)/Windows Server 2019" },
             new PKeyConfigFile {BaseFileName="19041-pkeyconfig", DisplayName="Windows 10 2004/Windows Server 2019" },
-            new PKeyConfigFile {BaseFileName="20348-pkeyconfig", DisplayName="Windows Server 2019 Turbine Server/Windows Server 2022/Windows Server 2021 SAC" },
+            new PKeyConfigFile {BaseFileName="20348-pkeyconfig", DisplayName="Windows Server 2019 Azure Stack HCI/Windows Server 2022/Windows Server 2021 SAC" },
             new PKeyConfigFile {BaseFileName="20348-pkeyconfig-downlevel", DisplayName="Windows 7/Windows Server 2008 R2 compatible upgrade to Windows 10 Insider Program/Windows Server 2022" },
             new PKeyConfigFile {BaseFileName="22621-pkeyconfig", DisplayName="Windows 11 (22H2, 23H2)/Windows IoT Enterprise LTSC/Windows Server 2022 vNext" },
             new PKeyConfigFile {BaseFileName="26100-pkeyconfig", DisplayName="Windows 11 24H2/Windows Server 2025" },
             new PKeyConfigFile {BaseFileName="26100-pkeyconfig-downlevel", DisplayName="Windows 7/Windows Server 2008 R2 (OEM) compatible upgrade to Windows 11 24H2/Windows Server 2025 (OEM)" },
             
-            new PKeyConfigFile {BaseFileName="pkconfig_win10-csvlk", DisplayName="Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next KMS Host" },
-            new PKeyConfigFile {BaseFileName="pkconfig_win10_anniversary-csvlk", DisplayName="Windows 10 Pre-Release/Windows 10 1607/Windows Server 2012 Next/Windows Server 2016 KMS Host" },
+            new PKeyConfigFile {BaseFileName="pkconfig_win10-csvlk", DisplayName="Windows 10/Windows 11/Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next KMS Host" },
+            new PKeyConfigFile {BaseFileName="pkconfig_win10_anniversary-csvlk", DisplayName="Windows 10 Preview/Windows 10 1607/Windows Server 2012 R2 Next/Windows Server 2016 KMS Host" },
             new PKeyConfigFile {BaseFileName="16299-pkeyconfig-csvlk", DisplayName="Windows 10 (1709, 1803)/Windows Server (1709, 1803)/Windows Server 2016 KMS Host" },
             new PKeyConfigFile {BaseFileName="19041-pkeyconfig-csvlk", DisplayName="Windows 10 2004/Windows Server 2019 KMS Host" },
             new PKeyConfigFile {BaseFileName="22621-pkeyconfig-csvlk", DisplayName="Windows 11 (22H2, 23H2)/Windows IoT Enterprise LTSC/Windows Server 2022 vNext KMS Host" },
