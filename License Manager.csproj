@@ -51,7 +51,7 @@
     <DefineConstants>
     </DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -64,6 +64,7 @@
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <DocumentationFile>..\..\!bin!\License Manager\Release\x86\LicenseManager.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon1.ico</ApplicationIcon>
@@ -102,6 +103,8 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <DocumentationFile>..\..\!bin!\License Manager\Release\x64\LicenseManager.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
