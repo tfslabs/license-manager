@@ -142,7 +142,7 @@ namespace HGM.Hotbird64.LicenseManager
                 return;
             }
 #else
-      if (Application.Current.Windows.Count < 2) return;
+            if (Application.Current.Windows.Count < 2) return;
 #endif
 
             if (MessageBox.Show(

@@ -132,7 +132,7 @@ namespace HGM.Hotbird64.LicenseManager
             new PKeyConfigFile {BaseFileName="22621-pkeyconfig", DisplayName="Windows 11 (22H2, 23H2)/Windows IoT Enterprise LTSC/Windows Server 2022 vNext" },
             new PKeyConfigFile {BaseFileName="26100-pkeyconfig", DisplayName="Windows 11 24H2/Windows Server 2025" },
             new PKeyConfigFile {BaseFileName="26100-pkeyconfig-downlevel", DisplayName="Windows 7/Windows Server 2008 R2 (OEM) compatible upgrade to Windows 11 24H2/Windows Server 2025 (OEM)" },
-            
+
             new PKeyConfigFile {BaseFileName="pkconfig_win10-csvlk", DisplayName="Windows 10/Windows 11/Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next KMS Host" },
             new PKeyConfigFile {BaseFileName="pkconfig_win10_anniversary-csvlk", DisplayName="Windows 10 Preview/Windows 10 1607/Windows Server 2012 R2 Next/Windows Server 2016 KMS Host" },
             new PKeyConfigFile {BaseFileName="16299-pkeyconfig-csvlk", DisplayName="Windows 10 (1709, 1803)/Windows Server (1709, 1803)/Windows Server 2016 KMS Host" },
