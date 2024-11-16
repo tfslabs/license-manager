@@ -60,12 +60,11 @@
       <xs:enumeration value="EPID_OFFICE2013"/>
       <xs:enumeration value="EPID_OFFICE2016"/>
       <xs:enumeration value="EPID_OFFICE2019"/>
-	  <xs:enumeration value="EPID_OFFICE2021"/>
-	  <xs:enumeration value="EPID_OFFICE2024"/>
+      <xs:enumeration value="EPID_OFFICE2021"/>
+      <xs:enumeration value="EPID_OFFICE2024"/>
       <xs:enumeration value="EPID_WINDOWS_CHINA_GOV"/>
     </xs:restriction>
   </xs:simpleType>
-
   <xs:simpleType name="GroupId">
     <xs:restriction base="xs:int">
       <xs:minInclusive value="-1"/>
@@ -161,7 +160,7 @@
               <xs:element name="AppItem" minOccurs="1" maxOccurs="unbounded">
                 <xs:annotation>
                   <xs:documentation xml:lang="en">
-                    Defines a KMS Application. There are only three Applications: Windows, Office 2010 and Office 2013+. On a genuine KMS server each Application has a separate counter for currently active clients. Thus each Application needs to be charged seperately.
+                    Defines a KMS Application. There are only three Applications: Windows, Office 2010 and Office 2013 and up. On a genuine KMS server each Application has a separate counter for currently active clients. Thus each Application needs to be charged seperately.
                   </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>

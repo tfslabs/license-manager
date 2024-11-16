@@ -48,7 +48,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\..\!bin!\License Manager\Release\x86</OutputPath>
-    <DefineConstants>CODE_ANALYSIS;</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>none</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -61,7 +62,8 @@
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <FileAlignment>512</FileAlignment>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DocumentationFile>..\..\!bin!\License Manager\Release\x86\LicenseManager.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon1.ico</ApplicationIcon>
@@ -97,8 +99,9 @@
     <DefineConstants>
     </DefineConstants>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <DocumentationFile>..\..\!bin!\License Manager\Release\x64\LicenseManager.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>

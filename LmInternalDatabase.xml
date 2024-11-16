@@ -37,7 +37,7 @@ UsesNDR64="true"                                        // Genuine KMS servers u
 
 </CsvlkItem>
 
-<AppItem                                                   // Application (Windows, Office 2010 or Office 2013+)
+<AppItem                                                   // Application (Windows, Office 2010 or Office 2013 and up)
 Id="{55c92734-d682-4d71-983e-d6ec3f16059f}"              // Guid (required, braces are optional).
 DisplayName="Windows"                                    // Friendly name that should be displayed instead of the Guid (required)
 VlmcsdIndex="0"                                          // VlmcsdIndex of CsvlkItem to use if an unknown KmsItem activates with that AppItem (required)
