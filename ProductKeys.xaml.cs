@@ -24,8 +24,6 @@ namespace HGM.Hotbird64.LicenseManager
             new ProductKey ("Microsoft Visual Studio 2019 Enterprise", "BF8Y8-GN2QH-T84XB-QVY3B-RC4DF", KeyType.StoreLicense ),
             new ProductKey ("Microsoft Visual Studio 2022 Professional", "TD244-P4NB7-YQ6XK-Y8MMM-YWV2J", KeyType.StoreLicense ),
             new ProductKey ("Microsoft Visual Studio 2022 Enterprise", "VHF9H-NXBBB-638P6-6JHCY-88JWH", KeyType.StoreLicense ),
-            new ProductKey ("Microsoft SQL Server 2022 Enterprise", "J4V48-P8MM4-9N3J9-HD97X-DYMRM", KeyType.StoreLicense ),
-            new ProductKey ("Microsoft SCCM 2022 Enterprise", "BXH69-M62YX-QQD6R-3GPWX-8WMFY", KeyType.StoreLicense ),
             new ProductKey ("Windows Server 2022 KMS Host", "R47NX-MVMYR-98PV9-XYVXY-XBXCH", KeyType.StoreLicense)
         };
 
