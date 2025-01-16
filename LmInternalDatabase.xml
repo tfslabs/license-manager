@@ -119,7 +119,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<WinBuild BuildNumber="26100" ReleaseDate="2024-01-26T11:10:00Z" DisplayName="Windows 11 24H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 	</WinBuilds>
 	<CsvlkItems>
-		<CsvlkItem DisplayName="Windows Server 2025" ReleaseDate="2024-04-26T00:00:00Z" IniFileName="Windows" Id="84e331f6-4279-48c4-ab10-b75139181351" VlmcsdIndex="0">
+		<CsvlkItem DisplayName="Windows Server 2025" ReleaseDate="2024-04-26T00:00:00Z" IniFileName="Windows" Id="84e331f6-4279-48c4-ab10-b75139181351">
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6"/>
 			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48"/>
 			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9"/>
