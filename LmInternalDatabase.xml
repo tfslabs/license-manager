@@ -119,7 +119,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<WinBuild BuildNumber="26100" ReleaseDate="2024-01-26T11:10:00Z" DisplayName="Windows 11 24H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 	</WinBuilds>
 	<CsvlkItems>
-		<CsvlkItem DisplayName="Windows Server 2025" VlmcsdIndex="0" GroupId="4919" MinKeyId="20000" MaxKeyId="20019999" IniFileName="Windows" ReleaseDate="2024-04-26T00:00:00Z" EPid="05426-04919-009-767455-03-1033-9200.0000-0172025" Id="84e331f6-4279-48c4-ab10-b75139181351">
+		<CsvlkItem DisplayName="Windows Server 2025" GroupId="4919" MinKeyId="20000" MaxKeyId="20019999" IniFileName="Windows" ReleaseDate="2024-04-26T00:00:00Z" EPid="05426-04919-009-767455-03-1033-9200.0000-0172025" Id="84e331f6-4279-48c4-ab10-b75139181351">
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
 			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
 			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9" />
@@ -368,7 +368,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="6d646890-3606-461a-86ab-598bb84ace82" />
 			<Activate KmsItem="e1c51358-fe3e-4203-a4a2-3b6b20c9734e" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Windows 10 China Government" VlmcsdIndex="4" GroupId="3858" MinKeyId="15000000" MaxKeyId="999999999" IniFileName="WinChinaGov" ReleaseDate="2017-04-05T00:00:00Z" EPid="05426-03858-356-921766-03-1033-9200.0000-0172025" Id="ecc0774a-aed3-4e1a-b815-2b31781adfea">
+		<CsvlkItem DisplayName="Windows 10 Enterprise G" VlmcsdIndex="0" GroupId="3858" MinKeyId="15000000" MaxKeyId="999999999" IniFileName="WinChinaGov" ReleaseDate="2017-04-05T00:00:00Z" EPid="05426-03858-356-921766-03-1033-9200.0000-0172025" Id="ecc0774a-aed3-4e1a-b815-2b31781adfea">
 			<Activate KmsItem="7ba0bf23-d0f5-4072-91d9-d55af5a481b6" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows 10 2019" GroupId="206" MinKeyId="256000000" MaxKeyId="265999999" IniFileName="Windows" ReleaseDate="2018-10-02T00:00:00Z" Id="90da7373-1c51-430b-bf26-c97e9c5cdc31">
@@ -628,13 +628,13 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<CsvlkItem DisplayName="Windows Vista (2 of 2)" GroupId="154" MinKeyId="394000000" MaxKeyId="416999999" IniFileName="Windows" ReleaseDate="2006-11-30T00:00:00Z" Id="4871de8b-3adf-4455-a7d3-fd7b6c01c939">
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Office 2024" VlmcsdIndex="7" GroupId="206" MinKeyId="591000000" MaxKeyId="610999999" IniFileName="Office2024" ReleaseDate="2024-09-16T00:00:00Z" EPid="05426-00206-601-010329-03-1033-9200.0000-0172025" Id="f3d89bbf-c0ec-47ce-a8fa-e5a5f97e447f">
+		<CsvlkItem DisplayName="Office 2024" VlmcsdIndex="6" GroupId="206" MinKeyId="591000000" MaxKeyId="610999999" IniFileName="Office2024" ReleaseDate="2024-09-16T00:00:00Z" EPid="05426-00206-601-010329-03-1033-9200.0000-0172025" Id="f3d89bbf-c0ec-47ce-a8fa-e5a5f97e447f">
 			<Activate KmsItem="a8973cb5-bf03-0a4c-9cef-703099645ab3" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Office 2021" VlmcsdIndex="6" GroupId="206" MinKeyId="571000000" MaxKeyId="590999999" IniFileName="Office2021" ReleaseDate="2021-09-16T00:00:00Z" EPid="05426-00206-578-810880-03-1033-9200.0000-0172025" Id="47f3b983-7c53-4d45-abc6-bcd91e2dd90a">
+		<CsvlkItem DisplayName="Office 2021" VlmcsdIndex="5" GroupId="206" MinKeyId="571000000" MaxKeyId="590999999" IniFileName="Office2021" ReleaseDate="2021-09-16T00:00:00Z" EPid="05426-00206-578-810880-03-1033-9200.0000-0172025" Id="47f3b983-7c53-4d45-abc6-bcd91e2dd90a">
 			<Activate KmsItem="86d50b16-4808-41af-b83b-b338274318b2" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Office 2019" VlmcsdIndex="5" GroupId="206" MinKeyId="666000000" MaxKeyId="685999999" IniFileName="Office2019" ReleaseDate="2018-09-24T00:00:00Z" EPid="05426-00206-684-399670-03-1033-9200.0000-0172025" Id="70512334-47b4-44db-a233-be5ea33b914c">
+		<CsvlkItem DisplayName="Office 2019" VlmcsdIndex="4" GroupId="206" MinKeyId="666000000" MaxKeyId="685999999" IniFileName="Office2019" ReleaseDate="2018-09-24T00:00:00Z" EPid="05426-00206-684-399670-03-1033-9200.0000-0172025" Id="70512334-47b4-44db-a233-be5ea33b914c">
 			<Activate KmsItem="617d9eb1-ef36-4f82-86e0-a65ae07b96c6" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Office 2016" VlmcsdIndex="3" GroupId="206" MinKeyId="437000000" MaxKeyId="458999999" IniFileName="Office2016" ReleaseDate="2015-09-22T00:00:00Z" EPid="05426-00206-442-913180-03-1033-9200.0000-0172025" Id="98ebfe73-2084-4c97-932c-c0cd1643bea7">
