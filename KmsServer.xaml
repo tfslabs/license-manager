@@ -21,7 +21,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Right" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Left" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -50,12 +50,12 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Right" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Left" />
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Style="{StaticResource StandardLabel}" Content="{Binding DisplayName}"/>
+                                <Label Grid.Column="0" Style="{StaticResource StandardLabel}" HorizontalAlignment="Left" Content="{Binding DisplayName}"/>
 
                                 <TextBox
-                                        Grid.Column="1"
+                                    Grid.Column="1"
                                     Background="{Binding IsValidEpid, Converter={lm:Bool2Brush}}"
                                     IsReadOnly="{Binding IsRandom}"
                                     Style="{StaticResource StandardTextBox}"
@@ -81,7 +81,7 @@
                 <TextBox x:Name="TextBoxTapIp" Grid.Row="9" Visibility="{Binding ElementName=ComboBoxTap, Path=Visibility}" IsEnabled="{Binding ElementName=ComboBoxTap, Path=IsEnabled}" Grid.Column="1"
             Style="{StaticResource StandardTextBox}" IsReadOnly="False" Background="LightGreen" TextChanged="TextBoxTapIp_TextChanged">10.10.10.9/30</TextBox>
 
-                <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource StandardLabel}">Activation Renewal Interval</Label>
+                <Label Grid.Row="10" Grid.Column="0" Style="{StaticResource StandardLabel}" HorizontalAlignment="Left">Activation Renewal Interval</Label>
                 <Grid Grid.Row="10" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30*" />
@@ -125,7 +125,7 @@
                     <CheckBox x:Name="CheckBoxAllowNonVl" Content="Allow beta and retail KMS IDs" Width="{Binding ElementName=CheckBoxAllowUnknownProducts,Path=Width}" IsChecked="True" IsThreeState="False"
               ToolTip="If unchecked, clients with beta and retail KMS IDs or incorrect Application IDs will not be granted activation." ToolTipService.ShowDuration="30000" />
                     <CheckBox x:Name="CheckBoxCheckTime" Content="Check client time" Width="{Binding ElementName=CheckBoxAllowUnknownProducts,Path=Width}" IsChecked="True" IsThreeState="False"
-              ToolTip="If checked, clients with a time difference of more than 4 hours will not be granted activation." ToolTipService.ShowDuration="30000" HorizontalAlignment="Right" />
+              ToolTip="If checked, clients with a time difference of more than 4 hours will not be granted activation." ToolTipService.ShowDuration="30000" HorizontalAlignment="Left" />
                     <CheckBox x:Name="CheckBoxPreCharge" Content="Pre-charge server" Width="{Binding ElementName=CheckBoxAllowUnknownProducts,Path=Width}" IsChecked="true" IsThreeState="False"
               ToolTip="If unchecked, the server will not be pre-charged and you need at least 25 Windows clients, 5 Windows servers and/or 5 Office computers for activations to succeed."
               ToolTipService.ShowDuration="30000" ToolTipService.ShowOnDisabled="True" />
