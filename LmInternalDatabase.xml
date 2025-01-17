@@ -716,12 +716,12 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Windows 10/11 Home Single Language" Id="cd918a57-a41b-4c82-8dce-1a538e221a83" Gvlk="7HNRX-D7KGG-3K4RQ-4WPJ4-YTDFH" />
 			</KmsItem>
 			<KmsItem DisplayName="Windows 10 2015 (Volume)" Id="d27cd636-1962-44e9-8b4f-27b6c23efb85" IsPreview="false" DefaultKmsProtocol="6.0">
-				<SkuItem DisplayName="Windows 10 Enterprise 2015 LTSB" Id="7b51a46c-0c04-4e8f-9af4-8496cca90d5e" Gvlk="WNMTR-4C88C-JK8YV-HQ7T2-76DF9" />
-				<SkuItem DisplayName="Windows 10 Enterprise 2015 LTSB N" Id="87b838b7-41b6-4590-8318-5797951d8529" Gvlk="2F77B-TNFGY-69QQF-B8YKP-D69TJ" />
+				<SkuItem DisplayName="Windows 10 Enterprise 2015 LTSB S" Id="7b51a46c-0c04-4e8f-9af4-8496cca90d5e" Gvlk="WNMTR-4C88C-JK8YV-HQ7T2-76DF9" />
+				<SkuItem DisplayName="Windows 10 Enterprise 2015 LTSB SN" Id="87b838b7-41b6-4590-8318-5797951d8529" Gvlk="2F77B-TNFGY-69QQF-B8YKP-D69TJ" />
 			</KmsItem>
 			<KmsItem DisplayName="Windows 10 2016 (Volume)" Id="969fe3c0-a3ec-491a-9f25-423605deb365" IsPreview="false" DefaultKmsProtocol="6.0">
-				<SkuItem DisplayName="Windows 10 Enterprise 2016 LTSB" Id="2d5a5a60-3040-48bf-beb0-fcd770c20ce0" Gvlk="DCPHK-NFMTC-H88MJ-PFHPY-QJ4BJ" />
-				<SkuItem DisplayName="Windows 10 Enterprise 2016 LTSB N" Id="9f776d83-7156-45b2-8a5c-359b9c9f22a3" Gvlk="QFFDN-GRT3P-VKWWX-X7T3R-8B639" />
+				<SkuItem DisplayName="Windows 10 Enterprise 2016 LTSB S" Id="2d5a5a60-3040-48bf-beb0-fcd770c20ce0" Gvlk="DCPHK-NFMTC-H88MJ-PFHPY-QJ4BJ" />
+				<SkuItem DisplayName="Windows 10 Enterprise 2016 LTSB SN" Id="9f776d83-7156-45b2-8a5c-359b9c9f22a3" Gvlk="QFFDN-GRT3P-VKWWX-X7T3R-8B639" />
 			</KmsItem>
 			<KmsItem DisplayName="Windows 10/11 2019 (Volume, bundled with 2021 and 2024)" Id="11b15659-e603-4cf1-9c1f-f0ec01b81888" IsPreview="false" DefaultKmsProtocol="6.0">
 				<SkuItem DisplayName="Windows 10 Enterprise LTSC (2019, 2021)/Windows 11 Enterprise LTSC 2024 S" Id="32d2fab3-e4a8-42c2-923b-4bf4fd13e6ee" Gvlk="M7XTQ-FN8P6-TTKYV-9D4CC-J462D" />
@@ -753,7 +753,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Windows 10/11 Enterprise for Virtual Desktops Preview" Id="e4db50ea-bda1-4566-b047-0ca50abc6f07" Gvlk="7NBT4-WGBQX-MP4H7-QXFF8-YP3KX" />
 				<SkuItem DisplayName="Windows IoT Enterprise LTSC (2021, 2024)" Id="59eb965c-9150-42b7-a0ec-22151b9897c5" Gvlk="KBN8V-HFGQ4-MGXVD-347P6-PDQGT" />
 			</KmsItem>
-			<KmsItem DisplayName="Windows 10 China Government" Id="7ba0bf23-d0f5-4072-91d9-d55af5a481b6" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="1">
+			<KmsItem DisplayName="Windows 10 Enterprise for Government" Id="7ba0bf23-d0f5-4072-91d9-d55af5a481b6" IsPreview="false" CanMapToDefaultCsvlk="false" DefaultKmsProtocol="6.0" NCountPolicy="1">
 				<SkuItem DisplayName="Windows 10/11 Enterprise G" Id="e0b2d383-d112-413f-8a80-97f373a5820c" Gvlk="YYVX9-NTFWV-6MDM3-9PT4T-4M68B" />
 				<SkuItem DisplayName="Windows 10/11 Enterprise G N" Id="e38454fb-41a4-4f59-a5dc-25080e354730" Gvlk="44RPN-FTY23-9VTTB-MP9BX-T84FV" />
 			</KmsItem>
