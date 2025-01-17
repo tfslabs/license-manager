@@ -119,83 +119,83 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<WinBuild BuildNumber="26100" ReleaseDate="2024-01-26T11:10:00Z" DisplayName="Windows 11 24H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 	</WinBuilds>
 	<CsvlkItems>
-		<CsvlkItem DisplayName="Windows Server 2025" ReleaseDate="2024-04-26T00:00:00Z" IniFileName="Windows" Id="84e331f6-4279-48c4-ab10-b75139181351">
-			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6"/>
-			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48"/>
-			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9"/>
-			<Activate KmsItem="8a21fdf3-cbc5-44eb-83f3-fe284e6680a7"/>
-			<Activate KmsItem="7fde5219-fbfa-484a-82c9-34d1ad53e856"/>
-			<Activate KmsItem="0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed"/>
-			<Activate KmsItem="ca87f5b6-cd46-40c0-b06d-8ecd57a4373f"/>
-			<Activate KmsItem="b2ca2689-a9a8-42d7-938d-cf8e9f201958"/>
-			<Activate KmsItem="3c40b358-5948-45af-923b-53d21fcc7e79"/>
-			<Activate KmsItem="8665cb71-468c-4aa3-a337-cb9bc9d5eaac"/>
-			<Activate KmsItem="cb8fc780-2c05-495a-9710-85afffc904d7"/>
-			<Activate KmsItem="8456efd3-0c04-4089-8740-5b7238535a65"/>
-			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148"/>
-			<Activate KmsItem="d27cd636-1962-44e9-8b4f-27b6c23efb85"/>
-			<Activate KmsItem="969fe3c0-a3ec-491a-9f25-423605deb365"/>
-			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743"/>
-			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888"/>
-			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5"/>
-			<Activate KmsItem="b74263e4-0f92-46c6-bcf8-c11d5efe2959"/>
-			<Activate KmsItem="3b576817-7b75-4362-9e13-223f2d9e9c97"/>
-			<Activate KmsItem="907f1f65-adcd-4a2e-95bc-4bf500bc6e58"/>
-			<Activate KmsItem="e85ee727-69c4-4528-99d2-216b0f065e38"/>
+		<CsvlkItem DisplayName="Windows Server 2025" VlmcsdIndex="0" GroupId="4919" MinKeyId="20000" MaxKeyId="20019999" IniFileName="Windows" ReleaseDate="2024-04-26T00:00:00Z" EPid="03612-04919-013-155490-03-1033-26100.0000-0172025" Id="84e331f6-4279-48c4-ab10-b75139181351">
+			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
+			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
+			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9" />
+			<Activate KmsItem="8a21fdf3-cbc5-44eb-83f3-fe284e6680a7" />
+			<Activate KmsItem="7fde5219-fbfa-484a-82c9-34d1ad53e856" />
+			<Activate KmsItem="0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed" />
+			<Activate KmsItem="ca87f5b6-cd46-40c0-b06d-8ecd57a4373f" />
+			<Activate KmsItem="b2ca2689-a9a8-42d7-938d-cf8e9f201958" />
+			<Activate KmsItem="3c40b358-5948-45af-923b-53d21fcc7e79" />
+			<Activate KmsItem="8665cb71-468c-4aa3-a337-cb9bc9d5eaac" />
+			<Activate KmsItem="cb8fc780-2c05-495a-9710-85afffc904d7" />
+			<Activate KmsItem="8456efd3-0c04-4089-8740-5b7238535a65" />
+			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
+			<Activate KmsItem="d27cd636-1962-44e9-8b4f-27b6c23efb85" />
+			<Activate KmsItem="969fe3c0-a3ec-491a-9f25-423605deb365" />
+			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743" />
+			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888" />
+			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5" />
+			<Activate KmsItem="b74263e4-0f92-46c6-bcf8-c11d5efe2959" />
+			<Activate KmsItem="3b576817-7b75-4362-9e13-223f2d9e9c97" />
+			<Activate KmsItem="907f1f65-adcd-4a2e-95bc-4bf500bc6e58" />
+			<Activate KmsItem="e85ee727-69c4-4528-99d2-216b0f065e38" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Windows Server 2025 (Azure Only)" ReleaseDate="2024-04-26T00:00:00Z" IniFileName="Windows" Id="82fcf64d-f9dd-4411-9c79-f2eed16d4eb8">
-			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6"/>
-			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48"/>
-			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9"/>
-			<Activate KmsItem="8a21fdf3-cbc5-44eb-83f3-fe284e6680a7"/>
-			<Activate KmsItem="7fde5219-fbfa-484a-82c9-34d1ad53e856"/>
-			<Activate KmsItem="0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed"/>
-			<Activate KmsItem="ca87f5b6-cd46-40c0-b06d-8ecd57a4373f"/>
-			<Activate KmsItem="b2ca2689-a9a8-42d7-938d-cf8e9f201958"/>
-			<Activate KmsItem="3c40b358-5948-45af-923b-53d21fcc7e79"/>
-			<Activate KmsItem="8665cb71-468c-4aa3-a337-cb9bc9d5eaac"/>
-			<Activate KmsItem="cb8fc780-2c05-495a-9710-85afffc904d7"/>
-			<Activate KmsItem="8456efd3-0c04-4089-8740-5b7238535a65"/>
-			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148"/>
-			<Activate KmsItem="d27cd636-1962-44e9-8b4f-27b6c23efb85"/>
-			<Activate KmsItem="969fe3c0-a3ec-491a-9f25-423605deb365"/>
-			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743"/>
-			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888"/>
-			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5"/>
-			<Activate KmsItem="b74263e4-0f92-46c6-bcf8-c11d5efe2959"/>
-			<Activate KmsItem="3b576817-7b75-4362-9e13-223f2d9e9c97"/>
-			<Activate KmsItem="907f1f65-adcd-4a2e-95bc-4bf500bc6e58"/>
-			<Activate KmsItem="e85ee727-69c4-4528-99d2-216b0f065e38"/>
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9"/>
+		<CsvlkItem DisplayName="Windows Server 2025 (Azure Only)" GroupId="4918" MinKeyId="0" MaxKeyId="49999" IniFileName="Windows" ReleaseDate="2024-04-26T00:00:00Z" Id="82fcf64d-f9dd-4411-9c79-f2eed16d4eb8">
+			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
+			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
+			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9" />
+			<Activate KmsItem="8a21fdf3-cbc5-44eb-83f3-fe284e6680a7" />
+			<Activate KmsItem="7fde5219-fbfa-484a-82c9-34d1ad53e856" />
+			<Activate KmsItem="0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed" />
+			<Activate KmsItem="ca87f5b6-cd46-40c0-b06d-8ecd57a4373f" />
+			<Activate KmsItem="b2ca2689-a9a8-42d7-938d-cf8e9f201958" />
+			<Activate KmsItem="3c40b358-5948-45af-923b-53d21fcc7e79" />
+			<Activate KmsItem="8665cb71-468c-4aa3-a337-cb9bc9d5eaac" />
+			<Activate KmsItem="cb8fc780-2c05-495a-9710-85afffc904d7" />
+			<Activate KmsItem="8456efd3-0c04-4089-8740-5b7238535a65" />
+			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
+			<Activate KmsItem="d27cd636-1962-44e9-8b4f-27b6c23efb85" />
+			<Activate KmsItem="969fe3c0-a3ec-491a-9f25-423605deb365" />
+			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743" />
+			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888" />
+			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5" />
+			<Activate KmsItem="b74263e4-0f92-46c6-bcf8-c11d5efe2959" />
+			<Activate KmsItem="3b576817-7b75-4362-9e13-223f2d9e9c97" />
+			<Activate KmsItem="907f1f65-adcd-4a2e-95bc-4bf500bc6e58" />
+			<Activate KmsItem="e85ee727-69c4-4528-99d2-216b0f065e38" />
+			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Windows Server 2025 (Microsoft Internal Lab)" ReleaseDate="2024-04-26T00:00:00Z" IniFileName="Windows" Id="6bad0243-1c35-46b2-b8e6-7a853e37413f" IsLab="true">
-			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6"/>
-			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48"/>
-			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9"/>
-			<Activate KmsItem="8a21fdf3-cbc5-44eb-83f3-fe284e6680a7"/>
-			<Activate KmsItem="7fde5219-fbfa-484a-82c9-34d1ad53e856"/>
-			<Activate KmsItem="0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed"/>
-			<Activate KmsItem="ca87f5b6-cd46-40c0-b06d-8ecd57a4373f"/>
-			<Activate KmsItem="b2ca2689-a9a8-42d7-938d-cf8e9f201958"/>
-			<Activate KmsItem="3c40b358-5948-45af-923b-53d21fcc7e79"/>
-			<Activate KmsItem="8665cb71-468c-4aa3-a337-cb9bc9d5eaac"/>
-			<Activate KmsItem="cb8fc780-2c05-495a-9710-85afffc904d7"/>
-			<Activate KmsItem="8456efd3-0c04-4089-8740-5b7238535a65"/>
-			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148"/>
-			<Activate KmsItem="d27cd636-1962-44e9-8b4f-27b6c23efb85"/>
-			<Activate KmsItem="969fe3c0-a3ec-491a-9f25-423605deb365"/>
-			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743"/>
-			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888"/>
-			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5"/>
-			<Activate KmsItem="b74263e4-0f92-46c6-bcf8-c11d5efe2959"/>
-			<Activate KmsItem="3b576817-7b75-4362-9e13-223f2d9e9c97"/>
-			<Activate KmsItem="907f1f65-adcd-4a2e-95bc-4bf500bc6e58"/>
-			<Activate KmsItem="e85ee727-69c4-4528-99d2-216b0f065e38"/>
-			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9"/>
-			<Activate KmsItem="bbb97b3b-8ca4-4a28-9717-89fabd42c4ac"/>
-			<Activate KmsItem="6d646890-3606-461a-86ab-598bb84ace82"/>
-			<Activate KmsItem="e1c51358-fe3e-4203-a4a2-3b6b20c9734e"/>
-		</CsvlkItem>
+		<CsvlkItem DisplayName="Windows Server 2025 (Microsoft Internal Lab)" IsLab="true" GroupId="4920" MinKeyId="0" MaxKeyId="49999" IniFileName="Windows" ReleaseDate="2024-04-26T00:00:00Z" Id="6bad0243-1c35-46b2-b8e6-7a853e37413f">
+			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
+			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
+			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9" />
+			<Activate KmsItem="8a21fdf3-cbc5-44eb-83f3-fe284e6680a7" />
+			<Activate KmsItem="7fde5219-fbfa-484a-82c9-34d1ad53e856" />
+			<Activate KmsItem="0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed" />
+			<Activate KmsItem="ca87f5b6-cd46-40c0-b06d-8ecd57a4373f" />
+			<Activate KmsItem="b2ca2689-a9a8-42d7-938d-cf8e9f201958" />
+			<Activate KmsItem="3c40b358-5948-45af-923b-53d21fcc7e79" />
+			<Activate KmsItem="8665cb71-468c-4aa3-a337-cb9bc9d5eaac" />
+			<Activate KmsItem="cb8fc780-2c05-495a-9710-85afffc904d7" />
+			<Activate KmsItem="8456efd3-0c04-4089-8740-5b7238535a65" />
+			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
+			<Activate KmsItem="d27cd636-1962-44e9-8b4f-27b6c23efb85" />
+			<Activate KmsItem="969fe3c0-a3ec-491a-9f25-423605deb365" />
+			<Activate KmsItem="6e9fc069-257d-4bc4-b4a7-750514d32743" />
+			<Activate KmsItem="11b15659-e603-4cf1-9c1f-f0ec01b81888" />
+			<Activate KmsItem="8449b1fb-f0ea-497a-99ab-66ca96e9a0f5" />
+			<Activate KmsItem="b74263e4-0f92-46c6-bcf8-c11d5efe2959" />
+			<Activate KmsItem="3b576817-7b75-4362-9e13-223f2d9e9c97" />
+			<Activate KmsItem="907f1f65-adcd-4a2e-95bc-4bf500bc6e58" />
+			<Activate KmsItem="e85ee727-69c4-4528-99d2-216b0f065e38" />
+			<Activate KmsItem="cbdcb1ba-e093-4c81-a463-10775291fdf9" />
+			<Activate KmsItem="bbb97b3b-8ca4-4a28-9717-89fabd42c4ac" />
+			<Activate KmsItem="6d646890-3606-461a-86ab-598bb84ace82" />
+			<Activate KmsItem="e1c51358-fe3e-4203-a4a2-3b6b20c9734e" />
+		</CsvlkItem>	
 		<CsvlkItem DisplayName="Windows Server 2022" VlmcsdIndex="0" GroupId="4573" MinKeyId="30000" MaxKeyId="20029999" IniFileName="Windows" ReleaseDate="2021-08-18T00:00:00Z" EPid="03612-04573-018-246887-03-1033-20348.0000-1862021" Id="661f7658-7035-4b4c-9f35-010682943ec2">
 			<Activate KmsItem="b74263e4-0f92-46c6-bcf8-c11d5efe2959" />
 			<Activate KmsItem="58e2134f-8e11-4d17-9cb2-91069c151148" />
@@ -775,11 +775,11 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 				<SkuItem DisplayName="Windows Server 2021 Datacenter (SAC)" Id="39e69c41-42b4-4a0a-abad-8e3c10a797cc" Gvlk="QFND9-D3Y9C-J3KKY-6RPVP-2DPYV" />
 				<SkuItem DisplayName="Windows Server 2021 Standard (SAC)" Id="f5e9429c-f50b-4b98-b15c-ef92eb5cff39" Gvlk="67KN8-4FYJW-2487Q-MQ2J7-4C4RG" />
 			</KmsItem>
-			<KmsItem DisplayName="Windows Server 2025" Id="7da35c8b-bd8b-4190-aa8f-62c243c55321" IsPreview="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
-				<SkuItem DisplayName="Windows Server 2025 Standard" Id="7dc26449-db21-4e09-ba37-28f2958506a6" Gvlk="TVRH6-WHNXV-R9WG3-9XRFY-MY832"/>
-				<SkuItem DisplayName="Windows Server 2025 Azure Core" Id="45b5aff2-60a0-42f2-bc4b-ec6e5f7b527e" Gvlk="QN7G3-4RM92-MT6QR-PR966-FVYV7"/>
-				<SkuItem DisplayName="Windows Server 2025 Datacenter" Id="c052f164-cdf6-409a-a0cb-853ba0f0f55a" Gvlk="D764K-2NDRG-47T6Q-P8T8W-YP6DF"/>
-				<SkuItem DisplayName="Windows Server 2025 Datacenter: Azure Edition" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="XGN3F-F394H-FD2MY-PP6FD-8MCRC"/>
+			<KmsItem DisplayName="Windows Server 2025" Id="907f1f65-adcd-4a2e-95bc-4bf500bc6e58" IsPreview="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Windows Server 2025 Azure Core" Id="45b5aff2-60a0-42f2-bc4b-ec6e5f7b527e" Gvlk="QN7G3-4RM92-MT6QR-PR966-FVYV7" />
+				<SkuItem DisplayName="Windows Server 2025 Datacenter Azure Edition" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="NQ8HH-FTDTM-6VGY7-TQ3DV-XFBV2" />
+				<SkuItem DisplayName="Windows Server 2025 Datacenter" Id="c052f164-cdf6-409a-a0cb-853ba0f0f55a" Gvlk="CNFDQ-2BW8H-9V4WM-TKCPD-MD2QF" />
+				<SkuItem DisplayName="Windows Server 2025 Standard" Id="7dc26449-db21-4e09-ba37-28f2958506a6" Gvlk="DPNXD-67YY9-WWFJJ-RYH99-RM832" />
 			</KmsItem>
 		</AppItem>
 		<AppItem DisplayName="Office 2010" Id="59a52881-a989-479d-af46-f275c6370663" VlmcsdIndex="1" MinActiveClients="10">
