@@ -396,7 +396,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
                 else
                 {
-                    TextBoxComputerName.Background = Brushes.LightGreen;
+                    TextBoxComputerName.Background = App.DefaultTextBoxBackground;
                     TextBoxComputerName.Text = Machine.ComputerName + " ";
                     ConnectToLocalComputerToolStripMenuItem.IsEnabled = true;
                 }
@@ -410,7 +410,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
                 else
                 {
-                    TextBoxUserName.Background = Brushes.LightGreen;
+                    TextBoxUserName.Background = App.DefaultTextBoxBackground;
                     TextBoxUserName.Text = Machine.UserName;
                 }
             }
@@ -905,24 +905,20 @@ namespace HGM.Hotbird64.LicenseManager
 
                         if (pid.KeyTypeString != "03")
                         {
-                            TextBoxCsvlk.Background = Brushes.OrangeRed;
                             TextBoxCsvlk.ToolTip = "The extended PID is not from a Volume License Key";
                             TextBoxCsvlk.Text = "(KMS host does not have a CSVLK)";
                         }
                         else if (!CsvlkConfigs.Select(g => g.RefGroupId).Contains((int)pid.GroupId))
                         {
-                            TextBoxCsvlk.Background = Brushes.OrangeRed;
                             TextBoxCsvlk.ToolTip = "The extended PID contains a Group ID that never appears in a CSVLK";
                             TextBoxCsvlk.Text = "(KMS has an invalid CSVLK)";
                         }
                         else if (currentKmsItem == null)
                         {
-                            TextBoxCsvlk.Background = Brushes.Orange;
                             TextBoxCsvlk.ToolTip = "This active product is not in the License Manager Database and cannot be checked.";
                         }
                         else if (pkConfig == null | csvlkRule == null)
                         {
-                            TextBoxCsvlk.Background = Brushes.Orange;
                             TextBoxCsvlk.ToolTip = "This CSVLK is not in the License Manager Database and cannot be checked.";
                         }
                         else
@@ -931,7 +927,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                             if (csvlkRule.Activates[currentKmsItem.Guid] != null)
                             {
-                                TextBoxCsvlk.Background = csvlkRule.IsLab || csvlkRule.IsPreview ? Brushes.Yellow : Brushes.LightGreen;
+                                TextBoxCsvlk.Background = csvlkRule.IsLab || csvlkRule.IsPreview ? Brushes.Yellow : App.DefaultTextBoxBackground;
                                 TextBoxCsvlk.ToolTip = $"KMS ID \"{currentKmsItem}\" is covered by your KMS host's CSVLK";
                                 if (csvlkRule.IsLab)
                                 {
@@ -945,7 +941,6 @@ namespace HGM.Hotbird64.LicenseManager
                             }
                             else
                             {
-                                TextBoxCsvlk.Background = currentKmsItem.IsRetail || currentKmsItem.IsPreview ? Brushes.YellowGreen : Brushes.OrangeRed;
                                 TextBoxCsvlk.ToolTip = $"KMS ID \"{currentKmsItem}\" is not covered by your KMS host's CSVLK. You have been activated by an emulator";
                                 if (currentKmsItem.IsRetail || currentKmsItem.IsPreview)
                                 {
@@ -955,7 +950,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                             DataGridToolTip.Text =
                                 "The ePID reveals the CSVLK of your KMS host. This is a list of KMS IDs a genuine KMS server would activate. If you have been granted activation without your product being in this list, you have been activated by an emulator with an incorrect extended PID.";
-                            DataGrid.Visibility = (!Equals(TextBoxCsvlk.Background, Brushes.YellowGreen) && !Equals(TextBoxCsvlk.Background, Brushes.LightGreen)) || License.ShowAllFields ? Visibility.Visible : Visibility.Collapsed;
+                            DataGrid.Visibility = (!Equals(TextBoxCsvlk.Background, Brushes.YellowGreen) && !Equals(TextBoxCsvlk.Background, App.DefaultTextBoxBackground)) || License.ShowAllFields ? Visibility.Visible : Visibility.Collapsed;
                         }
                     }
                 }
@@ -1014,7 +1009,7 @@ namespace HGM.Hotbird64.LicenseManager
                 w.DisplayProperty(LabelKeyManagementServiceCurrentCount, TextBoxKeyManagementServiceCurrentCount, "KeyManagementServiceCurrentCount");
                 uint currentCount = (uint)w.Value;
 
-                TextBoxKeyManagementServiceCurrentCount.Background = currentCount < requiredClientCount ? Brushes.OrangeRed : Brushes.LightGreen;
+                TextBoxKeyManagementServiceCurrentCount.Background = currentCount < requiredClientCount ? Brushes.OrangeRed : App.DefaultTextBoxBackground;
 
                 w.DisplayProperty(LabelKeyManagementServiceTotalRequests, TextBoxKeyManagementServiceTotalRequests, "KeyManagementServiceTotalRequests");
                 w.DisplayProperty(LabelKeyManagementServiceFailedRequests, TextBoxKeyManagementServiceFailedRequests, "KeyManagementServiceFailedRequests");
