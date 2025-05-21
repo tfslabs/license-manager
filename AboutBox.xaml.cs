@@ -12,6 +12,9 @@ namespace HGM.Hotbird64.LicenseManager
             TopElement.LayoutTransform = Scaler;
             System.Version version = Assembly.GetCallingAssembly().GetName().Version;
             LabelVersion.Content = "Version " + version.ToString() + (version.MinorRevision < 2300 ? $" Beta {version.MinorRevision}" : "") + $" {IntPtr.Size << 3}-bit";
+#if DEBUG
+            LabelVersion.Content += " (Debugging mode is enabled)";
+#endif
         }
 
         private void Button_Ok_Click(object sender, RoutedEventArgs e)

@@ -91,6 +91,11 @@ namespace HGM.Hotbird64.LicenseManager
                 ); ;
             }
 
+#if DEBUG
+            MessageBox.Show("Debugging mode is enabled in this build, allowing the verbose information during the application operation.", "Debugging mode is enabled", MessageBoxButton.OK);
+            MainWindowName.Title += " (Debugging mode is enabled)";
+#endif
+
             TopElement.LayoutTransform = Scaler;
 
             Loaded += (s, e) =>
