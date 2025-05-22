@@ -200,9 +200,16 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (Exception ex)
             {
-                GetCIDLabelStatus.Text = "Key uninstall error";
+                GetCIDLabelStatus.Text = "Installing Confirmation ID Error";
                 IsProgressBarRunning = false;
-                MessageBox.Show(this, "The Product key could not be uninstalled: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(this, 
+                    "The CID for the following product " + 
+                    Machine.ProductLicenseList[index].License["Description"] + 
+                    " could not be uninstalled: " + 
+                    ex.Message, 
+                    "Error", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error);
                 ControlsEnabled = true;
                 GetCIDLabelStatus.Text = "Ready";
             }
