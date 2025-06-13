@@ -70,6 +70,15 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.0" Author="Hotbird64 + Shiroi Neko (TheFlightSims Labs)" xsi:noNamespaceSchemaLocation="KmsDataBase.xsd">
 	<WinBuilds>
+		
+		<!-- 
+		The build numbers are getting from this sources:
+		Windows SDKs
+		https://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
+		https://uupdump.net/
+		.and other sources of Microsoft Insider Program (both internal and public).
+		-->
+		
 		<WinBuild BuildNumber="103" ReleaseDate="1992-04-06T00:00:00Z" DisplayName="Windows 3.1" PlatformId="55041" />
 		<WinBuild BuildNumber="300" ReleaseDate="1993-11-08T00:00:00Z" DisplayName="Windows for Workgroup 3.11" PlatformId="55041" />
 		<WinBuild BuildNumber="528" ReleaseDate="1992-04-06T00:00:00Z" DisplayName="Windows NT 3.1" PlatformId="55041" />

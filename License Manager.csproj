@@ -433,7 +433,6 @@
     <Resource Include="Data\PKeyConfig\26100-pkeyconfig-downlevel.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\26100-pkeyconfig.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\26100-pkeyconfig-csvlk.xrm-ms.gz" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="pkeyConfig.xsd">
       <SubType>Designer</SubType>
       <LastGenOutput>pkeyConfig.Designer.cs</LastGenOutput>

@@ -12,8 +12,8 @@ namespace HGM.Hotbird64.Vlmcs
     public unsafe struct KmsGuid : IEquatable<Guid>, IEquatable<string>, IEquatable<KmsGuid>
     {
         public fixed byte Data[16];
-        public static KmsGuid InvalidGuid = new KmsGuid(new byte[] { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, });
-        public static KmsGuid Empty = new KmsGuid(Guid.Empty);
+        public static KmsGuid InvalidGuid = new([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,]);
+        public static KmsGuid Empty = new(Guid.Empty);
 
         public bool Equals(string guidString) => guidString != null && ((Guid)this).Equals(new Guid(guidString));
         public bool Equals(Guid guid) => ((Guid)this).Equals(guid);

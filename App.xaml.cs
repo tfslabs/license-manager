@@ -33,11 +33,11 @@ namespace HGM.Hotbird64.LicenseManager
         public static event Action DataBaseLoaded;
         public static readonly string ExeDirectoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        public static IReadOnlyList<Brush> DatagridBackgroundBrushes = new Brush[]
-        {
+        public static IReadOnlyList<Brush> DatagridBackgroundBrushes =
+        [
             new SolidColorBrush(new Color { A = 255, R = 255, B = 255, G = 255 }),
             new SolidColorBrush(new Color { A = 255, R = 240, B = 255, G = 248 }),
-        };
+        ];
 
         public static bool IsDatabaseLoaded;
 
@@ -45,18 +45,18 @@ namespace HGM.Hotbird64.LicenseManager
         static App()
         {
             // TODO: Get rid of this
-            KmsGuid win2008A = new KmsGuid("33e156e4-b76f-4a52-9f91-f641dd95ac48");
-            KmsGuid win2008B = new KmsGuid("8fe53387-3087-4447-8985-f75132215ac9");
-            KmsGuid win2008C = new KmsGuid("8a21fdf3-cbc5-44eb-83f3-fe284e6680a7");
-            KmsGuid win2008R2A = new KmsGuid("0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed");
-            KmsGuid win2008R2B = new KmsGuid("ca87f5b6-cd46-40c0-b06d-8ecd57a4373f");
-            KmsGuid win2008R2C = new KmsGuid("b2ca2689-a9a8-42d7-938d-cf8e9f201958");
-            KmsGuid win2012 = new KmsGuid("8665cb71-468c-4aa3-a337-cb9bc9d5eaac");
-            KmsGuid win2012R2 = new KmsGuid("8456efd3-0c04-4089-8740-5b7238535a65");
-            KmsGuid win2016 = new KmsGuid("6e9fc069-257d-4bc4-b4a7-750514d32743");
-            KmsGuid win2019 = new KmsGuid("8449b1fb-f0ea-497a-99ab-66ca96e9a0f5");
-            KmsGuid win2022 = new KmsGuid("b74263e4-0f92-46c6-bcf8-c11d5efe2959");
-            ServerKmsGuids = new[] { win2008A, win2008B, win2008C, win2008R2A, win2008R2B, win2008R2C, win2012, win2012R2, win2016, win2019, win2022 };
+            KmsGuid win2008A = new("33e156e4-b76f-4a52-9f91-f641dd95ac48");
+            KmsGuid win2008B = new("8fe53387-3087-4447-8985-f75132215ac9");
+            KmsGuid win2008C = new("8a21fdf3-cbc5-44eb-83f3-fe284e6680a7");
+            KmsGuid win2008R2A = new("0fc6ccaf-ff0e-4fae-9d08-4370785bf7ed");
+            KmsGuid win2008R2B = new("ca87f5b6-cd46-40c0-b06d-8ecd57a4373f");
+            KmsGuid win2008R2C = new("b2ca2689-a9a8-42d7-938d-cf8e9f201958");
+            KmsGuid win2012 = new("8665cb71-468c-4aa3-a337-cb9bc9d5eaac");
+            KmsGuid win2012R2 = new("8456efd3-0c04-4089-8740-5b7238535a65");
+            KmsGuid win2016 = new("6e9fc069-257d-4bc4-b4a7-750514d32743");
+            KmsGuid win2019 = new("8449b1fb-f0ea-497a-99ab-66ca96e9a0f5");
+            KmsGuid win2022 = new("b74263e4-0f92-46c6-bcf8-c11d5efe2959");
+            ServerKmsGuids = [win2008A, win2008B, win2008C, win2008R2A, win2008R2B, win2008R2C, win2012, win2012R2, win2016, win2019, win2022];
         }
 
         private static bool TryLoadLibrary(string dllFileName)
@@ -73,7 +73,7 @@ namespace HGM.Hotbird64.LicenseManager
                 return false;
             }
 
-            Win32Exception ex = new Win32Exception(error);
+            Win32Exception ex = new(error);
             string message = ex.Message.Replace("%1", dllFileName);
             throw new Win32Exception(error, message);
         }
@@ -162,14 +162,6 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //var xmlDoc = new XmlDocument();
-            //xmlDoc.Load(@"C:\Windows\System32\spp\tokens\skus\Enterprise\Enterprise-Volume-CSVLK-2-ul-oob-rtm.xrm-ms");
-            ////var result=xmlDoc.SelectNodes("/*[local-name()='licenseGroup']/*[local-name()='license']/*[local-name()='grant']/*[local-name()='grant']/*[local-name()='allConditions']/*[local-name()='allConditions']/*[local-name()='productPolicies']/*[local-name()='policyStr']");
-            //var kmsIds = Regex.Split(xmlDoc.SelectSingleNode("//*[@name='Security-SPP-KmsCountedIdList']")?.InnerText, @"\s*,\s*");
-            //var skuId = xmlDoc.SelectSingleNode("//*[@name='productSkuId']")?.InnerText;
-            //var appId = xmlDoc.SelectSingleNode("//*[@name='applicationId']")?.InnerText;
-            //var name = xmlDoc.SelectSingleNode("//*[@name='productDescription']")?.InnerText;
-
             LoadLibKms($"libkms{IntPtr.Size << 3}.dll");
 
             KmsLists.LoadDatabase = () =>
@@ -181,12 +173,10 @@ namespace HGM.Hotbird64.LicenseManager
 
                 try
                 {
-                    using (FileStream stream = new FileStream(DatabaseFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                    {
-                        KmsLists.ReadDatabase(stream);
-                        IsDatabaseLoaded = true;
-                        DataBaseLoaded?.Invoke();
-                    }
+                    using FileStream stream = new FileStream(DatabaseFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    KmsLists.ReadDatabase(stream);
+                    IsDatabaseLoaded = true;
+                    DataBaseLoaded?.Invoke();
                 }
                 catch (Exception ex)
                 {
@@ -198,12 +188,10 @@ namespace HGM.Hotbird64.LicenseManager
                     $"Could not read {Path.GetFileName(DatabaseFileName)}", MessageBoxButton.OK, MessageBoxImage.Error
                   );
                     }
-                    using (Stream stream = GetResourceStream(new Uri("pack://application:,,,/LmInternalDatabase.xml"))?.Stream)
-                    {
-                        KmsLists.ReadDatabase(stream);
-                        IsDatabaseLoaded = true;
-                        DataBaseLoaded?.Invoke();
-                    }
+                    using Stream stream = GetResourceStream(new Uri("pack://application:,,,/LmInternalDatabase.xml"))?.Stream;
+                    KmsLists.ReadDatabase(stream);
+                    IsDatabaseLoaded = true;
+                    DataBaseLoaded?.Invoke();
                 }
             };
 
