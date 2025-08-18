@@ -7,7 +7,6 @@ using HGM.Hotbird64.Vlmcs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -1060,7 +1059,7 @@ namespace HGM.Hotbird64.LicenseManager
             InvokeMethod(licenseProvider.LicenseClassName, "Version", licenseProvider.Version, method, inParams);
         }
 
-        public void InstallConfirmationID(int productIndex, string iid, string cid) => InvokeProductMethod(productIndex, "UninstallProductKey", [iid, cid]);
+        public void InstallConfirmationID(int productIndex, string iid, string cid) => InvokeProductMethod(productIndex, "DepositOfflineConfirmationId", [iid, cid]);
         private void InvokeServiceMethod(int providerIndex, string method, params object[] inParams) => InvokeServiceMethod(LicenseProvidersList[providerIndex], method, inParams);
         public void Activate(int productIndex) => InvokeProductMethod(productIndex, "Activate", null);
         public void UninstallProductKey(int productIndex) => InvokeProductMethod(productIndex, "UninstallProductKey", null);

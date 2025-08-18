@@ -77,15 +77,6 @@
 					<Run Text="Get CID"/>
                 </TextBlock>
             </Button>
-            <Button
-                x:Name="InstallCID"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Left"
-                Click="Button_InstallCID_Clicked" Height="24" Width="71" Margin="394,0,0,0">
-                <TextBlock Margin="5,2,5,2" VerticalAlignment="Center">
-					<Run Text="Install CID"/>
-                </TextBlock>
-            </Button>
         </Grid>
         <Grid Width="530" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,184,0,0">
             <Label Visibility="{Binding Visibility, ElementName=CIDCode}" HorizontalAlignment="Left" Content="Confirmation ID" Width="94" Height="26" />

@@ -12,7 +12,6 @@ using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,8 +30,6 @@ namespace HGM.Hotbird64.LicenseManager
         public static ISet<ProductKeyConfigurationPublicKeysPublicKey> PublicKeys => ((ProductKeyConfigurationPublicKeys)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationPublicKeys)).PublicKey;
         public static ISet<ProductKeyConfigurationKeyRangesKeyRange> KeyRanges => ((ProductKeyConfigurationKeyRanges)PKeyConfig.Items.Single(i => i is ProductKeyConfigurationKeyRanges)).KeyRange;
         public static RoutedUICommand CheckEpid, AutoSizeWindow;
-        public static InputGestureCollection CtrlE = [];
-        public static InputGestureCollection CtrlW = [];
         public static CultureInfo OsSystemLocale;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -82,10 +79,8 @@ namespace HGM.Hotbird64.LicenseManager
 
         static GetCID()
         {
-            CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
-            CtrlW.Add(new KeyGesture(Key.W, ModifierKeys.Control));
-            CheckEpid = new RoutedUICommand("Get Info", nameof(CheckEpid), typeof(ScalableWindow), CtrlE);
-            AutoSizeWindow = new RoutedUICommand("Auto Size Window", nameof(AutoSizeWindow), typeof(ScalableWindow), CtrlW);
+            CheckEpid = new RoutedUICommand("Get Info", nameof(CheckEpid), typeof(ScalableWindow));
+            AutoSizeWindow = new RoutedUICommand("Auto Size Window", nameof(AutoSizeWindow), typeof(ScalableWindow));
         }
 
         public GetCID()
@@ -133,88 +128,37 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        private async void Button_InstallCID_Clicked(object sender, RoutedEventArgs e)
-        {
-            int index = ComboBoxProductId.SelectedIndex;
-
-            if (MessageBox.Show(
-                    this,
-                    "Are you sure you want to install Confirmation ID for " + Machine.ProductLicenseList[index].License["Description"] + "?",
-                    "Warning",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Warning
-                ) !=
-                MessageBoxResult.Yes)
-            {
-                e.Handled = false;
-                return;
-            }
-
-            string installationId = string.Concat(PhoneInstallationIdBox.ToString()
-                .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
-            string confirmationId = string.Concat(CIDCode.ToString().Trim());
-
-            IsProgressBarRunning = true;
-            ControlsEnabled = false;
-            GetCIDLabelStatus.Text = "Installing CID";
-
-            try
-            {
-                await Task.Run(() => Machine.InstallConfirmationID(index, installationId, confirmationId));
-
-                new Thread(() => Dispatcher.Invoke(() => MessageBox.Show(
-                    this,
-                    "Confirmation ID has been installed successfully",
-                    "Success",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                ))).Start();
-
-                Refresh_Click(sender, e);
-            }
-            catch (Exception ex)
-            {
-                GetCIDLabelStatus.Text = "Installing Confirmation ID Error";
-                IsProgressBarRunning = false;
-                MessageBox.Show(this, 
-                    "The CID for the following product " + 
-                    Machine.ProductLicenseList[index].License["Description"] + 
-                    " could not be uninstalled: " + 
-                    ex.Message, 
-                    "Error", 
-                    MessageBoxButton.OK, 
-                    MessageBoxImage.Error);
-                ControlsEnabled = true;
-                GetCIDLabelStatus.Text = "Ready";
-            }
-        }
-
         private void Button_GetCID_Clicked(object sender, RoutedEventArgs e)
         {
             string installationId = string.Concat(PhoneInstallationIdBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
             string epid = string.Concat(EpidBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Where(c => char.IsDigit(c) || c == '.' || c == '-')).Trim();
-            IsProgressBarRunning = true;
-            GetCIDLabelStatus.Text = "Processing...";
+            
 
             try
             {
-                CIDCode.Text = WebService_Handler.CallWebService(installationId, epid);
+                IsProgressBarRunning = true;
+                GetCIDLabelStatus.Text = "Processing...";
+                CIDCode.Text = Regex.Replace(WebService_Handler.CallWebService(installationId, epid), ".{6}", "$0-").TrimEnd('-');
             }
             catch (WebException webEx)
             {
                 MessageBox.Show(this, "Error connecting to the web service: " + webEx.Message, "Web Service Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CIDCode.Text = $"Error: WebException {webEx.Message}";
             }
             catch (IOException ioEx)
             {
                 MessageBox.Show(this, "I/O error: " + ioEx.Message, "I/O Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CIDCode.Text = $"Error: IOException {ioEx.Message}";
             }
             catch (NullReferenceException nullPtr)
             {
                 MessageBox.Show(this, "Null reference error: " + nullPtr.Message, "Null Reference Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CIDCode.Text = $"Error: NullReferenceException {nullPtr.Message}";
             }
             catch (InvalidOperationException ioExp)
             {
-                MessageBox.Show(this, "Invalid operation error: " +ioExp.Message, "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(this, "Invalid operation error: " + ioExp.Message, "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                CIDCode.Text = $"Error: InvalidOperationException {ioExp.Message}";
             }
 
             IsProgressBarRunning = false;
@@ -244,20 +188,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             finally
             {
-                if ((string)ComboBoxProductId.Items.Cast<object>().Last() != "USER_CONTROL: Enter manually")
-                {
-                    ComboBoxProductId.Items.Add("USER_CONTROL: Enter manually");
-                }
-                InstallCID.IsEnabled = false;
-
-
                 ControlsEnabled = true;
-
-                if (ComboBoxProductId.SelectedIndex == ComboBoxProductId.Items.Count - 1)
-                {
-                    ControlsEnabled = false;
-                }
-
             }
         }
 
@@ -271,24 +202,20 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void SelectedProductChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ComboBoxProductId.SelectedIndex == -1) return; //-1 for unselected
+            if (ComboBoxProductId.SelectedIndex == -1) {
+                CIDCode.Clear();
+                CIDCode.Background = new SolidColorBrush(Colors.Transparent);
+                GetCIDLabelStatus.Text = "Error";
+                return;
+            } //-1 for unselected
 
-            if (ComboBoxProductId.SelectedIndex == ComboBoxProductId.Items.Count - 1)
-            {
-                PhoneInstallationIdBox.IsReadOnly = EpidBox.IsReadOnly = false;
-                TextBoxLicenseStatusReason.Text = "Not available in manual mode.";
-            }
-            else
-            {
-                PhoneInstallationIdBox.IsReadOnly = EpidBox.IsReadOnly = true;
-                LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ComboBoxProductId.SelectedIndex];
-                WmiProperty w = new("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
-                w.DisplayPropertyAsLicenseStatus([TextBoxLicenseStatusReason], TextBoxLicenseStatusReason);
-            }
-
+            PhoneInstallationIdBox.IsReadOnly = EpidBox.IsReadOnly = true;
+            LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ComboBoxProductId.SelectedIndex];
+            WmiProperty w = new("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
+            w.DisplayPropertyAsLicenseStatus([TextBoxLicenseStatusReason], TextBoxLicenseStatusReason);
+            
             CIDCode.Clear();
             CIDCode.Background = new SolidColorBrush(Colors.Transparent);
-            InstallCID.IsEnabled = false;
             GetCIDLabelStatus.Text = "Ready";
         }
 
