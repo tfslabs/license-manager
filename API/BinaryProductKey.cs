@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
-// ReSharper disable once CheckNamespace
 namespace HGM.Hotbird64.Vlmcs
 {
     [StructLayout(LayoutKind.Explicit)]
@@ -194,8 +193,8 @@ namespace HGM.Hotbird64.Vlmcs
             return result;
         }
 
-        public static explicit operator List<byte>(BinaryProductKey binaryKey) => ((byte[])binaryKey).ToList();
-        public static explicit operator BinaryProductKey(List<byte> bytes) => new BinaryProductKey(bytes.ToArray());
+        public static explicit operator List<byte>(BinaryProductKey binaryKey) => [.. ((byte[])binaryKey)];
+        public static explicit operator BinaryProductKey(List<byte> bytes) => new([.. bytes]);
 
         public static unsafe explicit operator BinaryProductKey(byte[] bytes)
         {
@@ -234,7 +233,7 @@ namespace HGM.Hotbird64.Vlmcs
             if ((binaryKey.Uint64Low | binaryKey.Uint64High) == 0) return "(none)";
 
             byte[] binaryCodedBase24Key = new byte[25];
-            StringBuilder keyBuilder = new StringBuilder(32);
+            StringBuilder keyBuilder = new(32);
             bool isNewKey = binaryKey.IsNewKey;
             binaryKey.Uint64High &= 0x7ffffffffffff;
 
@@ -282,7 +281,7 @@ namespace HGM.Hotbird64.Vlmcs
 
             while ((i = key.IndexOf('-')) >= 0) key = key.Remove(i, 1);
 
-            BinaryProductKey binaryKey = new BinaryProductKey();
+            BinaryProductKey binaryKey = new();
 
             for (i = 0; i < 25; i++)
             {
@@ -321,7 +320,7 @@ namespace HGM.Hotbird64.Vlmcs
         public List<byte> ToList() => (List<byte>)this;
         public int CompareTo(object obj) => string.Compare(ToString(), obj.ToString(), StringComparison.OrdinalIgnoreCase);
 
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             if (obj is string s) return (string)this == s.ToUpperInvariant();
             if (obj is BinaryProductKey other) return Uint64High == other.Uint64High && Uint64Low == other.Uint64Low;
@@ -338,6 +337,7 @@ namespace HGM.Hotbird64.Vlmcs
         public override unsafe int GetHashCode() => unchecked((int)u32[2]);
 
         public string GetEpid(int msKeyType = -1) => GetEpid(this, msKeyType);
+
         public string EPid => GetEpid();
 
         public static string GetEpid(BinaryProductKey binaryKey, int msKeyType = -1)

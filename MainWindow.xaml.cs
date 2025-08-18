@@ -36,7 +36,7 @@ namespace HGM.Hotbird64.LicenseManager
     public partial class MainWindow : IHaveNotifyOfPropertyChange
     {
         internal LicenseMachine Machine;
-        private static readonly KmsGuid zeroGuid = new KmsGuid(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+        private static readonly KmsGuid zeroGuid = new([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
         private KmsGuid lastSkuId = zeroGuid;
         //internal bool ShowAllFields;
         private bool kmsHostDirtyField;
@@ -58,15 +58,15 @@ namespace HGM.Hotbird64.LicenseManager
         public static IKmsProductCollection<AppItem> ApplicationList => KmsLists.AppItemList;
         public static IKmsProductCollection<KmsItem> KmsProductList => KmsLists.KmsItemList;
         public static RoutedUICommand CheckEpid, AutoSizeWindow;
-        public static InputGestureCollection CtrlE = new InputGestureCollection();
-        public static InputGestureCollection CtrlW = new InputGestureCollection();
+        public static InputGestureCollection CtrlE = [];
+        public static InputGestureCollection CtrlW = [];
 
 
         static MainWindow()
         {
-            CsvlkConfigs = KeyConfigs.Where(c => c.ProductKeyType == "Volume:CSVLK").ToList();
+            CsvlkConfigs = [.. KeyConfigs.Where(c => c.ProductKeyType == "Volume:CSVLK")];
             IEnumerable<KmsGuid> csvlkConfigIds = CsvlkConfigs.Select(c => c.ActConfigGuid);
-            CsvlkRanges = KeyRanges.Where(r => csvlkConfigIds.Contains(r.RefActConfigGuid)).ToList();
+            CsvlkRanges = [.. KeyRanges.Where(r => csvlkConfigIds.Contains(r.RefActConfigGuid))];
             CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
             CtrlW.Add(new KeyGesture(Key.W, ModifierKeys.Control));
             CheckEpid = new RoutedUICommand("Get Info", nameof(CheckEpid), typeof(ScalableWindow), CtrlE);

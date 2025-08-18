@@ -425,8 +425,7 @@ namespace HGM.Hotbird64.LicenseManager
                     {
                         continue;
                     }
-
-                    string x = @"Win32_DiskDrive.DeviceID='\\.\PHYSICALDRIVE" + partitionObject["DiskIndex"] + "'";
+                        string x = @"Win32_DiskDrive.DeviceID='\\.\PHYSICALDRIVE" + partitionObject["DiskIndex"] + "'";
                     using ManagementObject physicalDisk = new(scope, new ManagementPath(x), wmiObjectOptions);
                     si.DiskSerialNumber = ((string)physicalDisk["SerialNumber"]);
 
@@ -446,7 +445,7 @@ namespace HGM.Hotbird64.LicenseManager
                     }
                 }
             }
-            catch {}
+            catch  {}
         }
 
         public void Connect(string localComputerName, string username, string password, bool includeInactiveLicenses)
