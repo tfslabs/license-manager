@@ -141,6 +141,9 @@
     <Compile Include="GetCID.xaml.cs">
       <DependentUpon>GetCID.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GetCID_Manual.xaml.cs">
+      <DependentUpon>GetCID_Manual.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GetCID_WebService.cs" />
     <Compile Include="Icons\multi\ClientComputer.xaml.cs">
       <DependentUpon>ClientComputer.xaml</DependentUpon>
@@ -259,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GetCID.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GetCID_Manual.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

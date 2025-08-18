@@ -118,7 +118,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 soapResponse = XDocument.Parse(streamReader.ReadToEnd());
             }
-            
+
             if (soapResponse == null)
             {
                 throw new NullReferenceException();

@@ -132,7 +132,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             string installationId = string.Concat(PhoneInstallationIdBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
             string epid = string.Concat(EpidBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Where(c => char.IsDigit(c) || c == '.' || c == '-')).Trim();
-            
+
 
             try
             {
@@ -202,7 +202,8 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void SelectedProductChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ComboBoxProductId.SelectedIndex == -1) {
+            if (ComboBoxProductId.SelectedIndex == -1)
+            {
                 CIDCode.Clear();
                 CIDCode.Background = new SolidColorBrush(Colors.Transparent);
                 GetCIDLabelStatus.Text = "Error";
@@ -213,7 +214,7 @@ namespace HGM.Hotbird64.LicenseManager
             LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ComboBoxProductId.SelectedIndex];
             WmiProperty w = new("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
             w.DisplayPropertyAsLicenseStatus([TextBoxLicenseStatusReason], TextBoxLicenseStatusReason);
-            
+
             CIDCode.Clear();
             CIDCode.Background = new SolidColorBrush(Colors.Transparent);
             GetCIDLabelStatus.Text = "Ready";

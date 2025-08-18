@@ -132,7 +132,7 @@ namespace HGM.Hotbird64.LicenseManager
             });
         }
 
-        private LicenseModel license = new LicenseModel();
+        private LicenseModel license = new();
         public LicenseModel License
         {
             get => license;
@@ -1493,6 +1493,12 @@ namespace HGM.Hotbird64.LicenseManager
         {
             GetCID getCIDWindow = new GetCID();
             getCIDWindow.Show();
+        }
+
+        private void MenuItem_GetCID_Manual_Click(object sender, RoutedEventArgs e)
+        {
+            GetCID_Manual getCIDManualWindow = new GetCID_Manual();
+            getCIDManualWindow.Show();
         }
 
         private void MenuItemInstallKmsKey_Click(object sender, RoutedEventArgs e)

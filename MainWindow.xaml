@@ -95,7 +95,16 @@
                             Header="_Get Confirmation ID"
                             ToolTip="Activate Windows and Office products by getting the Confirmation ID from Microsoft Support Service.">
                             <MenuItem.Icon>
-                                <icons:Windows Width="16" />
+                                <icons:DatabaseBrowse Width="16" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem
+                            x:Name="GetConfirmationID_Manual"
+                            Click="MenuItem_GetCID_Manual_Click"
+                            Header="_Get Confirmation ID (Manual)"
+                            ToolTip="Activate Windows and Office products by getting the Confirmation ID from Microsoft Support Service.">
+                            <MenuItem.Icon>
+                                <icons:DatabaseBrowse Width="16" />
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
