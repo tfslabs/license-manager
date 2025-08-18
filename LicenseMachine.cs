@@ -415,54 +415,37 @@ namespace HGM.Hotbird64.LicenseManager
 
             try
             {
-                using (ManagementClass disk2PartClass = new ManagementClass(scope, new ManagementPath("Win32_LogicalDiskToPartition"), wmiObjectOptions))
+                using ManagementClass disk2PartClass = new(scope, new ManagementPath("Win32_LogicalDiskToPartition"), wmiObjectOptions);
+                using ManagementObjectCollection disk2PartCollection = disk2PartClass.GetInstances();
+                foreach (ManagementBaseObject disk2PartObject in disk2PartCollection)
                 {
-                    using (ManagementObjectCollection disk2PartCollection = disk2PartClass.GetInstances())
+                    using ManagementObject partitionObject = new(scope, new ManagementPath((string)disk2PartObject["Antecedent"]), wmiObjectOptions),
+                        logicalDrive = new ManagementObject(scope, new ManagementPath((string)disk2PartObject["Dependent"]), wmiObjectOptions);
+                    if ((string)logicalDrive["DeviceID"] != si.OsInfo.SystemDrive)
                     {
-                        foreach (ManagementBaseObject disk2PartObject in disk2PartCollection)
-                        {
-                            using (ManagementObject partitionObject = new ManagementObject(scope, new ManagementPath((string)disk2PartObject["Antecedent"]), wmiObjectOptions),
-                                logicalDrive = new ManagementObject(scope, new ManagementPath((string)disk2PartObject["Dependent"]), wmiObjectOptions))
-                            {
-                                if ((string)logicalDrive["DeviceID"] != si.OsInfo.SystemDrive)
-                                {
-                                    continue;
-                                }
+                        continue;
+                    }
+                        string x = @"Win32_DiskDrive.DeviceID='\\.\PHYSICALDRIVE" + partitionObject["DiskIndex"] + "'";
+                    using ManagementObject physicalDisk = new(scope, new ManagementPath(x), wmiObjectOptions);
+                    si.DiskSerialNumber = ((string)physicalDisk["SerialNumber"]);
 
-                                string x = @"Win32_DiskDrive.DeviceID='\\.\PHYSICALDRIVE" + partitionObject["DiskIndex"] + "'";
-                                using (ManagementObject physicalDisk = new ManagementObject(scope, new ManagementPath(x), wmiObjectOptions))
-                                {
-                                    si.DiskSerialNumber = ((string)physicalDisk["SerialNumber"]);
-                                    if (si.DiskSerialNumber != null)
-                                    {
-                                        string serial = si.DiskSerialNumber;
-                                        string decodedSerial = "";
-                                        try
-                                        {
-                                            for (int i = 0; i < serial.Length; i += 4)
-                                            {
-                                                for (int j = 2; j >= 0; j -= 2)
-                                                {
-                                                    string hexByteString = serial.Substring(i + j, 2);
-                                                    decodedSerial += (char)ushort.Parse(hexByteString, NumberStyles.AllowHexSpecifier);
-                                                }
-                                            }
+                    string decodedSerial = "";
 
-                                            si.DiskSerialNumber = decodedSerial.Trim();
-                                        }
-                                        catch
-                                        {
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    try
+                    {
+                        decodedSerial = si.DiskSerialNumber;
+                    }
+                    catch (Exception ex)
+                    {
+#if DEBUG
+                        decodedSerial = "Error while loading disk serial: " + ex.Message;
+#else
+                                    decodedSerial = "[Error]  " + ex.HResult;
+#endif
                     }
                 }
             }
-            catch
-            {
-            }
+            catch  {}
         }
 
         public void Connect(string localComputerName, string username, string password, bool includeInactiveLicenses)
