@@ -95,9 +95,9 @@ namespace HGM.Hotbird64.LicenseManager
             public OsInfo OsInfo;
             public CsProductInfo CsProductInfo;
             public string DiskSerialNumber;
-            public IList<NicInfo> NicInfos = new List<NicInfo>();
-            public ChassisInfo ChassisInfo = new ChassisInfo();
-            public MotherBoardInfo MotherboardInfo = new MotherBoardInfo();
+            public IList<NicInfo> NicInfos = [];
+            public ChassisInfo ChassisInfo = new();
+            public MotherBoardInfo MotherboardInfo = new();
             public string BiosSerialNumber;
             public string BiosManufacturer;
         }
@@ -158,22 +158,21 @@ namespace HGM.Hotbird64.LicenseManager
         }
 
         private string computerName;
-        private readonly ConnectionOptions credentials = new ConnectionOptions();
+        private readonly ConnectionOptions credentials = new();
         private ManagementScope scope;
         public IList<ProductLicense> ProductLicenseList = new ObservableCollection<ProductLicense>();
-        private readonly ObjectGetOptions wmiObjectOptions = new ObjectGetOptions(null, TimeSpan.MaxValue, true);
+        private readonly ObjectGetOptions wmiObjectOptions = new(null, TimeSpan.MaxValue, true);
         public bool IncludeInactiveLicenses;
         public SysInfoClass SysInfo { get; private set; } = new SysInfoClass();
 
         public string ConnectErrorString { get; private set; }
 
         public readonly LicenseProvider[] LicenseProvidersList =
-        {
+        [
 #if DEBUG
       // Non-existing service for testing purposes
       // Your application must work, even if some licensing service providers are not installed
-      new LicenseProvider
-      {
+      new() {
         FriendlyName = "DUMMY Licensing Service",
         LicenseClassName = "DUMMYLicensingService",
         ProductClassName = "DUMMYLicensingProduct",
@@ -181,9 +180,9 @@ namespace HGM.Hotbird64.LicenseManager
         ServiceName = "DUMMYsppsvc"
       },
 #endif
+
       // Standard Windows licensing service as used in Windows NT 6.0 and up (Vista, Win7, Win8, Server 2008, Multipoint Server 2010, ... )
-      new LicenseProvider
-      {
+      new() {
         FriendlyName = "Windows Software Protection",
         LicenseClassName = "SoftwareLicensingService",
         ProductClassName = "SoftwareLicensingProduct",
@@ -196,23 +195,22 @@ namespace HGM.Hotbird64.LicenseManager
       //
       // Office 2013 uses its own service, when it thinks, the system provided service is not secure enough (Win7).
       // However when running in Windows 8/Server 2012 and up, it uses the system service (just to make things complicated).
-      new LicenseProvider
-      {
+      new() {
         FriendlyName = "Office Software Protection",
         LicenseClassName = "OfficeSoftwareProtectionService",
         ProductClassName = "OfficeSoftwareProtectionProduct",
         TokenClassName = "OfficeSoftwareProtectionTokenActivationLicense",
         ServiceName = "osppsvc"
       }
-    };
+        ];
 
         public static readonly string[] ActivationTypes =
-        {
+        [
             "All (recommended)",
             "Active Directory",
             "Key Management Server",
             "Token-based"
-    };
+        ];
 
         public void Connect()
         {
@@ -279,7 +277,7 @@ namespace HGM.Hotbird64.LicenseManager
                 licenseProvider.Version = null;
                 try
                 {
-                    ManagementClass serviceClass = new ManagementClass(scope,
+                    ManagementClass serviceClass = new(scope,
                         new ManagementPath(licenseProvider.LicenseClassName),
                         wmiObjectOptions);
                     foreach (ManagementBaseObject serviceItem in serviceClass.GetInstances())
@@ -311,103 +309,90 @@ namespace HGM.Hotbird64.LicenseManager
             //RefreshLicenses();
         }
 
-        [SuppressMessage("ReSharper", "EmptyGeneralCatchClause")]
         public void GetSystemInfo()
         {
             SysInfoClass si = SysInfo;
-            dynamic DateConverter(dynamic x) => ManagementDateTimeConverter.ToDateTime(x);
+            static dynamic DateConverter(dynamic x) => ManagementDateTimeConverter.ToDateTime(x);
 
             try
             {
-                using (ManagementObject osInfoObject = new ManagementObject(scope, new ManagementPath("Win32_OperatingSystem=@"), wmiObjectOptions))
-                {
-                    si.OsInfo.BuildNumber = osInfoObject.TryGetObject("BuildNumber", x => Convert.ToUInt32(x));
-                    si.OsInfo.CsName = osInfoObject.TryGetObject("CSName");
-                    si.OsInfo.Caption = osInfoObject.TryGetObject("Caption");
-                    si.OsInfo.SystemDrive = osInfoObject.TryGetObject("SystemDrive");
-                    si.OsInfo.InstallDate = osInfoObject.TryGetObject("InstallDate", DateConverter);
-                    si.OsInfo.LocalDateTime = osInfoObject.TryGetObject("LocalDateTime", DateConverter);
-                    si.OsInfo.Version = osInfoObject.TryGetObject("Version");
-                    si.OsInfo.OsLanguage = osInfoObject.TryGetObject("OSLanguage", x => new CultureInfo((int)x));
-                    si.OsInfo.Locale = osInfoObject.TryGetObject("Locale", x => new CultureInfo(int.Parse(x, NumberStyles.AllowHexSpecifier)));
-                }
+                using ManagementObject osInfoObject = new(scope, new ManagementPath("Win32_OperatingSystem=@"), wmiObjectOptions);
+                si.OsInfo.BuildNumber = osInfoObject.TryGetObject("BuildNumber", x => Convert.ToUInt32(x));
+                si.OsInfo.CsName = osInfoObject.TryGetObject("CSName");
+                si.OsInfo.Caption = osInfoObject.TryGetObject("Caption");
+                si.OsInfo.SystemDrive = osInfoObject.TryGetObject("SystemDrive");
+                si.OsInfo.InstallDate = osInfoObject.TryGetObject("InstallDate", DateConverter);
+                si.OsInfo.LocalDateTime = osInfoObject.TryGetObject("LocalDateTime", DateConverter);
+                si.OsInfo.Version = osInfoObject.TryGetObject("Version");
+                si.OsInfo.OsLanguage = osInfoObject.TryGetObject("OSLanguage", x => new CultureInfo((int)x));
+                si.OsInfo.Locale = osInfoObject.TryGetObject("Locale", x => new CultureInfo(int.Parse(x, NumberStyles.AllowHexSpecifier)));
             }
             catch { }
 
             try
             {
-                using (ManagementClass csProductClass = new ManagementClass(scope, new ManagementPath("Win32_ComputerSystemProduct"), wmiObjectOptions))
-                using (ManagementObjectCollection csProductCollection = csProductClass.GetInstances())
-                using (ManagementObject csProductObject = csProductCollection.OfType<ManagementObject>().First())
-                {
-                    si.CsProductInfo.IdentifyingNumber = csProductObject.TryGetObject("IdentifyingNumber");
-                    si.CsProductInfo.Name = csProductObject.TryGetObject("Name");
-                    si.CsProductInfo.Vendor = csProductObject.TryGetObject("Vendor");
-                    si.CsProductInfo.Uuid = csProductObject.TryGetObject("UUID");
-                    si.CsProductInfo.Version = csProductObject.TryGetObject("Version");
-                }
+                using ManagementClass csProductClass = new(scope, new ManagementPath("Win32_ComputerSystemProduct"), wmiObjectOptions);
+                using ManagementObjectCollection csProductCollection = csProductClass.GetInstances();
+                using ManagementObject csProductObject = csProductCollection.OfType<ManagementObject>().First();
+                si.CsProductInfo.IdentifyingNumber = csProductObject.TryGetObject("IdentifyingNumber");
+                si.CsProductInfo.Name = csProductObject.TryGetObject("Name");
+                si.CsProductInfo.Vendor = csProductObject.TryGetObject("Vendor");
+                si.CsProductInfo.Uuid = csProductObject.TryGetObject("UUID");
+                si.CsProductInfo.Version = csProductObject.TryGetObject("Version");
             }
             catch { }
 
             try
             {
-                using (ManagementClass biosClass = new ManagementClass(scope, new ManagementPath("Win32_BIOS"), wmiObjectOptions))
-                using (ManagementObjectCollection biosCollection = biosClass.GetInstances())
-                using (ManagementObject biosObject = biosCollection.OfType<ManagementObject>().First())
-                {
-                    si.BiosSerialNumber = biosObject.TryGetObject("SerialNumber");
-                    si.BiosManufacturer = biosObject.TryGetObject("Manufacturer");
-                }
+                using ManagementClass biosClass = new(scope, new ManagementPath("Win32_BIOS"), wmiObjectOptions);
+                using ManagementObjectCollection biosCollection = biosClass.GetInstances();
+                using ManagementObject biosObject = biosCollection.OfType<ManagementObject>().First();
+                si.BiosSerialNumber = biosObject.TryGetObject("SerialNumber");
+                si.BiosManufacturer = biosObject.TryGetObject("Manufacturer");
             }
             catch { }
 
             try
             {
-                using (ManagementClass chassisClass = new ManagementClass(scope, new ManagementPath("Win32_SystemEnclosure"), wmiObjectOptions))
-                using (ManagementObjectCollection chassisCollection = chassisClass.GetInstances())
-                using (ManagementObject chassisObject = chassisCollection.OfType<ManagementObject>().First())
-                {
-                    si.ChassisInfo.SerialNumber = chassisObject.TryGetObject("SerialNumber");
-                    si.ChassisInfo.Manufacturer = chassisObject.TryGetObject("Manufacturer");
-                    si.ChassisInfo.SmbiosAssetTag = chassisObject.TryGetObject("SMBIOSAssetTag");
-                }
+                using ManagementClass chassisClass = new(scope, new ManagementPath("Win32_SystemEnclosure"), wmiObjectOptions);
+                using ManagementObjectCollection chassisCollection = chassisClass.GetInstances();
+                using ManagementObject chassisObject = chassisCollection.OfType<ManagementObject>().First();
+                si.ChassisInfo.SerialNumber = chassisObject.TryGetObject("SerialNumber");
+                si.ChassisInfo.Manufacturer = chassisObject.TryGetObject("Manufacturer");
+                si.ChassisInfo.SmbiosAssetTag = chassisObject.TryGetObject("SMBIOSAssetTag");
             }
             catch { }
 
             try
             {
-                using (ManagementClass baseBoardClass = new ManagementClass(scope, new ManagementPath("Win32_Baseboard"), wmiObjectOptions))
-                using (ManagementObjectCollection baseBoardCollection = baseBoardClass.GetInstances())
-                using (ManagementObject baseBoardObject = baseBoardCollection.OfType<ManagementObject>().First())
-                {
-                    si.MotherboardInfo.Product = baseBoardObject.TryGetObject("Product");
-                    si.MotherboardInfo.Manufacturer = baseBoardObject.TryGetObject("Manufacturer");
-                    si.MotherboardInfo.SerialNumber = baseBoardObject.TryGetObject("SerialNumber");
-                    si.MotherboardInfo.Version = baseBoardObject.TryGetObject("Version");
-                }
+                using ManagementClass baseBoardClass = new(scope, new ManagementPath("Win32_Baseboard"), wmiObjectOptions);
+                using ManagementObjectCollection baseBoardCollection = baseBoardClass.GetInstances();
+                using ManagementObject baseBoardObject = baseBoardCollection.OfType<ManagementObject>().First();
+                si.MotherboardInfo.Product = baseBoardObject.TryGetObject("Product");
+                si.MotherboardInfo.Manufacturer = baseBoardObject.TryGetObject("Manufacturer");
+                si.MotherboardInfo.SerialNumber = baseBoardObject.TryGetObject("SerialNumber");
+                si.MotherboardInfo.Version = baseBoardObject.TryGetObject("Version");
             }
             catch { }
 
             try
             {
-                using (ManagementClass nicClass = new ManagementClass(scope, new ManagementPath("Win32_NetworkAdapter"), wmiObjectOptions))
-                using (ManagementObjectCollection nicCollection = nicClass.GetInstances())
-                {
-                    si.NicInfos.Clear();
+                using ManagementClass nicClass = new(scope, new ManagementPath("Win32_NetworkAdapter"), wmiObjectOptions);
+                using ManagementObjectCollection nicCollection = nicClass.GetInstances();
+                si.NicInfos.Clear();
 
-                    foreach (ManagementBaseObject nicObject in nicCollection)
+                foreach (ManagementBaseObject nicObject in nicCollection)
+                {
+                    NicInfo ni = new()
                     {
-                        NicInfo ni = new NicInfo
-                        {
-                            NetConnectionId = nicObject.TryGetObject("NetConnectionID"),
-                            MacAddress = nicObject.TryGetObject("MACAddress"),
-                            NetEnabled = nicObject.TryGetObject("NetEnabled")
-                        };
+                        NetConnectionId = nicObject.TryGetObject("NetConnectionID"),
+                        MacAddress = nicObject.TryGetObject("MACAddress"),
+                        NetEnabled = nicObject.TryGetObject("NetEnabled")
+                    };
 
-                        if (ni.NetConnectionId != null && ni.MacAddress != null)
-                        {
-                            si.NicInfos.Add(ni);
-                        }
+                    if (ni.NetConnectionId != null && ni.MacAddress != null)
+                    {
+                        si.NicInfos.Add(ni);
                     }
                 }
             }
@@ -420,7 +405,7 @@ namespace HGM.Hotbird64.LicenseManager
                 foreach (ManagementBaseObject disk2PartObject in disk2PartCollection)
                 {
                     using ManagementObject partitionObject = new(scope, new ManagementPath((string)disk2PartObject["Antecedent"]), wmiObjectOptions),
-                        logicalDrive = new ManagementObject(scope, new ManagementPath((string)disk2PartObject["Dependent"]), wmiObjectOptions);
+                        logicalDrive = new(scope, new ManagementPath((string)disk2PartObject["Dependent"]), wmiObjectOptions);
                     if ((string)logicalDrive["DeviceID"] != si.OsInfo.SystemDrive)
                     {
                         continue;
@@ -523,10 +508,8 @@ namespace HGM.Hotbird64.LicenseManager
         {
             try
             {
-                using (ManagementObjectCollection queryResult = GetManagementObjectCollection("SELECT LicenseStatus from SoftwareLicensingProduct WHERE ApplicationID = '55c92734-d682-4d71-983e-d6ec3f16059f' and LicenseStatus = 1"))
-                {
-                    isWindowsActivated = queryResult.OfType<ManagementObject>().Any();
-                }
+                using ManagementObjectCollection queryResult = GetManagementObjectCollection("SELECT LicenseStatus from SoftwareLicensingProduct WHERE ApplicationID = '55c92734-d682-4d71-983e-d6ec3f16059f' and LicenseStatus = 1");
+                isWindowsActivated = queryResult.OfType<ManagementObject>().Any();
             }
             catch
             {
@@ -595,7 +578,7 @@ namespace HGM.Hotbird64.LicenseManager
         private ManagementObjectCollection GetManagementObjectCollection(string querystring)
         {
             ManagementObjectCollection queryResult;
-            using (ManagementObjectSearcher query = new ManagementObjectSearcher(scope, new ObjectQuery(querystring)))
+            using (ManagementObjectSearcher query = new(scope, new ObjectQuery(querystring)))
             {
                 try
                 {
@@ -609,24 +592,22 @@ namespace HGM.Hotbird64.LicenseManager
                     }
 
                     ReEstablishConnection(ex);
-                    using (ManagementObjectSearcher query2 = new ManagementObjectSearcher(scope, new ObjectQuery(querystring)))
-                    {
-                        queryResult = query2.Get();
-                    }
+                    using ManagementObjectSearcher query2 = new(scope, new ObjectQuery(querystring));
+                    queryResult = query2.Get();
                 }
             }
             return queryResult;
         }
 
-        public static readonly string[] RequiredProperties = new[]
-        {
+        public static readonly string[] RequiredProperties =
+        [
           "Name", "Description","ID", "GracePeriodRemaining", "OfflineInstallationId", "LicenseStatus","LicenseStatusReason","PartialProductKey",
           "ProductKeyChannel","GenuineStatus","EvaluationEndDate","ApplicationID","ProductKeyID","KeyManagementServicePort","KeyManagementServiceLookupDomain","KeyManagementServiceMachine",
           "DiscoveredKeyManagementServiceMachinePort","DiscoveredKeyManagementServiceMachineName","DiscoveredKeyManagementServiceMachineIpAddress","KeyManagementServiceProductKeyID",
           "VLRenewalInterval","VLActivationInterval","VLActivationTypeEnabled","IsKeyManagementServiceMachine","RequiredClientCount","KeyManagementServiceCurrentCount",
           "KeyManagementServiceTotalRequests","KeyManagementServiceFailedRequests","KeyManagementServiceUnlicensedRequests","KeyManagementServiceLicensedRequests",
           "KeyManagementServiceNonGenuineGraceRequests","KeyManagementServiceNotificationRequests","KeyManagementServiceOOBGraceRequests","KeyManagementServiceOOTGraceRequests","ExtendedGrace",
-        };
+        ];
 
 
         public void RefreshLicenses()
@@ -640,11 +621,9 @@ namespace HGM.Hotbird64.LicenseManager
 
                 try
                 {
-                    using (ManagementClass managementClass = new ManagementClass(scope, new ManagementPath(LicenseProvidersList[i].ProductClassName), new ObjectGetOptions(null, TimeSpan.MaxValue, true)))
-                    {
-                        PropertyData[] properties = managementClass.Properties.Cast<PropertyData>().Where(p => RequiredProperties.Contains(p.Name)).ToArray();
-                        propertyList = properties.Aggregate("", (current, managementClassProperty) => current + (managementClassProperty.Name + (managementClassProperty != properties.Last() ? ", " : "")));
-                    }
+                    using ManagementClass managementClass = new(scope, new ManagementPath(LicenseProvidersList[i].ProductClassName), new ObjectGetOptions(null, TimeSpan.MaxValue, true));
+                    PropertyData[] properties = [.. managementClass.Properties.Cast<PropertyData>().Where(p => RequiredProperties.Contains(p.Name))];
+                    propertyList = properties.Aggregate("", (current, managementClassProperty) => current + (managementClassProperty.Name + (managementClassProperty != properties.Last() ? ", " : "")));
                 }
                 catch
                 {
@@ -696,20 +675,16 @@ namespace HGM.Hotbird64.LicenseManager
                 }
                 catch (COMException ex)
                 {
-                    switch ((uint)ex.ErrorCode)
+                    errorMessage += (uint)ex.ErrorCode switch
                     {
-                        case 0xC004D302:
-                            errorMessage += "\r\n\r\nThe Licensing Provider " + LicenseProvidersList[i].FriendlyName
-                                    + " was rearmed. You must reboot your computer to use this service.";
-                            break;
-                        default:
-                            errorMessage += "\r\n\r\nThe Licensing Provider " + LicenseProvidersList[i].FriendlyName +
-                                    " has encountered a severe error. This happens if you tamper with its store or install " +
-                                    "license files that are not supported by that Provider. The following error has occured: " +
-                                    "0x" + ((uint)ex.ErrorCode).ToString("X") + " " +
-                                    Kms.StatusMessage((uint)ex.ErrorCode);
-                            break;
-                    }
+                        0xC004D302 => "\r\n\r\nThe Licensing Provider " + LicenseProvidersList[i].FriendlyName
+                                                            + " was rearmed. You must reboot your computer to use this service.",
+                        _ => "\r\n\r\nThe Licensing Provider " + LicenseProvidersList[i].FriendlyName +
+                                                            " has encountered a severe error. This happens if you tamper with its store or install " +
+                                                            "license files that are not supported by that Provider. The following error has occured: " +
+                                                            "0x" + ((uint)ex.ErrorCode).ToString("X") + " " +
+                                                            Kms.StatusMessage((uint)ex.ErrorCode),
+                    };
                 }
                 finally
                 {
@@ -735,7 +710,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         public ManagementObject GetLicenseProviderParameters(string serviceName)
         {
-            ManagementClass serviceClass = new ManagementClass(scope, new ManagementPath(serviceName), wmiObjectOptions);
+            ManagementClass serviceClass = new(scope, new ManagementPath(serviceName), wmiObjectOptions);
             ManagementObjectCollection collection;
             try
             {
@@ -749,12 +724,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
 
             ManagementObject result = collection.OfType<ManagementObject>().FirstOrDefault();
-            if (result == null)
-            {
-                throw new ApplicationException("Licensing service " + serviceName + " did not return any parameters.");
-            }
-
-            return result;
+            return result ?? throw new ApplicationException("Licensing service " + serviceName + " did not return any parameters.");
         }
 
         public string InstallProductKey(string key)
@@ -769,7 +739,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                 try
                 {
-                    InvokeServiceMethod(ls, "InstallProductKey", new object[] { key });
+                    InvokeServiceMethod(ls, "InstallProductKey", [key]);
                     return ls.FriendlyName;
                 }
                 catch (ArgumentException ex)
@@ -828,7 +798,7 @@ namespace HGM.Hotbird64.LicenseManager
                             InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServiceLookupDomain", null);
                             break;
                         default:
-                            InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceLookupDomain", new object[] { domain });
+                            InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceLookupDomain", [domain]);
                             break;
                     }
                 }
@@ -849,7 +819,7 @@ namespace HGM.Hotbird64.LicenseManager
                             InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServiceMachine", null);
                             break;
                         default:
-                            InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceMachine", new object[] { hostname });
+                            InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceMachine", [hostname]);
                             break;
                     }
                 }
@@ -864,7 +834,7 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     if (port != 0)
                     {
-                        InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServicePort", new object[] { port });
+                        InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServicePort", [port]);
                     }
                     else
                     {
@@ -926,12 +896,12 @@ namespace HGM.Hotbird64.LicenseManager
                         }
                         else
                         {
-                            InvokeServiceMethod(provider, methodSet, new object[] { defaultValue });
+                            InvokeServiceMethod(provider, methodSet, [defaultValue]);
                         }
                     }
                     else
                     {
-                        InvokeServiceMethod(provider, methodSet, new object[] { intValue });
+                        InvokeServiceMethod(provider, methodSet, [intValue]);
                     }
                 }
                 catch (ManagementException ex) { IgnoreMethodNotImplemented(ex); }
@@ -961,7 +931,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 try
                 {
-                    InvokeServiceMethod(provider, "DisableKeyManagementServiceDnsPublishing", new object[] { !enableDnsPublishing });
+                    InvokeServiceMethod(provider, "DisableKeyManagementServiceDnsPublishing", [!enableDnsPublishing]);
                 }
                 catch (ManagementException ex) { IgnoreMethodNotImplemented(ex); }
             }
@@ -970,7 +940,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 try
                 {
-                    InvokeServiceMethod(provider, "EnableKeyManagementServiceLowPriority", new object[] { lowPrio });
+                    InvokeServiceMethod(provider, "EnableKeyManagementServiceLowPriority", [lowPrio]);
                 }
                 catch (ManagementException ex) { IgnoreMethodNotImplemented(ex); }
             }
@@ -1029,29 +999,25 @@ namespace HGM.Hotbird64.LicenseManager
         {
             try
             {
-                using (ManagementObject target = new ManagementObject(scope, new ManagementPath(wmiServiceName + "." + uniqueKey + "='" + id + "'"), wmiObjectOptions))
+                using ManagementObject target = new(scope, new ManagementPath(wmiServiceName + "." + uniqueKey + "='" + id + "'"), wmiObjectOptions);
+                try
                 {
-                    try
-                    {
-                        return target.InvokeMethod(method, inParams);
-                    }
-                    catch (ManagementException)
+                    return target.InvokeMethod(method, inParams);
+                }
+                catch (ManagementException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Source == "WinMgmt")
                     {
                         throw;
                     }
-                    catch (Exception ex)
-                    {
-                        if (ex.Source == "WinMgmt")
-                        {
-                            throw;
-                        }
 
-                        ReEstablishConnection(ex);
-                        using (ManagementObject target2 = new ManagementObject(scope, new ManagementPath(wmiServiceName + "." + uniqueKey + "='" + id + "'"), wmiObjectOptions))
-                        {
-                            return target2.InvokeMethod(method, inParams);
-                        }
-                    }
+                    ReEstablishConnection(ex);
+                    using ManagementObject target2 = new(scope, new ManagementPath(wmiServiceName + "." + uniqueKey + "='" + id + "'"), wmiObjectOptions);
+                    return target2.InvokeMethod(method, inParams);
                 }
             }
             catch (UnauthorizedAccessException ex)
@@ -1123,7 +1089,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 InvokeServiceMethod(provider,
                           "DisableKeyManagementServiceHostCaching",
-                          new object[] { !enabled });
+                          [!enabled]);
             }
             catch (ManagementException ex)
             {
