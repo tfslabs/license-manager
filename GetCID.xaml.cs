@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -34,8 +34,12 @@ namespace HGM.Hotbird64.LicenseManager
         public static InputGestureCollection CtrlE = [];
         public static InputGestureCollection CtrlW = [];
         public static CultureInfo OsSystemLocale;
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private int selectedProductIndex = -1;
+
+        private readonly GetCID_WebService WebService_Handler = new();
+
         public void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -58,7 +62,7 @@ namespace HGM.Hotbird64.LicenseManager
             e.CanExecute = true;
         }
 
-        private int selectedProductIndex = -1;
+
         public int SelectedProductIndex
         {
             get => selectedProductIndex;
@@ -75,6 +79,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
             });
         }
+
         static GetCID()
         {
             CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
@@ -86,7 +91,7 @@ namespace HGM.Hotbird64.LicenseManager
         public GetCID()
         {
             InitializeComponent();
-            if (!CheckConnection())
+            if (!WebService_Handler.CheckConnection())
             {
                 MessageBox.Show(
                     "Your Internet connection to the Microsoft Customer Service is not stable. Confirmation ID may not get.",
@@ -111,39 +116,11 @@ namespace HGM.Hotbird64.LicenseManager
             set
             {
                 EpidBox.IsEnabled =
-                      ComboBoxProductId.IsEnabled =
+                    ComboBoxProductId.IsEnabled =
                         TextBoxLicenseStatusReason.IsEnabled =
-                           PhoneInstallationIdBox.IsEnabled = value;
+                            PhoneInstallationIdBox.IsEnabled = value;
 
             }
-        }
-
-        private static bool CheckConnection()
-        {
-            bool isInternetTrouble = false;
-            string[] GetCIDTargets = ["www.microsoft.com", "activation.sls.microsoft.com"];
-            foreach (var target in GetCIDTargets)
-            {
-                try
-                {
-                    IPHostEntry hostEntry = Dns.GetHostEntry(target);
-                    if (hostEntry.AddressList.Length > 0)
-                    {
-                        using var ping = new Ping();
-                        var reply = ping.Send(hostEntry.AddressList[0]);
-                        if (reply.Status == IPStatus.Success)
-                        {
-                            isInternetTrouble = true;
-                            break;
-                        }
-                    }
-                }
-                catch
-                {
-                    isInternetTrouble = false;
-                }
-            }
-            return isInternetTrouble;
         }
 
         internal bool IsProgressBarRunning
@@ -158,25 +135,23 @@ namespace HGM.Hotbird64.LicenseManager
 
         private async void Button_InstallCID_Clicked(object sender, RoutedEventArgs e)
         {
-            TextBoxInfoText.AppendText("\nInstalling Confirmation ID...\n");
             int index = ComboBoxProductId.SelectedIndex;
 
-            if (MessageBox.Show
-                (
-                  this,
-                  "Are you sure you want to install Confirmation ID for " + Machine.ProductLicenseList[index].License["Description"] + "?",
-                  "Warning",
-                  MessageBoxButton.YesNo,
-                  MessageBoxImage.Warning
-                )
-                != MessageBoxResult.Yes)
+            if (MessageBox.Show(
+                    this,
+                    "Are you sure you want to install Confirmation ID for " + Machine.ProductLicenseList[index].License["Description"] + "?",
+                    "Warning",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                ) !=
+                MessageBoxResult.Yes)
             {
                 e.Handled = false;
                 return;
             }
 
             string installationId = string.Concat(PhoneInstallationIdBox.ToString()
-                    .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
+                .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
             string confirmationId = string.Concat(CIDCode.ToString().Trim());
 
             IsProgressBarRunning = true;
@@ -187,13 +162,12 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 await Task.Run(() => Machine.InstallConfirmationID(index, installationId, confirmationId));
 
-                new Thread(() => Dispatcher.Invoke(() => MessageBox.Show
-                (
-                  this,
-                  "Confirmation ID has been installed successfully",
-                  "Success",
-                  MessageBoxButton.OK,
-                  MessageBoxImage.Information
+                new Thread(() => Dispatcher.Invoke(() => MessageBox.Show(
+                    this,
+                    "Confirmation ID has been installed successfully",
+                    "Success",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
                 ))).Start();
 
                 Refresh_Click(sender, e);
@@ -210,144 +184,34 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void Button_GetCID_Clicked(object sender, RoutedEventArgs e)
         {
+            string installationId = string.Concat(PhoneInstallationIdBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
+            string epid = string.Concat(EpidBox.ToString().Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Where(c => char.IsDigit(c) || c == '.' || c == '-')).Trim();
+            IsProgressBarRunning = true;
+            GetCIDLabelStatus.Text = "Processing...";
+
             try
             {
-                TextBoxInfoText.Clear();
-                string installationId = string.Concat(PhoneInstallationIdBox.ToString()
-                    .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "").Replace("-", "").Trim());
-                string epid = string.Concat(EpidBox.ToString()
-                    .Replace("HGM.Hotbird64.LicenseManager.Controls.WmiPropertyBox: ", "")
-                    .Where(c => char.IsDigit(c) || c == '.' || c == '-'))
-                    .Trim();
-#if DEBUG
-                TextBoxInfoText.AppendText("Debugging mode is enabled.\n" +
-                                           $"Your selected Installation ID: {installationId}\n" +
-                                           $"Your selected Extended Product ID: {epid}\n\n");
-#endif
-                IsProgressBarRunning = true;
-                GetCIDLabelStatus.Text = "Processing...";
-                string confirmationId = ActivationHelper.CallWebService(installationId, epid);
-                if (confirmationId.StartsWith("Error:"))
-                {
-                    switch (confirmationId)
-                    {
-                        case "Error: 0x194":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x194: " +
-#endif
-                                "The remote server returned an unexpected response."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "The remote server returned an unexpected response.";
-                            break;
-                        case "Error: 0x19D":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x19D: " +
-#endif
-                                "The remote server returned an unexpected response."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "The remote server returned an unexpected response.";
-                            break;
-                        case "Error: 0x7F":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x7F: " +
-#endif
-                                "The Multiple Activation Key has exceeded its limit."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "The Multiple Activation Key has exceeded its limit.";
-                            break;
-                        case "Error: 0x67":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x67: " +
-#endif
-                                "The product key has been blocked."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "The product key has been blocked.";
-                            break;
-                        case "Error: 0x68":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x68: " +
-#endif
-                                "Invalid product key."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "Invalid product key.";
-                            break;
-                        case "Error: 0x86":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x86: " +
-#endif
-                                "Invalid key type."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "Invalid key type.";
-                            break;
-                        case "Error: 0x90":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x90: " +
-#endif
-                                "Please check the Installation ID and try again."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "Please check the Installation ID and try again.";
-                            break;
-                        case "Error: 0x2F78":
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                "0x2F78: " +
-#endif
-                                "The remote server returned an unrecognized response."
-                                );
-                            CIDCode.Background = new SolidColorBrush(Colors.Red);
-                            CIDCode.Text = "Please check the Installation ID and try again.";
-                            break;
-                        default:
-                            TextBoxInfoText.AppendText(
-#if DEBUG
-                                $"{confirmationId}: " +
-#endif
-                                "The remote server reported an unknown error."
-                                );
-                            break;
-                    }
-                }
-                else
-                {
-                    TextBoxInfoText.AppendText($"Your confirmation ID is: {confirmationId}");
-                    CIDCode.Background = new SolidColorBrush(Colors.LightGreen);
-                    CIDCode.Text = confirmationId;
-                    if ((string)ComboBoxProductId.Items[ComboBoxProductId.SelectedIndex] == "USER_CONTROL: Enter manually")
-                    {
-                        InstallCID.IsEnabled = false;
-                    }
-                    else
-                    {
-                        InstallCID.IsEnabled = true;
-                    }
-                }
-                IsProgressBarRunning = false;
-                GetCIDLabelStatus.Text = "Completed";
+                CIDCode.Text = WebService_Handler.CallWebService(installationId, epid);
             }
-            catch (Exception ex)
+            catch (WebException webEx)
             {
-#if DEBUG
-                MessageBox.Show("Error:\n\n" + ex.ToString(), "Get CID Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                GetCIDLabelStatus.Text = $"Error: {ex.HResult}";
-#else
-                MessageBox.Show("Error:\n\n" + ex.HResult, "Get CID Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                GetCIDLabelStatus.Text = "Error";
-#endif
+                MessageBox.Show(this, "Error connecting to the web service: " + webEx.Message, "Web Service Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch (IOException ioEx)
+            {
+                MessageBox.Show(this, "I/O error: " + ioEx.Message, "I/O Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (NullReferenceException nullPtr)
+            {
+                MessageBox.Show(this, "Null reference error: " + nullPtr.Message, "Null Reference Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (InvalidOperationException ioExp)
+            {
+                MessageBox.Show(this, "Invalid operation error: " +ioExp.Message, "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            IsProgressBarRunning = false;
+            GetCIDLabelStatus.Text = "Completed";
         }
 
         private async Task Refresh()
@@ -355,24 +219,21 @@ namespace HGM.Hotbird64.LicenseManager
             ControlsEnabled = false;
             try
             {
-                try
+                IsProgressBarRunning = true;
+                await Task.Run(() =>
                 {
-                    IsProgressBarRunning = true;
-                    await Task.Run(() =>
-                    {
-                        Machine.RefreshLicenses();
-                    });
+                    Machine.RefreshLicenses();
+                });
 
-                    FillLicenseComboBox();
-                    IsProgressBarRunning = false;
-                    GetCIDLabelStatus.Text = "Ready";
-                }
-                catch (Exception ex)
-                {
-                    GetCIDLabelStatus.Text = "Error";
-                    IsProgressBarRunning = false;
-                    MessageBox.Show(this, ex.Message, "Error getting License information", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                FillLicenseComboBox();
+                IsProgressBarRunning = false;
+                GetCIDLabelStatus.Text = "Ready";
+            }
+            catch (Exception ex)
+            {
+                GetCIDLabelStatus.Text = "Error";
+                IsProgressBarRunning = false;
+                MessageBox.Show(this, ex.Message, "Error getting License information", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -381,7 +242,15 @@ namespace HGM.Hotbird64.LicenseManager
                     ComboBoxProductId.Items.Add("USER_CONTROL: Enter manually");
                 }
                 InstallCID.IsEnabled = false;
+
+
                 ControlsEnabled = true;
+
+                if (ComboBoxProductId.SelectedIndex == ComboBoxProductId.Items.Count - 1)
+                {
+                    ControlsEnabled = false;
+                }
+
             }
         }
 
@@ -395,9 +264,6 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void SelectedProductChanged(object sender, SelectionChangedEventArgs e)
         {
-#if DEBUG
-            GetCIDLabelStatus.Text = "Fetching...";
-#endif
             if (ComboBoxProductId.SelectedIndex == -1) return; //-1 for unselected
 
             if (ComboBoxProductId.SelectedIndex == ComboBoxProductId.Items.Count - 1)
@@ -412,7 +278,7 @@ namespace HGM.Hotbird64.LicenseManager
                 WmiProperty w = new("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, false);
                 w.DisplayPropertyAsLicenseStatus([TextBoxLicenseStatusReason], TextBoxLicenseStatusReason);
             }
-            TextBoxInfoText.Clear();
+
             CIDCode.Clear();
             CIDCode.Background = new SolidColorBrush(Colors.Transparent);
             InstallCID.IsEnabled = false;
@@ -437,11 +303,10 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 string description = l.License["Description"].ToString();
                 string name = l.License["Name"].ToString();
-                ComboBoxProductId.Items.Add
-                (
-                  description.Substring(0, Math.Min(100, description.Length)) +
-                  ": " +
-                  name.Substring(0, Math.Min(100, name.Length))
+                ComboBoxProductId.Items.Add(
+                    description.Substring(0, Math.Min(100, description.Length)) +
+                    ": " +
+                    name.Substring(0, Math.Min(100, name.Length))
                 );
                 index++;
             }
@@ -456,7 +321,6 @@ namespace HGM.Hotbird64.LicenseManager
         {
             GetCIDLabelStatus.Text = "Gathering Data...";
             await Refresh();
-
         }
     }
 }

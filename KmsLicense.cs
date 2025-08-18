@@ -1,6 +1,5 @@
 ﻿using HGM.Hotbird64.Vlmcs;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;

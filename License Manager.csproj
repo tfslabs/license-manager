@@ -16,7 +16,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\!bin!\License Manager\Debug\x86</OutputPath>
+    <OutputPath>.\bin\$(Configuration)\$(Platform)</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>false</Optimize>
@@ -31,7 +31,7 @@
     <FileAlignment>1024</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\..\!bin!\License Manager\Release\x86</OutputPath>
+    <OutputPath>.\bin\$(Configuration)\$(Platform)</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <PlatformTarget>x86</PlatformTarget>
@@ -42,14 +42,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
-    <DocumentationFile>..\..\!bin!\License Manager\Release\x86\LicenseManager.xml</DocumentationFile>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>1024</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\!bin!\License Manager\Debug\x64</OutputPath>
+    <OutputPath>.\bin\$(Configuration)\$(Platform)</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>false</Optimize>
@@ -63,7 +62,7 @@
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\..\!bin!\License Manager\Release\x64</OutputPath>
+    <OutputPath>.\bin\$(Configuration)\$(Platform)</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <PlatformTarget>x64</PlatformTarget>
@@ -74,7 +73,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
-    <DocumentationFile>..\..\!bin!\License Manager\Release\x64\LicenseManager.xml</DocumentationFile>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
@@ -143,7 +141,7 @@
     <Compile Include="GetCID.xaml.cs">
       <DependentUpon>GetCID.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GetCIDBackend.cs" />
+    <Compile Include="GetCID_WebService.cs" />
     <Compile Include="Icons\multi\ClientComputer.xaml.cs">
       <DependentUpon>ClientComputer.xaml</DependentUpon>
     </Compile>
