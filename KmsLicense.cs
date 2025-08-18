@@ -1,14 +1,11 @@
 ﻿using HGM.Hotbird64.Vlmcs;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
 namespace HGM.Hotbird64.LicenseManager
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
     public class KmsLicense : PropertyChangeBase
     {
         private KmsGuid id;

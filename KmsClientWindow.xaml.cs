@@ -1,24 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Reflection;
-using System.Diagnostics;
-using System.Net.Sockets;
+﻿using HGM.Hotbird64.LicenseManager.Extensions;
 using HGM.Hotbird64.Vlmcs;
-using System.Globalization;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using LicenseManager.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using System.Net.Sockets;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using HGM.Hotbird64.LicenseManager.Extensions;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace HGM.Hotbird64.LicenseManager
 {
@@ -75,7 +75,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             public ServerTestResult()
             {
-                HasPassed = default(bool);
+                HasPassed = default;
             }
 
             public bool HasPassed
@@ -141,11 +141,11 @@ namespace HGM.Hotbird64.LicenseManager
             ? TimeZone.CurrentTimeZone.DaylightName
             : TimeZone.CurrentTimeZone.StandardName;
 
-        private static readonly IdnMapping idn = new IdnMapping();
+        private static readonly IdnMapping idn = new();
         private bool noTextTrigger;
 
         private static readonly Random random =
-          new Random(unchecked((int)(DateTime.UtcNow.Ticks & 0xfffffff)) ^ unchecked((int)(DateTime.UtcNow.Ticks >> 32)));
+          new(unchecked((int)(DateTime.UtcNow.Ticks & 0xfffffff)) ^ unchecked((int)(DateTime.UtcNow.Ticks >> 32)));
 
         private ushort kmsPort;
 
@@ -164,60 +164,59 @@ namespace HGM.Hotbird64.LicenseManager
 
         private static readonly RemainingTimeModel[] remainingTimeList =
         {
-            new RemainingTimeModel {MinutesRemaining = 0, FriendlyName = "Forever"},
-            new RemainingTimeModel {MinutesRemaining = 15*60*24, FriendlyName = "15 days"},
-            new RemainingTimeModel {MinutesRemaining = 30*60*24, FriendlyName = "30 days"},
-            new RemainingTimeModel {MinutesRemaining = 45*60*24, FriendlyName = "45 days"},
-            new RemainingTimeModel {MinutesRemaining = 180*60*24, FriendlyName = "180 days"}
+            new() {MinutesRemaining = 0, FriendlyName = "Forever"},
+            new() {MinutesRemaining = 15*60*24, FriendlyName = "15 days"},
+            new() {MinutesRemaining = 30*60*24, FriendlyName = "30 days"},
+            new() {MinutesRemaining = 45*60*24, FriendlyName = "45 days"},
+            new() {MinutesRemaining = 180*60*24, FriendlyName = "180 days"}
         };
 
         private static readonly ProtocolVersion[] versionList =
         {
-            new ProtocolVersion {Major = 4},
-            new ProtocolVersion {Major = 5},
-            new ProtocolVersion {Major = 6},
+            new() {Major = 4},
+            new() {Major = 5},
+            new() {Major = 6},
         };
 
         private static readonly AddressFamilyModel[] addressFamilyList =
         {
-            new AddressFamilyModel {AddressFamily = AddressFamily.InterNetwork, FriendlyName = "IPv4"},
-            new AddressFamilyModel {AddressFamily = AddressFamily.InterNetworkV6, FriendlyName = "IPv6"},
-            new AddressFamilyModel {AddressFamily = AddressFamily.Unspecified, FriendlyName = "IPv4 and IPv6"}
+            new() {AddressFamily = AddressFamily.InterNetwork, FriendlyName = "IPv4"},
+            new() {AddressFamily = AddressFamily.InterNetworkV6, FriendlyName = "IPv6"},
+            new() {AddressFamily = AddressFamily.Unspecified, FriendlyName = "IPv4 and IPv6"}
         };
 
         private static readonly LicenseStatusModel[] licenseStatusList =
         {
-            new LicenseStatusModel
-            {
+            new() {
                 LicenseStatus = LicenseStatus.Unlicensed,
                 FriendlyName = Model.LicenseStatus.GetText(LicenseStatus.Unlicensed),
             },
-            new LicenseStatusModel
+            new()
             {
                 LicenseStatus = LicenseStatus.Licensed,
                 FriendlyName = Model.LicenseStatus.GetText(LicenseStatus.Licensed)
             },
-            new LicenseStatusModel
+            new()
             {
                 LicenseStatus = LicenseStatus.GraceOob,
                 FriendlyName = Model.LicenseStatus.GetText(LicenseStatus.GraceOob)
             },
-            new LicenseStatusModel
+            new()
             {
                 LicenseStatus = LicenseStatus.GraceOot,
                 FriendlyName = Model.LicenseStatus.GetText(LicenseStatus.GraceOot)
             },
-            new LicenseStatusModel
+            new()
             {
                 LicenseStatus = LicenseStatus.GraceNonGenuine,
                 FriendlyName = Model.LicenseStatus.GetText(LicenseStatus.GraceNonGenuine)
             },
-            new LicenseStatusModel
+            new()
             {
                 LicenseStatus = LicenseStatus.Notification,
                 FriendlyName = Model.LicenseStatus.GetText(LicenseStatus.Notification)
             },
-            new LicenseStatusModel
+            new()
             {
                 LicenseStatus = LicenseStatus.GraceExtended,
                 FriendlyName = Model.LicenseStatus.GetText(LicenseStatus.GraceExtended)
@@ -227,32 +226,29 @@ namespace HGM.Hotbird64.LicenseManager
 
         private static readonly string[][] dnsNames =
         {
-            new[]
-            {
+            [
                 "www", "ftp", "kms", "hack-me", "smtp", "ns1", "mx1", "ns1", "pop3", "imap", "mail", "dns", "headquarter",
                 "we-love", "_vlmcs._tcp", "ceo-laptop"
-            },
-            new[]
-            {
+            ],
+            [
                 ".microsoft", ".apple", ".amazon", ".samsung", ".adobe", ".google", ".yahoo", ".facebook", ".ubuntu", ".oracle",
                 ".borland", ".htc", ".acer", ".windows", ".linux", ".sony", ".ibm", ".tesla", ".debian", ".bing", ".e-corp",
                 ".starfleet",
-            },
-            new[]
-            {
+            ],
+            [
                 ".com", ".net", ".org", ".cn", ".co.uk", ".de", ".com.tw", ".us", ".fr", ".it", ".me", ".info", ".biz",
                 ".co.jp", ".ua", ".at", ".es", ".pro", ".ch", ".by", ".ru", ".pl", ".kr", ".mx", ".nl", ".li", ".dk"
-            },
+            ],
         };
 
         private static readonly string[] netBiosNames =
-        {
+        [
             "MAIL1", "SERVER", "FILESERVER7", "EXCHANGE", "PC0201", "CLIENT17", "ALDEBARAN", "CHARLY", "JOESMITH1", "HGM1",
             "MYWORKSTATION", "WIN-08154711", "PRINTSRV21", "MOBILE5",
             "LAPTOP", "NOTEBOOK", "MYTABLET56", "WINDOWS3", "WINXPSP3", "CUDA12", "MSDOS-PC", "DELL1", "LENOVO17", "MACBOOK2",
             "IMAC19", "VMWARE12", "VBOX18", "CORE_I7", "INTEL1",
             "SURFACEPRO4",
-        };
+        ];
 
         private readonly IReadOnlyList<TextBox> responseTextBoxes;
         private readonly IReadOnlyList<CheckBox> responseCheckBoxes;
@@ -317,20 +313,20 @@ namespace HGM.Hotbird64.LicenseManager
             SetInitialDefaults();
             Loaded += (s, e) => SetInitialDefaults();
 
-            responseTextBoxes = new[]
-            {
+            responseTextBoxes =
+            [
                 TextBoxCorrectResponseSize, TextBoxActualResponseSize, TextBoxResponseVersion, TextBoxEPid, TextBoxOs,
                 TextBoxInstallDate, TextBoxResponseClientId, TextBoxResponseTimeStamp, TextBoxResponseTimeStampUtc,
                 TextBoxActiveClients, TextBoxRenewalInterval, TextBoxRetryInterval, TextBoxCsvlk, TextBoxHwId,
-            };
+            ];
 
-            responseCheckBoxes = new[]
-            {
+            responseCheckBoxes =
+            [
                 CheckBoxDecryptSuccess, CheckBoxIsValidHash, CheckBoxIsValidHmac, CheckBoxIsValidInitializationVector,
                 CheckBoxIsValidProtocolVersion, CheckBoxIsValidClientMachineId, CheckBoxIsValidTimeStamp,
                 CheckBoxIsValidPidLength,
                 CheckBoxIsValidResponseSize,
-            };
+            ];
 
             readonlyTextBoxBrush = responseTextBoxes[0].Background;
         }

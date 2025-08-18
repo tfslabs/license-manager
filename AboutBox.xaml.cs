@@ -1,7 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Windows;
 
-// ReSharper disable once CheckNamespace
 namespace HGM.Hotbird64.LicenseManager
 {
     public partial class AboutBox
@@ -11,10 +11,13 @@ namespace HGM.Hotbird64.LicenseManager
             InitializeComponent();
             TopElement.LayoutTransform = Scaler;
             System.Version version = Assembly.GetCallingAssembly().GetName().Version;
-            LabelVersion.Content = "Version " + version.ToString(3) + (version.MinorRevision < 2300 ? $" Beta {version.MinorRevision}" : "");
+            LabelVersion.Content = "Version " + version.ToString() + (version.MinorRevision < 2300 ? $" Beta {version.MinorRevision}" : "") + $" {IntPtr.Size << 3}-bit";
+#if DEBUG
+            LabelVersion.Content += " (Debugging mode is enabled)";
+#endif
         }
 
-        private void button_Ok_Click(object sender, RoutedEventArgs e)
+        private void Button_Ok_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
         }

@@ -1,5 +1,5 @@
-﻿using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -7,7 +7,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("License Manager")]
-[assembly: AssemblyDescription("TheFlightSims (ft. Hotbird64 & nang)")]
+[assembly: AssemblyDescription("TheFlightSims Labs (ft. Hotbird64)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TheFlightSims")]
 [assembly: AssemblyProduct("License Manager")]
@@ -53,3 +53,4 @@ using System.Windows;
 [assembly: AssemblyVersion("5.5.0.2410")]
 [assembly: AssemblyFileVersion("5.5.0.2410")]
 [assembly: NeutralResourcesLanguage("en")]
+[assembly: Guid("df0c8bf8-a64d-4e54-8e6f-a8946a796241")]

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Net.Sockets;
@@ -51,7 +50,6 @@ namespace HGM.Hotbird64.Vlmcs
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
     public struct ProtocolVersion : IComparable<ProtocolVersion>, IEquatable<ProtocolVersion>
     {
         public uint Full;
@@ -72,7 +70,7 @@ namespace HGM.Hotbird64.Vlmcs
 
         public static explicit operator ProtocolVersion(string versionString)
         {
-            ProtocolVersion result = new ProtocolVersion();
+            ProtocolVersion result = new();
             string[] split = versionString.Split('.');
             if (split.Length != 2) throw new FormatException("KMS protocol must contain exactly one period.");
             result.Major = ushort.Parse(split[0], CultureInfo.InvariantCulture);
@@ -88,7 +86,7 @@ namespace HGM.Hotbird64.Vlmcs
         public static bool operator >=(ProtocolVersion a, ProtocolVersion b) => a.Full >= b.Full;
         public static bool operator <=(ProtocolVersion a, ProtocolVersion b) => a.Full <= b.Full;
         public static explicit operator uint(ProtocolVersion a) => a.Full;
-        public static explicit operator ProtocolVersion(uint a) => new ProtocolVersion { Full = a };
+        public static explicit operator ProtocolVersion(uint a) => new() { Full = a };
         public override int GetHashCode() => unchecked((int)Full);
         public int CompareTo(ProtocolVersion other) => this == other ? 0 : this > other ? 1 : -1;
         public bool Equals(ProtocolVersion other) => this == other;
@@ -306,11 +304,11 @@ namespace HGM.Hotbird64.Vlmcs
 
         public RpcDiag ConnectRpc(bool useMultiplexedRpc, bool useNdr64, bool useBtfn)
         {
-            RpcDiag rpcDiag = default(RpcDiag);
+            RpcDiag rpcDiag = default;
             int rpcStatus = BindRpc(ctx, useMultiplexedRpc, useNdr64, useBtfn, ref rpcDiag);
 
             if (rpcStatus == 0) return rpcDiag;
-            Win32Exception exception = new Win32Exception(rpcStatus);
+            Win32Exception exception = new(rpcStatus);
             throw new KmsException(LibKmsMessage, exception);
         }
 
@@ -359,7 +357,7 @@ namespace HGM.Hotbird64.Vlmcs
                     IntPtr hwIdPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(HwId)));
                     try
                     {
-                        StringBuilder errorMessage = new StringBuilder(256, 16384);
+                        StringBuilder errorMessage = new(256, 16384);
                         Marshal.StructureToPtr(baseRequest, baseRequestPtr, false);
                         uint status = SendKmsRequest(ctx, baseResponsePtr, baseRequestPtr, out uint result, hwIdPtr);
                         warnings = LibKmsMessage;
@@ -382,7 +380,7 @@ namespace HGM.Hotbird64.Vlmcs
 
                         baseResponse = (KmsResponse)Marshal.PtrToStructure(baseResponsePtr, typeof(KmsResponse));
                         hwId = ((HwId)Marshal.PtrToStructure(hwIdPtr, typeof(HwId))).ByteArray;
-                        KmsResult kmsResult = new KmsResult(result, baseResponse.Version);
+                        KmsResult kmsResult = new(result, baseResponse.Version);
 
                         if ((result & (int)ResultCode.DecryptSuccess) == 0) errorMessage.AppendLine("AES Decryption of KMS response failed.");
                         if ((result & (int)ResultCode.IsValidPidLength) == 0) errorMessage.AppendLine("The length field of the KMS PID is not valid.");
@@ -599,9 +597,9 @@ namespace HGM.Hotbird64.Vlmcs
         public static readonly ProtocolVersion RequiredDllVersion = new ProtocolVersion { Major = 4, Minor = 0 };
         public static IdnMapping Idn = new IdnMapping();
 
-        public static readonly KmsGuid O2010Guid = new KmsGuid("59a52881-a989-479d-af46-f275c6370663");
-        public static readonly KmsGuid O2013Guid = new KmsGuid("0ff1ce15-a989-479d-af46-f275c6370663");
-        public static readonly KmsGuid WinGuid = new KmsGuid("55c92734-d682-4d71-983e-d6ec3f16059f");
+        public static readonly KmsGuid O2010Guid = new("59a52881-a989-479d-af46-f275c6370663");
+        public static readonly KmsGuid O2013Guid = new("0ff1ce15-a989-479d-af46-f275c6370663");
+        public static readonly KmsGuid WinGuid = new("55c92734-d682-4d71-983e-d6ec3f16059f");
         //private static readonly IDictionary<uint, string> platformId = new Dictionary<uint, string>();
         //public static IReadOnlyDictionary<uint, string> PlatformId => (IReadOnlyDictionary<uint, string>)platformId;
 

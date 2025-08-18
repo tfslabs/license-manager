@@ -204,7 +204,7 @@ namespace HGM.Hotbird64.LicenseManager.WPF.Converters
 
                 for (int i = 0; i < 9; i++)
                 {
-                    result += rawValue.Substring(i * rawValue.Length / 9, rawValue.Length / 9) + (i == 8 ? "" : " ");
+                    result += rawValue.Substring(i * rawValue.Length / 9, rawValue.Length / 9) + (i == 8 ? "" : "-");
                 }
 
                 return result;

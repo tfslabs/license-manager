@@ -19,18 +19,11 @@ namespace HGM.Hotbird64.LicenseManager
         {
             new ProductKey ("Windows 10/11 Professional", "VK7JG-NPHTM-C97JM-9MPGT-3V66T", KeyType.StoreLicense ),
             new ProductKey ("Windows 10/11 Home", "YTMG3-N6DKC-DKB77-7M9GH-8HVX7", KeyType.StoreLicense ),
-            new ProductKey ("Windows 8 Preview Core Country Specific", "NDTWC-J28B6-RTR3C-CPRHW-2GV83", KeyType.StoreLicense),
-            new ProductKey ("Windows 8 Preview Professional N", "G2DR7-7N9C8-KBK9V-D4W3M-H49R8", KeyType.StoreLicense),
-            new ProductKey ("Windows 8 Preview Enterprise N", "N8BR7-D8XB9-939VB-FMFWD-KWXR9", KeyType.StoreLicense),
             new ProductKey ("Windows 8 Preview Standard Server", "YNBF9-GPVTG-FFHQC-MJR4B-B4CQX", KeyType.StoreLicense),
-            new ProductKey ("Windows 8 Preview Multipoint Server Standard", "3CK7G-VRNKC-8QBFR-9G8HC-YKG8W", KeyType.StoreLicense),
-            new ProductKey ("Windows 8 Preview Multipoint Server Premium", "GRMDJ-JNF7H-W9WTC-WKQRG-H8KW6", KeyType.StoreLicense),
             new ProductKey ("Microsoft Visual Studio 2019 Professional", "NYWVH-HT4XC-R2WYW-9Y3CM-X4V3Y", KeyType.StoreLicense ),
             new ProductKey ("Microsoft Visual Studio 2019 Enterprise", "BF8Y8-GN2QH-T84XB-QVY3B-RC4DF", KeyType.StoreLicense ),
             new ProductKey ("Microsoft Visual Studio 2022 Professional", "TD244-P4NB7-YQ6XK-Y8MMM-YWV2J", KeyType.StoreLicense ),
             new ProductKey ("Microsoft Visual Studio 2022 Enterprise", "VHF9H-NXBBB-638P6-6JHCY-88JWH", KeyType.StoreLicense ),
-            new ProductKey ("Microsoft SQL Server 2022 Enterprise", "J4V48-P8MM4-9N3J9-HD97X-DYMRM", KeyType.StoreLicense ),
-            new ProductKey ("Microsoft SCCM 2022 Enterprise", "BXH69-M62YX-QQD6R-3GPWX-8WMFY", KeyType.StoreLicense ),
             new ProductKey ("Windows Server 2022 KMS Host", "R47NX-MVMYR-98PV9-XYVXY-XBXCH", KeyType.StoreLicense)
         };
 
