@@ -639,7 +639,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             else if (vendor.StartsWith("microsoft") && name.StartsWith("virtual"))
             {
-                vmName = "Micrsoft";
+                vmName = "Microsoft Hyper-V";
             }
 
             else
