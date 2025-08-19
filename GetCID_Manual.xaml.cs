@@ -24,7 +24,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        private async void GetCID_Manual_Loaded(object sender, RoutedEventArgs e)
+        private void GetCID_Manual_Loaded(object sender, RoutedEventArgs e)
         {
             ControlsEnabled = true;
             IsProgressBarRunning = false;
