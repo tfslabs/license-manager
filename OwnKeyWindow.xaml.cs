@@ -1,16 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using Microsoft.Win32;
+﻿using HGM.Hotbird64.LicenseManager.Extensions;
 using HGM.Hotbird64.Vlmcs;
-using System.Globalization;
-using System.Windows.Input;
-using System.Windows.Controls;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
-using HGM.Hotbird64.LicenseManager.Extensions;
+using System.Globalization;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace HGM.Hotbird64.LicenseManager
 {
