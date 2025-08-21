@@ -157,13 +157,42 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (InvalidOperationException ioExp)
             {
+#if DEBUG
                 MessageBox.Show(this, "Invalid operation error: " + ioExp.Message, "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
                 CIDCode.Text = $"Error: InvalidOperationException {ioExp.Message}";
+#else
+                if (ioExp.Message.Equals("0x7F"))
+                {
+                    MessageBox.Show(this, "The Multiple Activation Key has exceeded its limit", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    CIDCode.Text = "The Multiple Activation Key has exceeded its limit";
+                } else if (ioExp.Message.Equals("0x67"))
+                {
+                    MessageBox.Show(this, "The product key has been blocked", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    CIDCode.Text = "The product key has been blocked";
+                } else if (ioExp.Message.Equals("0x68"))
+                {
+                    MessageBox.Show(this, "Invalid product key", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    CIDCode.Text = "Invalid product key";
+                } else if (ioExp.Message.Equals("0x86"))
+                {
+                    MessageBox.Show(this, "Invalid key type", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    CIDCode.Text = "Invalid key type";
+                } else if (ioExp.Message.Equals("0x90"))
+                {
+                    MessageBox.Show(this, "Please check the Installation ID and try again", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    CIDCode.Text = "Please check the Installation ID and try again";
+                } else
+                {
+                    MessageBox.Show(this, "The server is returning unknown error", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    CIDCode.Text = $"The activation server is returning unknown error. Detail: {ioExp}";
+                }
+#endif
             }
-
-            IsProgressBarRunning = false;
-            GetCIDLabelStatus.Text = "Completed";
-        }
+            finally
+            {
+                IsProgressBarRunning = false;
+                GetCIDLabelStatus.Text = "Completed";
+            }        }
 
         private async Task Refresh()
         {
