@@ -22,9 +22,9 @@ UsesNDR64="true"                                        // Genuine KMS servers u
 	DisplayName="Windows Server 2019"                        // Friendly name that should be displayed instead of the Guid (required)
 	IsLab="false"                                            // This is a lab CSVLK that also activates retail Windows > 8 (default false)
 	IsPreview="false"                                        // This is a preview (beta, Non-RTM, etc.) CSVLK (default false)
-	GroupId="206"                                            // GroupId for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don´t have a pkeyconfig for this CSVLK
-	MinKeyId="551000000"                                     // Minimum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don´t have a pkeyconfig for this CSVLK
-	MaxKeyId="570999999"                                     // Maximum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don´t have a pkeyconfig for this CSVLK
+	GroupId="206"                                            // GroupId for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you donï¿½t have a pkeyconfig for this CSVLK
+	MinKeyId="551000000"                                     // Minimum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you donï¿½t have a pkeyconfig for this CSVLK
+	MaxKeyId="570999999"                                     // Maximum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you donï¿½t have a pkeyconfig for this CSVLK
 	VlmcsdIndex="0"                                          // Export this CsvlkItem with Index 0 to vlmcsd. (optional)
 	IniFileName="Windows"                                    // Name used in vlmcsd.ini to assign specific EPID (required for all CsvlkItems that have VlmcsdIndex=, optional for others)
 	EPid="03612-00206-568-381813-03-1033-14393.0000-2702018" // If you want a specific EPid, use this. Or omit it to generate a suitable default automatically.
@@ -850,6 +850,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			</KmsItem>
 
 			<KmsItem DisplayName="Windows Server 2025" Id="907f1f65-adcd-4a2e-95bc-4bf500bc6e58" IsPreview="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
+				<SkuItem DisplayName="Windows Server IoT 2025" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="NQ8HH-FTDTM-6VGY7-TQ3DV-XFBV2" />
 				<SkuItem DisplayName="Windows Server 2025 Standard" Id="7dc26449-db21-4e09-ba37-28f2958506a6" Gvlk="TVRH6-WHNXV-R9WG3-9XRFY-MY832" />
 				<SkuItem DisplayName="Windows Server 2025 Datacenter" Id="c052f164-cdf6-409a-a0cb-853ba0f0f55a" Gvlk="CNFDQ-2BW8H-9V4WM-TKCPD-MD2QF" />
 				<SkuItem DisplayName="Windows Server 2025 Datacenter: Azure Edition" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="XGN3F-F394H-FD2MY-PP6FD-8MCRC" />
