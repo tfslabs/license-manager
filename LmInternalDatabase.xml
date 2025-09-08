@@ -22,9 +22,9 @@ UsesNDR64="true"                                        // Genuine KMS servers u
 	DisplayName="Windows Server 2019"                        // Friendly name that should be displayed instead of the Guid (required)
 	IsLab="false"                                            // This is a lab CSVLK that also activates retail Windows > 8 (default false)
 	IsPreview="false"                                        // This is a preview (beta, Non-RTM, etc.) CSVLK (default false)
-	GroupId="206"                                            // GroupId for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don�t have a pkeyconfig for this CSVLK
-	MinKeyId="551000000"                                     // Minimum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don�t have a pkeyconfig for this CSVLK
-	MaxKeyId="570999999"                                     // Maximum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don�t have a pkeyconfig for this CSVLK
+	GroupId="206"                                            // GroupId for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don't have a pkeyconfig for this CSVLK
+	MinKeyId="551000000"                                     // Minimum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don't have a pkeyconfig for this CSVLK
+	MaxKeyId="570999999"                                     // Maximum key id for EPid generation. If omitted, this is taken from the pkeyconfig. Use only if you don't have a pkeyconfig for this CSVLK
 	VlmcsdIndex="0"                                          // Export this CsvlkItem with Index 0 to vlmcsd. (optional)
 	IniFileName="Windows"                                    // Name used in vlmcsd.ini to assign specific EPID (required for all CsvlkItems that have VlmcsdIndex=, optional for others)
 	EPid="03612-00206-568-381813-03-1033-14393.0000-2702018" // If you want a specific EPid, use this. Or omit it to generate a suitable default automatically.
