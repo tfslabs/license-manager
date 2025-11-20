@@ -94,72 +94,73 @@ namespace HGM.Hotbird64.LicenseManager
             /*
              * Windows Vista and Windows Server 2008
              */
-            new PKeyConfigFile {BaseFileName="pkconfig_vista", DisplayName="Windows Vista/Windows Server 2008", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig_vista", DisplayName="Windows Vista/Windows Server 2008", IsOldKeyFormat=true },
 
             /*
              * Windows 7 (all editions) and Windows Server 2008 R2
              */
-            new PKeyConfigFile {BaseFileName="19041-pkeyconfig-downlevel", DisplayName="Windows 7 SP1 OEM/Retail", IsOldKeyFormat=true},
-            new PKeyConfigFile {BaseFileName="pkconfig_winPosReady7", DisplayName="Windows 7 POS Ready", IsOldKeyFormat=true },
-            new PKeyConfigFile {BaseFileName="pkconfig_winThinPC", DisplayName="Windows 7 Thin PC", IsOldKeyFormat=true },
-            new PKeyConfigFile {BaseFileName="pkconfig_win7", DisplayName="Windows 7/Windows Server 2008 R2", IsOldKeyFormat=true },
-            new PKeyConfigFile {BaseFileName="pkconfig_winemb7", DisplayName="Windows 7 Embedded Standard", IsOldKeyFormat=true },
+            new() {BaseFileName="19041-pkeyconfig-downlevel", DisplayName="Windows 7 SP1 OEM/Retail", IsOldKeyFormat=true},
+            new() {BaseFileName="pkconfig_winPosReady7", DisplayName="Windows 7 POS Ready", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig_winThinPC", DisplayName="Windows 7 Thin PC", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig_win7", DisplayName="Windows 7/Windows Server 2008 R2", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig_winemb7", DisplayName="Windows 7 Embedded Standard", IsOldKeyFormat=true },
             
             /*
              * Windows 8 (all editions) and Windows Server 2012
              */ 
-            new PKeyConfigFile {BaseFileName="pkconfig_win8", DisplayName="Windows 8/Windows 8 Embedded/Windows Server 2012" },
-            new PKeyConfigFile {BaseFileName="pkconfig_win8-csvlk", DisplayName="Windows 8/Windows 8 Embedded/Windows Server 2012 KMS Host" }, //KMS Host
+            new() {BaseFileName="pkconfig_win8", DisplayName="Windows 8/Windows 8 Embedded/Windows Server 2012" },
+            new() {BaseFileName="pkconfig_win8-csvlk", DisplayName="Windows 8/Windows 8 Embedded/Windows Server 2012 KMS Host" }, //KMS Host
 
             /*
              * Windows 8.1 (all editions) and Windows Server 2012 R2 (Windows 8.1 based)
              */
-            new PKeyConfigFile {BaseFileName="pkconfig_win8.1Update", DisplayName="Windows 8.1/Windows Server 2012 R2" },
-            new PKeyConfigFile {BaseFileName="pkconfig_win8.1-csvlk", DisplayName="Windows 8.1/Windows Server 2012 R2 KMS Host" },
+            new() {BaseFileName="pkconfig_win8.1Update", DisplayName="Windows 8.1/Windows Server 2012 R2" },
+            new() {BaseFileName="pkconfig_win8.1-csvlk", DisplayName="Windows 8.1/Windows Server 2012 R2 KMS Host" },
 
             /*
              * Windows 10, Windows 11 (22H2, 23H2), Windows Server 2012 R2 Next (Windows 10 based), Windows Server 2016, 
              * Windows Server 2019, Windows Server 2022, Windows Server 2025
              * 
              */
-            new PKeyConfigFile {BaseFileName="pkconfig_win10", DisplayName="Windows 10/Windows 11/Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next" },
-            new PKeyConfigFile {BaseFileName="pkconfig_win10_anniversary", DisplayName="Windows 10 Preview/Windows 10 1607/Windows Server 2012 R2 Next/Windows Server 2016" },
-            new PKeyConfigFile {BaseFileName="16299-pkeyconfig", DisplayName="Windows 10 LTSC, Government (1709, 1803)/Windows 11 LTSC, Government/Windows Server (1709, 1803)/Windows Server 2016" },
-            new PKeyConfigFile {BaseFileName="18362-pkeyconfig", DisplayName="Windows 10 (LTSC, SAC)/Windows 11 (LTSC, SAC)/Windows Server SAC (1809 to 20H2)/Windows Server 2019" },
-            new PKeyConfigFile {BaseFileName="19041-pkeyconfig", DisplayName="Windows 10 2004/Windows Server 2019" },
-            new PKeyConfigFile {BaseFileName="20348-pkeyconfig", DisplayName="Windows Server 2019 Azure Stack HCI/Windows Server 2022/Windows Server 2021 SAC" },
-            new PKeyConfigFile {BaseFileName="20348-pkeyconfig-downlevel", DisplayName="Windows 7/Windows Server 2008 R2 compatible upgrade to Windows 10 Insider Program/Windows Server 2022" },
-            new PKeyConfigFile {BaseFileName="22621-pkeyconfig", DisplayName="Windows 11 (22H2, 23H2)/Windows IoT Enterprise LTSC/Windows Server 2022 vNext" },
-            new PKeyConfigFile {BaseFileName="26100-pkeyconfig", DisplayName="Windows 11 24H2/Windows Server 2025" },
-            new PKeyConfigFile {BaseFileName="26100-pkeyconfig-downlevel", DisplayName="Windows 7/Windows Server 2008 R2 (OEM) compatible upgrade to Windows 11 24H2/Windows Server 2025 (OEM)" },
+            new() {BaseFileName="pkconfig_win10", DisplayName="Windows 10/Windows 11/Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next" },
+            new() {BaseFileName="pkconfig_win10_anniversary", DisplayName="Windows 10 Preview/Windows 10 1607/Windows Server 2012 R2 Next/Windows Server 2016" },
+            new() {BaseFileName="16299-pkeyconfig", DisplayName="Windows 10 LTSC, Government (1709, 1803)/Windows 11 LTSC, Government/Windows Server (1709, 1803)/Windows Server 2016" },
+            new() {BaseFileName="18362-pkeyconfig", DisplayName="Windows 10 (LTSC, SAC)/Windows 11 (LTSC, SAC)/Windows Server SAC (1809 to 20H2)/Windows Server 2019" },
+            new() {BaseFileName="19041-pkeyconfig", DisplayName="Windows 10 2004/Windows Server 2019" },
+            new() {BaseFileName="20348-pkeyconfig", DisplayName="Windows Server 2019 Azure Stack HCI/Windows Server 2022/Windows Server 2021 SAC" },
+            new() {BaseFileName="20348-pkeyconfig-downlevel", DisplayName="Windows 7/Windows Server 2008 R2 compatible upgrade to Windows 10 Insider Program/Windows Server 2022" },
+            new() {BaseFileName="22621-pkeyconfig", DisplayName="Windows 11 (22H2, 23H2)/Windows IoT Enterprise LTSC/Windows Server 2022 vNext" },
+            new() {BaseFileName="26100-pkeyconfig", DisplayName="Windows 11 24H2/Windows Server 2025" },
+            new() {BaseFileName="26100-pkeyconfig-downlevel", DisplayName="Windows 7/Windows Server 2008 R2 (OEM) compatible upgrade to Windows 11 24H2/Windows Server 2025 (OEM)" },
 
-            new PKeyConfigFile {BaseFileName="pkconfig_win10-csvlk", DisplayName="Windows 10/Windows 11/Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next KMS Host" },
-            new PKeyConfigFile {BaseFileName="pkconfig_win10_anniversary-csvlk", DisplayName="Windows 10 Preview/Windows 10 1607/Windows Server 2012 R2 Next/Windows Server 2016 KMS Host" },
-            new PKeyConfigFile {BaseFileName="16299-pkeyconfig-csvlk", DisplayName="Windows 10 (1709, 1803)/Windows Server (1709, 1803)/Windows Server 2016 KMS Host" },
-            new PKeyConfigFile {BaseFileName="19041-pkeyconfig-csvlk", DisplayName="Windows 10 2004/Windows Server 2019 KMS Host" },
-            new PKeyConfigFile {BaseFileName="22621-pkeyconfig-csvlk", DisplayName="Windows 11 (22H2, 23H2)/Windows IoT Enterprise LTSC/Windows Server 2022 vNext KMS Host" },
-            new PKeyConfigFile {BaseFileName="26100-pkeyconfig-csvlk", DisplayName="Windows 11 24H2/Windows Server 2025 KMS Host" },
+            new() {BaseFileName="pkconfig_win10-csvlk", DisplayName="Windows 10/Windows 11/Windows 10 1507/Windows Embedded Industry Next Beta/Windows Server 2012 R2 Next KMS Host" },
+            new() {BaseFileName="pkconfig_win10_anniversary-csvlk", DisplayName="Windows 10 Preview/Windows 10 1607/Windows Server 2012 R2 Next/Windows Server 2016 KMS Host" },
+            new() {BaseFileName="16299-pkeyconfig-csvlk", DisplayName="Windows 10 (1709, 1803)/Windows Server (1709, 1803)/Windows Server 2016 KMS Host" },
+            new() {BaseFileName="19041-pkeyconfig-csvlk", DisplayName="Windows 10 2004/Windows Server 2019 KMS Host" },
+            new() {BaseFileName="22621-pkeyconfig-csvlk", DisplayName="Windows 11 (22H2, 23H2)/Windows IoT Enterprise LTSC/Windows Server 2022 vNext KMS Host" },
+            new() {BaseFileName="26100-pkeyconfig-csvlk", DisplayName="Windows 11 24H2/Windows Server 2025 KMS Host" },
 
             /*
              * Office 2010 and later
              */
-            new PKeyConfigFile {BaseFileName="pkconfig_office14", DisplayName="Office 2010", IsOldKeyFormat=true },
-            new PKeyConfigFile {BaseFileName="pkconfig_office15pre", DisplayName="Office 2013 Preview", IsOldKeyFormat=true},
-            new PKeyConfigFile {BaseFileName="pkconfig_office15", DisplayName="Office 2013", IsOldKeyFormat=true},
-            new PKeyConfigFile {BaseFileName="pkeyconfig-office", DisplayName="Office 2016 and up" },
-            new PKeyConfigFile {BaseFileName="pkconfig_Office15KMSHost", DisplayName="Office 2013 KMS Host" },
-            new PKeyConfigFile {BaseFileName="pkeyconfig-office-kmshost", DisplayName="Office 2016 and up KMS Host" },
+            new() {BaseFileName="pkconfig_office14", DisplayName="Office 2010", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig_office15pre", DisplayName="Office 2013 Preview", IsOldKeyFormat=true},
+            new() {BaseFileName="pkconfig_office15", DisplayName="Office 2013", IsOldKeyFormat=true},
+            new() {BaseFileName="pkeyconfig-office", DisplayName="Office 2016 and up" },
+            new() {BaseFileName="pkconfig_Office15KMSHost", DisplayName="Office 2013 KMS Host" },
+            new() {BaseFileName="pkeyconfig-office-kmshost", DisplayName="Office 2016 and up KMS Host" },
 
             /*
              * Visual Studio (all versions)
              */ 
-            new PKeyConfigFile {BaseFileName="pkconfig-vs2010", DisplayName="Visual Studio 2010", IsOldKeyFormat=true },
-            new PKeyConfigFile {BaseFileName="pkconfig-vs2012", DisplayName="Visual Studio 2012", IsOldKeyFormat=true },
-            new PKeyConfigFile {BaseFileName="pkconfig-vs2013", DisplayName="Visual Studio 2013", IsOldKeyFormat=true },
-            new PKeyConfigFile {BaseFileName="pkconfig-vs2015", DisplayName="Visual Studio 2015" },
-            new PKeyConfigFile {BaseFileName="pkconfig-vs2017", DisplayName="Visual Studio 2017" },
-            new PKeyConfigFile {BaseFileName="pkconfig-vs2019", DisplayName="Visual Studio 2019" },
-            new PKeyConfigFile {BaseFileName="pkconfig-vs2022", DisplayName="Visual Studio 2022" },
+            new() {BaseFileName="pkconfig-vs2010", DisplayName="Visual Studio 2010", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig-vs2012", DisplayName="Visual Studio 2012", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig-vs2013", DisplayName="Visual Studio 2013", IsOldKeyFormat=true },
+            new() {BaseFileName="pkconfig-vs2015", DisplayName="Visual Studio 2015" },
+            new() {BaseFileName="pkconfig-vs2017", DisplayName="Visual Studio 2017" },
+            new() {BaseFileName="pkconfig-vs2019", DisplayName="Visual Studio 2019" },
+            new() {BaseFileName="pkconfig-vs2022", DisplayName="Visual Studio 2022" },
+            new() {BaseFileName="pkconfig-vs2026", DisplayName="Visual Studio 2026" }
         };
 
         public event PropertyChangedEventHandler PropertyChanged;

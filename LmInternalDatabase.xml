@@ -850,7 +850,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			</KmsItem>
 
 			<KmsItem DisplayName="Windows Server 2025" Id="907f1f65-adcd-4a2e-95bc-4bf500bc6e58" IsPreview="false" DefaultKmsProtocol="6.0" NCountPolicy="5">
-				<SkuItem DisplayName="Windows Server IoT 2025" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="NQ8HH-FTDTM-6VGY7-TQ3DV-XFBV2" />
+				<SkuItem DisplayName="Windows Server IoT 2025" Id="18ccf6cf-341f-41dc-8156-47a4344ad21f" Gvlk="NQ8HH-FTDTM-6VGY7-TQ3DV-XFBV2" />
 				<SkuItem DisplayName="Windows Server 2025 Standard" Id="7dc26449-db21-4e09-ba37-28f2958506a6" Gvlk="TVRH6-WHNXV-R9WG3-9XRFY-MY832" />
 				<SkuItem DisplayName="Windows Server 2025 Datacenter" Id="c052f164-cdf6-409a-a0cb-853ba0f0f55a" Gvlk="CNFDQ-2BW8H-9V4WM-TKCPD-MD2QF" />
 				<SkuItem DisplayName="Windows Server 2025 Datacenter: Azure Edition" Id="c2e946d1-cfa2-4523-8c87-30bc696ee584" Gvlk="XGN3F-F394H-FD2MY-PP6FD-8MCRC" />

@@ -425,6 +425,7 @@
     <Resource Include="Data\PKeyConfig\pkconfig-vs2017.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig-vs2019.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\pkconfig-vs2022.xrm-ms.gz" />
+    <Resource Include="Data\PKeyConfig\pkconfig-vs2026.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\16299-pkeyconfig-csvlk.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\16299-pkeyconfig.xrm-ms.gz" />
     <Resource Include="Data\PKeyConfig\18362-pkeyconfig.xrm-ms.gz" />
