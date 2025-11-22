@@ -129,7 +129,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<WinBuild BuildNumber="26200" ReleaseDate="2025-03-24T23:00:01Z" DisplayName="Windows 11 25H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true"/>
 	</WinBuilds>
 	<CsvlkItems>
-		<CsvlkItem DisplayName="Windows Server 2025" GroupId="4919" MinKeyId="20000" MaxKeyId="20019999" IniFileName="Windows" ReleaseDate="2024-04-26T00:00:00Z" EPid="05426-04919-009-767455-03-1033-9200.0000-0172025" Id="84e331f6-4279-48c4-ab10-b75139181351">
+		<CsvlkItem DisplayName="Windows Server 2025" VlmcsdIndex="0" GroupId="4919" MinKeyId="20000" MaxKeyId="20019999" IniFileName="Windows" ReleaseDate="2024-04-26T00:00:00Z" EPid="05426-04919-009-767455-03-1033-9200.0000-0172025" Id="84e331f6-4279-48c4-ab10-b75139181351">
 			<Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
 			<Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
 			<Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9" />
@@ -378,7 +378,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 			<Activate KmsItem="6d646890-3606-461a-86ab-598bb84ace82" />
 			<Activate KmsItem="e1c51358-fe3e-4203-a4a2-3b6b20c9734e" />
 		</CsvlkItem>
-		<CsvlkItem DisplayName="Windows 10 Enterprise G/Windows Server 1709/Windows Server 2016 KMS Host" VlmcsdIndex="0" GroupId="3858" MinKeyId="15000000" MaxKeyId="999999999" IniFileName="WinChinaGov" ReleaseDate="2017-04-05T00:00:00Z" EPid="05426-03858-356-921766-03-1033-9200.0000-0172025" Id="ecc0774a-aed3-4e1a-b815-2b31781adfea">
+		<CsvlkItem DisplayName="Windows 10 Enterprise G/Windows Server 1709/Windows Server 2016 KMS Host" GroupId="3858" MinKeyId="15000000" MaxKeyId="999999999" IniFileName="WinChinaGov" ReleaseDate="2017-04-05T00:00:00Z" EPid="05426-03858-356-921766-03-1033-9200.0000-0172025" Id="ecc0774a-aed3-4e1a-b815-2b31781adfea">
 			<Activate KmsItem="7ba0bf23-d0f5-4072-91d9-d55af5a481b6" />
 		</CsvlkItem>
 		<CsvlkItem DisplayName="Windows 10 2019" GroupId="206" MinKeyId="256000000" MaxKeyId="265999999" IniFileName="Windows" ReleaseDate="2018-10-02T00:00:00Z" Id="90da7373-1c51-430b-bf26-c97e9c5cdc31">
