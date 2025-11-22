@@ -181,9 +181,9 @@ namespace HGM.Hotbird64.Vlmcs
         {
             int GetNumber(string s)
             {
-                if (s == null) return 0;
-
-                return s.StartsWith("0x")
+                return s == null
+                    ? 0
+                    : s.StartsWith("0x")
                     ? unchecked((int)uint.Parse(s.Substring(2), NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture))
                     : int.Parse(s, NumberStyles.Any, CultureInfo.InvariantCulture);
             }
@@ -296,12 +296,9 @@ namespace HGM.Hotbird64.Vlmcs
 
             string activationsRemainingText = payLoadNode.SelectSingleNode("//*[local-name()='ActivationRemaining']")?.InnerText;
 
-            if (activationsRemainingText == null)
-            {
-                throw new EPidQueryException("activation.sls.microsoft.com did not return the number of remaining activations.", -1, ePid);
-            }
-
-            return GetNumber(activationsRemainingText);
+            return activationsRemainingText == null
+                ? throw new EPidQueryException("activation.sls.microsoft.com did not return the number of remaining activations.", -1, ePid)
+                : GetNumber(activationsRemainingText);
         }
 
 
@@ -314,17 +311,9 @@ namespace HGM.Hotbird64.Vlmcs
             {
                 ePidStart = "03612";
             }
-            else if (osBuild >= 9600)
-            {
-                ePidStart = "06401";
-            }
-            else if (osBuild >= 9200)
-            {
-                ePidStart = "05426";
-            }
             else
             {
-                ePidStart = "55041";
+                ePidStart = osBuild >= 9600 ? "06401" : osBuild >= 9200 ? "05426" : "55041";
             }
 
             id3 = new DigitalProductId3();

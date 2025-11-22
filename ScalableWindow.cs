@@ -107,17 +107,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             e.Handled = true;
 
-            double tempScale;
-
-            if (e.Delta > 0)
-            {
-                tempScale = App.ZoomFactor;
-            }
-            else
-            {
-                tempScale = 1 / App.ZoomFactor;
-            }
-
+            double tempScale = e.Delta > 0 ? App.ZoomFactor : 1 / App.ZoomFactor;
             Height *= tempScale;
             Width *= tempScale;
             Scaler.ScaleX *= tempScale;

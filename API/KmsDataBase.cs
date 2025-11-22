@@ -238,7 +238,7 @@ namespace HGM.Hotbird64.Vlmcs
         public string ClientStatus => $"{Queue.Count} / {MaxActiveClients}";
         [XmlIgnore]
         public bool? IsValidClientStatus
-            => (MaxActiveClients > MinActiveClients || Queue.Count == 0) && Queue.Count < 671 ? (bool?)null : Queue.Count >= MinActiveClients >> 1 && Queue.Count < 671;
+            => (MaxActiveClients > MinActiveClients || Queue.Count == 0) && Queue.Count < 671 ? null : Queue.Count >= MinActiveClients >> 1 && Queue.Count < 671;
 
         public void Reset()
         {
@@ -546,12 +546,7 @@ namespace HGM.Hotbird64.Vlmcs
                 }
 
                 LoadDatabase();
-                if (kmsData?.Items == null)
-                {
-                    throw new InvalidOperationException("The on-demand loader did not load a KMS Database.");
-                }
-
-                return kmsData;
+                return kmsData?.Items == null ? throw new InvalidOperationException("The on-demand loader did not load a KMS Database.") : kmsData;
             }
 
             set => kmsData = value;
@@ -727,7 +722,7 @@ namespace HGM.Hotbird64.Vlmcs
 
         public static int GetPlatformId(int buildNumber)
         {
-            IReadOnlyList<WinBuild> winBuilds = KmsData.WinBuilds.OrderByDescending(b => b.BuildNumber).ToArray() as IReadOnlyList<WinBuild>;
+            IReadOnlyList<WinBuild> winBuilds = KmsData.WinBuilds.OrderByDescending(b => b.BuildNumber).ToArray();
 
             foreach (WinBuild winBuild in winBuilds)
             {

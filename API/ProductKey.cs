@@ -91,8 +91,7 @@ namespace HGM.Hotbird64.Vlmcs
         public override bool Equals(object obj)
         {
             IProductKey other = obj as IProductKey;
-            if (other == null) return false;
-            return Key == other.Key;
+            return other == null ? false : Key == other.Key;
         }
 
         public override int GetHashCode()

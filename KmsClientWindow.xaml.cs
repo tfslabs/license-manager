@@ -674,17 +674,9 @@ namespace HGM.Hotbird64.LicenseManager
             }
 
             int closingBracketPosition = address.LastIndexOf(']');
-            if (address.Length == closingBracketPosition + 2)
-            {
-                return false;
-            }
-
-            if (address.Length > closingBracketPosition + 2 && address[closingBracketPosition + 1] != ':')
-            {
-                return false;
-            }
-
-            return true;
+            return address.Length == closingBracketPosition + 2
+                ? false
+                : address.Length <= closingBracketPosition + 2 || address[closingBracketPosition + 1] == ':';
         }
 
         private static void SplitKmsAddress(string address, out string host, out string port)
@@ -995,194 +987,192 @@ namespace HGM.Hotbird64.LicenseManager
                 KmsResult kmsResult = default(KmsResult);
                 RpcDiag rpcDiag = default(RpcDiag);
 
-                using (KmsClient kmsClient = new KmsClient(TextBoxHost.Text, kmsPort))
+                using KmsClient kmsClient = new KmsClient(TextBoxHost.Text, kmsPort);
+                string warnings = null;
+                bool useMultiplexedRpc, useNdr64, useBtfn;
+
+                try
                 {
-                    string warnings = null;
-                    bool useMultiplexedRpc, useNdr64, useBtfn;
+                    useMultiplexedRpc = CheckBoxUseMultiplexedRpc.IsChecked.Value;
+                    useNdr64 = CheckBoxNdr64.IsChecked.Value;
+                    useBtfn = CheckBoxBtfn.IsChecked.Value;
 
-                    try
-                    {
-                        useMultiplexedRpc = CheckBoxUseMultiplexedRpc.IsChecked.Value;
-                        useNdr64 = CheckBoxNdr64.IsChecked.Value;
-                        useBtfn = CheckBoxBtfn.IsChecked.Value;
-
-                        await Task.Run(() => warnings = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn));
-                        TextBoxWarnings.Text = warnings;
-                    }
-                    catch (Exception ex)
-                    {
-                        WindowStatus = WindowStatus.Error;
-                        MessageBox.Show(ex.Message, $"Error Connecting To {TextBoxHost.Text} Port {kmsPort}", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-
-
-                    try
-                    {
-                        WindowStatus = WindowStatus.Sending;
-                        await Task.Run(() => kmsResult = kmsClient.SendRequest(out _, out warnings, out kmsResponse, kmsRequest, out hwId, false, false));
-                        if (!string.IsNullOrWhiteSpace(warnings))
-                        {
-                            TextBoxWarnings.AppendText(warnings);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ShowActivationError(ex);
-                        return;
-                    }
-
-                    TextBoxHwId.Text = $"{hwId[0]:X2} {hwId[1]:X2} {hwId[2]:X2} {hwId[3]:X2} {hwId[4]:X2} {hwId[5]:X2} {hwId[6]:X2} {hwId[7]:X2}";
-                    EPid pid = new EPid(kmsResponse.KmsPid);
-
-                    CheckEpidForErrors(pid);
-                    AnalyzeRpc(rpcDiag, pid, kmsRequest.KmsID);
-                    AnalyzeKeyRanges(pid, kmsRequest);
-                    WarnIfIncorrectActivation(kmsRequest);
-                    SetTextBoxFromKmsResponse(pid, kmsRequest, kmsResponse, kmsResult);
-                    SetCheckBoxesFromResponseResult(kmsResult, rpcDiag);
-
-                    TextBoxWarnings.Visibility = string.IsNullOrWhiteSpace(TextBoxWarnings.Text) ? Visibility.Collapsed : Visibility.Visible;
-                    TextBoxHwId.Visibility = kmsResponse.Version.Major > 5 ? Visibility.Visible : Visibility.Collapsed;
-
-                    if (!CheckBoxMultipleTest.IsChecked.Value)
-                    {
-                        return;
-                    }
-
-                    if (!await AnalyzeSecondRequest(kmsClient, kmsRequest, useMultiplexedRpc, useNdr64, useBtfn, kmsResponse))
-                    {
-                        return;
-                    }
-
-                    KmsRequest testRequest = kmsRequest;
-                    testRequest.TimeStamp = DateTime.FromFileTime(kmsRequest.TimeStamp).AddHours(5).ToFileTime();
-
-                    if (!await AnalyzeExpectedError(
-                      kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
-                      displayName: "Client and server time is +/- 4 hours",
-                      severity: 10,
-                      expectedHResult: 0xC004F06C,
-                      baseToolTip:
-                          "A genuine KMS server checks if the client time does deviate from its own time by more than 4 hours.\n" +
-                          "Two requests have been sent with time stamps that differ by 5 hours.\n"
-                    ))
-                    {
-                        return;
-                    }
-
-                    testRequest = kmsRequest;
-                    testRequest.Version.Major = 4;
-                    testRequest.Version.Minor = 1;
-
-                    if (!await AnalyzeExpectedError(
-                      kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
-                      displayName: "Refuse if incorrect protocol version",
-                      severity: 20,
-                      expectedHResult: 0x8007000D,
-                      baseToolTip:
-                          "A genuine KMS server returns HRESULT 0x8007000D if it encounters an incorrect protocol version.\n" +
-                          "Some emulators return a different HRESULT or don't check the minor protocol version.\n" +
-                          "This test tries to activate via the non-existing protocol 4.1.\n"
-                    ))
-                    {
-                        return;
-                    }
-
-                    testRequest = kmsRequest;
-                    testRequest.RequiredClientCount = 1001;
-
-                    if (!await AnalyzeExpectedError(
-                      kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
-                      displayName: "Refuse requests with clients > 1000",
-                      severity: 20,
-                      expectedHResult: 0x8007000D,
-                      baseToolTip:
-                          "A genuine KMS server returns HRESULT 0x8007000D on requests with more than 1000 required clients.\n" +
-                          "Many emulators do not check if the number of required clients is 1000 or less\n"
-                    ))
-                    {
-                        return;
-                    }
-
-                    testRequest = kmsRequest;
-                    testRequest.ApplicationID = KmsGuid.NewGuid();
-
-                    if (!await AnalyzeExpectedError(
-                      kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
-                      displayName: "Refuse if incorrect App ID",
-                      severity: 10,
-                      expectedHResult: 0xC004F042,
-                      baseToolTip:
-                          "A genuine KMS server never activates unknown App IDs.\n" +
-                          "Many emulators don't check the App ID.\n" +
-                          $"This test tries to activate with random App ID {testRequest.ApplicationID}.\n"
-                    ))
-                    {
-                        return;
-                    }
-
-                    testRequest = kmsRequest;
-                    testRequest.KmsID = KmsGuid.NewGuid();
-
-                    if (!await AnalyzeExpectedError(
-                      kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
-                      displayName: "Refuse if unknown Kms ID",
-                      severity: 10,
-                      expectedHResult: 0xC004F042,
-                      baseToolTip:
-                          "A genuine KMS server never activates unknown Kms IDs.\n" +
-                          "Many emulators don't check the Kms ID.\n" +
-                          $"This test tries to activate with random Kms ID {testRequest.KmsID}.\n"
-                    ))
-                    {
-                        return;
-                    }
-
-                    testRequest = kmsRequest;
-                    testRequest.KmsID = new KmsGuid("bbb97b3b-8ca4-4a28-9717-89fabd42c4ac");
-                    testRequest.Version.Major = 4;
-                    testRequest.RequiredClientCount = 25;
-                    testRequest.ApplicationID = Kms.WinGuid;
-                    testRequest.ID = new KmsGuid("c04ed6bf-55c8-4b47-9f8e-5a1f31ceee60");
-
-                    if (!await AnalyzeExpectedError(
-                      kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
-                      displayName: "Refuse if Non-VL Windows",
-                      severity: 30,
-                      expectedHResult: 0xC004F042,
-                      baseToolTip:
-                          "A genuine KMS does not activate retail editions of Windows.\n" +
-                          "Most emulators allow this.\n" +
-                          "This test tries to activate Windows 8 Core (Home).\n"
-                    ))
-                    {
-                        return;
-                    }
-
-                    testRequest = kmsRequest;
-                    testRequest.KmsID = new KmsGuid("5f94a0bb-d5a0-4081-a685-5819418b2fe0");
-                    testRequest.Version.Major = 4;
-                    testRequest.RequiredClientCount = 25;
-                    testRequest.ApplicationID = Kms.WinGuid;
-                    testRequest.ID = new KmsGuid("2b9c337f-7a1d-4271-90a3-c6855a2b8a1c");
-
-                    if (!await AnalyzeExpectedError(
-                      kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
-                      displayName: "Refuse if Windows beta",
-                      severity: 30,
-                      expectedHResult: 0xC004F042,
-                      baseToolTip:
-                          "A genuine KMS does not activate beta or preview editions of Windows.\n" +
-                          "Most emulators allow this.\n" +
-                          "This test tries to activate Windows 8.x Preview.\n"
-                    ))
-                    {
-                        return;
-                    }
-
-                    await AnalyzeUnknownSkuId(kmsClient, kmsRequest, useMultiplexedRpc, useNdr64, useBtfn);
+                    await Task.Run(() => warnings = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn));
+                    TextBoxWarnings.Text = warnings;
                 }
+                catch (Exception ex)
+                {
+                    WindowStatus = WindowStatus.Error;
+                    MessageBox.Show(ex.Message, $"Error Connecting To {TextBoxHost.Text} Port {kmsPort}", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+
+                try
+                {
+                    WindowStatus = WindowStatus.Sending;
+                    await Task.Run(() => kmsResult = kmsClient.SendRequest(out _, out warnings, out kmsResponse, kmsRequest, out hwId, false, false));
+                    if (!string.IsNullOrWhiteSpace(warnings))
+                    {
+                        TextBoxWarnings.AppendText(warnings);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ShowActivationError(ex);
+                    return;
+                }
+
+                TextBoxHwId.Text = $"{hwId[0]:X2} {hwId[1]:X2} {hwId[2]:X2} {hwId[3]:X2} {hwId[4]:X2} {hwId[5]:X2} {hwId[6]:X2} {hwId[7]:X2}";
+                EPid pid = new EPid(kmsResponse.KmsPid);
+
+                CheckEpidForErrors(pid);
+                AnalyzeRpc(rpcDiag, pid, kmsRequest.KmsID);
+                AnalyzeKeyRanges(pid, kmsRequest);
+                WarnIfIncorrectActivation(kmsRequest);
+                SetTextBoxFromKmsResponse(pid, kmsRequest, kmsResponse, kmsResult);
+                SetCheckBoxesFromResponseResult(kmsResult, rpcDiag);
+
+                TextBoxWarnings.Visibility = string.IsNullOrWhiteSpace(TextBoxWarnings.Text) ? Visibility.Collapsed : Visibility.Visible;
+                TextBoxHwId.Visibility = kmsResponse.Version.Major > 5 ? Visibility.Visible : Visibility.Collapsed;
+
+                if (!CheckBoxMultipleTest.IsChecked.Value)
+                {
+                    return;
+                }
+
+                if (!await AnalyzeSecondRequest(kmsClient, kmsRequest, useMultiplexedRpc, useNdr64, useBtfn, kmsResponse))
+                {
+                    return;
+                }
+
+                KmsRequest testRequest = kmsRequest;
+                testRequest.TimeStamp = DateTime.FromFileTime(kmsRequest.TimeStamp).AddHours(5).ToFileTime();
+
+                if (!await AnalyzeExpectedError(
+                  kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
+                  displayName: "Client and server time is +/- 4 hours",
+                  severity: 10,
+                  expectedHResult: 0xC004F06C,
+                  baseToolTip:
+                      "A genuine KMS server checks if the client time does deviate from its own time by more than 4 hours.\n" +
+                      "Two requests have been sent with time stamps that differ by 5 hours.\n"
+                ))
+                {
+                    return;
+                }
+
+                testRequest = kmsRequest;
+                testRequest.Version.Major = 4;
+                testRequest.Version.Minor = 1;
+
+                if (!await AnalyzeExpectedError(
+                  kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
+                  displayName: "Refuse if incorrect protocol version",
+                  severity: 20,
+                  expectedHResult: 0x8007000D,
+                  baseToolTip:
+                      "A genuine KMS server returns HRESULT 0x8007000D if it encounters an incorrect protocol version.\n" +
+                      "Some emulators return a different HRESULT or don't check the minor protocol version.\n" +
+                      "This test tries to activate via the non-existing protocol 4.1.\n"
+                ))
+                {
+                    return;
+                }
+
+                testRequest = kmsRequest;
+                testRequest.RequiredClientCount = 1001;
+
+                if (!await AnalyzeExpectedError(
+                  kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
+                  displayName: "Refuse requests with clients > 1000",
+                  severity: 20,
+                  expectedHResult: 0x8007000D,
+                  baseToolTip:
+                      "A genuine KMS server returns HRESULT 0x8007000D on requests with more than 1000 required clients.\n" +
+                      "Many emulators do not check if the number of required clients is 1000 or less\n"
+                ))
+                {
+                    return;
+                }
+
+                testRequest = kmsRequest;
+                testRequest.ApplicationID = KmsGuid.NewGuid();
+
+                if (!await AnalyzeExpectedError(
+                  kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
+                  displayName: "Refuse if incorrect App ID",
+                  severity: 10,
+                  expectedHResult: 0xC004F042,
+                  baseToolTip:
+                      "A genuine KMS server never activates unknown App IDs.\n" +
+                      "Many emulators don't check the App ID.\n" +
+                      $"This test tries to activate with random App ID {testRequest.ApplicationID}.\n"
+                ))
+                {
+                    return;
+                }
+
+                testRequest = kmsRequest;
+                testRequest.KmsID = KmsGuid.NewGuid();
+
+                if (!await AnalyzeExpectedError(
+                  kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
+                  displayName: "Refuse if unknown Kms ID",
+                  severity: 10,
+                  expectedHResult: 0xC004F042,
+                  baseToolTip:
+                      "A genuine KMS server never activates unknown Kms IDs.\n" +
+                      "Many emulators don't check the Kms ID.\n" +
+                      $"This test tries to activate with random Kms ID {testRequest.KmsID}.\n"
+                ))
+                {
+                    return;
+                }
+
+                testRequest = kmsRequest;
+                testRequest.KmsID = new KmsGuid("bbb97b3b-8ca4-4a28-9717-89fabd42c4ac");
+                testRequest.Version.Major = 4;
+                testRequest.RequiredClientCount = 25;
+                testRequest.ApplicationID = Kms.WinGuid;
+                testRequest.ID = new KmsGuid("c04ed6bf-55c8-4b47-9f8e-5a1f31ceee60");
+
+                if (!await AnalyzeExpectedError(
+                  kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
+                  displayName: "Refuse if Non-VL Windows",
+                  severity: 30,
+                  expectedHResult: 0xC004F042,
+                  baseToolTip:
+                      "A genuine KMS does not activate retail editions of Windows.\n" +
+                      "Most emulators allow this.\n" +
+                      "This test tries to activate Windows 8 Core (Home).\n"
+                ))
+                {
+                    return;
+                }
+
+                testRequest = kmsRequest;
+                testRequest.KmsID = new KmsGuid("5f94a0bb-d5a0-4081-a685-5819418b2fe0");
+                testRequest.Version.Major = 4;
+                testRequest.RequiredClientCount = 25;
+                testRequest.ApplicationID = Kms.WinGuid;
+                testRequest.ID = new KmsGuid("2b9c337f-7a1d-4271-90a3-c6855a2b8a1c");
+
+                if (!await AnalyzeExpectedError(
+                  kmsClient, testRequest, useMultiplexedRpc, useNdr64, useBtfn,
+                  displayName: "Refuse if Windows beta",
+                  severity: 30,
+                  expectedHResult: 0xC004F042,
+                  baseToolTip:
+                      "A genuine KMS does not activate beta or preview editions of Windows.\n" +
+                      "Most emulators allow this.\n" +
+                      "This test tries to activate Windows 8.x Preview.\n"
+                ))
+                {
+                    return;
+                }
+
+                await AnalyzeUnknownSkuId(kmsClient, kmsRequest, useMultiplexedRpc, useNdr64, useBtfn);
             }
             finally
             {
@@ -1880,18 +1870,9 @@ namespace HGM.Hotbird64.LicenseManager
 
             TextBoxActiveClients.Text = $"{response.KMSCurrentCount}";
 
-            if (response.KMSCurrentCount < request.RequiredClientCount)
-            {
-                TextBoxActiveClients.Background = Brushes.OrangeRed;
-            }
-            else if (response.KMSCurrentCount > (request.ApplicationID == Kms.WinGuid ? 50 : 10))
-            {
-                TextBoxActiveClients.Background = Brushes.Yellow;
-            }
-            else
-            {
-                TextBoxActiveClients.Background = Brushes.LightGreen;
-            }
+            TextBoxActiveClients.Background = response.KMSCurrentCount < request.RequiredClientCount
+                ? Brushes.OrangeRed
+                : response.KMSCurrentCount > (request.ApplicationID == Kms.WinGuid ? 50 : 10) ? Brushes.Yellow : Brushes.LightGreen;
 
             if (response.KMSCurrentCount > (request.ApplicationID == Kms.WinGuid ? 50 : 10))
             {

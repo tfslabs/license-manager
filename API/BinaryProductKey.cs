@@ -307,12 +307,9 @@ namespace HGM.Hotbird64.Vlmcs
 
             binaryKey.IsNewKey = isNewKey;
 
-            if (isNewKey && binaryKey.StoredCrc32 != Crc32(binaryKey))
-            {
-                throw new ArgumentException($"CRC-32 of key \"{originalKey}\" is not valid", nameof(key));
-            }
-
-            return binaryKey;
+            return isNewKey && binaryKey.StoredCrc32 != Crc32(binaryKey)
+                ? throw new ArgumentException($"CRC-32 of key \"{originalKey}\" is not valid", nameof(key))
+                : binaryKey;
         }
 
         public override string ToString() => (string)this;

@@ -92,32 +92,30 @@ namespace HGM.Hotbird64.LicenseManager
         [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void ExportXml()
         {
-            using (MemoryStream stream = new MemoryStream())
+            using MemoryStream stream = new MemoryStream();
+            XmlWriterSettings settings = new XmlWriterSettings
             {
-                XmlWriterSettings settings = new XmlWriterSettings
-                {
-                    NewLineHandling = NewLineHandling.Replace,
-                    NewLineOnAttributes = CheckBoxMultiLine.IsChecked.Value,
-                    NewLineChars = "\r\n",
-                    Encoding = encoding,
-                    Indent = true,
-                    IndentChars = $"{tabs}",
-                };
+                NewLineHandling = NewLineHandling.Replace,
+                NewLineOnAttributes = CheckBoxMultiLine.IsChecked.Value,
+                NewLineChars = "\r\n",
+                Encoding = encoding,
+                Indent = true,
+                IndentChars = $"{tabs}",
+            };
 
-                XmlWriter writer = XmlWriter.Create(stream, settings);
-                XmlSerializer serializer = new XmlSerializer(typeof(KmsData));
+            XmlWriter writer = XmlWriter.Create(stream, settings);
+            XmlSerializer serializer = new XmlSerializer(typeof(KmsData));
 
-                serializer.Serialize(writer, KmsLists.KmsData);
-                byte[] buffer = new byte[stream.Length];
-                stream.Seek(0, SeekOrigin.Begin);
-                stream.Read(buffer, 0, (int)stream.Length);
-                string text = encoding.GetString(buffer);
+            serializer.Serialize(writer, KmsLists.KmsData);
+            byte[] buffer = new byte[stream.Length];
+            stream.Seek(0, SeekOrigin.Begin);
+            stream.Read(buffer, 0, (int)stream.Length);
+            string text = encoding.GetString(buffer);
 
-                TextBoxOutput.Text = CheckBoxBlankLines.IsChecked.Value ?
-                  Regex.Replace(text, CheckBoxMultiLine.IsChecked.Value ? ".*>" : "<.*>", m =>
-                    !CheckBoxMultiLine.IsChecked.Value && (m.Value.StartsWith("<WinBuild") || m.Value.StartsWith("<SkuItem") || m.Value.StartsWith("<HostBuild") || m.Value.StartsWith("<KmsItem") || m.Value.StartsWith("<CsvlkItem") || m.Value.StartsWith("<Activate")) ? m.Value : m.Value.Replace(">", ">\r\n")) :
-                  text;
-            }
+            TextBoxOutput.Text = CheckBoxBlankLines.IsChecked.Value ?
+              Regex.Replace(text, CheckBoxMultiLine.IsChecked.Value ? ".*>" : "<.*>", m =>
+                !CheckBoxMultiLine.IsChecked.Value && (m.Value.StartsWith("<WinBuild") || m.Value.StartsWith("<SkuItem") || m.Value.StartsWith("<HostBuild") || m.Value.StartsWith("<KmsItem") || m.Value.StartsWith("<CsvlkItem") || m.Value.StartsWith("<Activate")) ? m.Value : m.Value.Replace(">", ">\r\n")) :
+              text;
         }
 
         private void ExportVlmcsd()

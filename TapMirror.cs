@@ -255,8 +255,9 @@ namespace HGM.Hotbird64.LicenseManager
         public static int IpAddressInt(string ipAddressString)
         {
             IPAddress ipAddress = IPAddress.Parse(ipAddressString);
-            if (ipAddress.AddressFamily != AddressFamily.InterNetwork) throw new FormatException($"{ipAddressString} is not a valid IPv4 address");
-            return IPAddress.NetworkToHostOrder(BitConverter.ToInt32(ipAddress.GetAddressBytes(), 0));
+            return ipAddress.AddressFamily != AddressFamily.InterNetwork
+                ? throw new FormatException($"{ipAddressString} is not a valid IPv4 address")
+                : IPAddress.NetworkToHostOrder(BitConverter.ToInt32(ipAddress.GetAddressBytes(), 0));
         }
 
         private static void ParseSubnet(string subnet, out int address, out int network, out int mask)
@@ -343,42 +344,40 @@ namespace HGM.Hotbird64.LicenseManager
         {
             const string adapterKey = @"SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002BE10318}";
 
-            using (RegistryKey regAdapters = Registry.LocalMachine.OpenSubKey(adapterKey, writable: false))
+            using RegistryKey regAdapters = Registry.LocalMachine.OpenSubKey(adapterKey, writable: false);
+            string[] keyNames = regAdapters?.GetSubKeyNames();
+            if (keyNames == null) yield break;
+
+            foreach (string keyName in keyNames)
             {
-                string[] keyNames = regAdapters?.GetSubKeyNames();
-                if (keyNames == null) yield break;
+                RegistryKey regAdapter;
 
-                foreach (string keyName in keyNames)
+                try
                 {
-                    RegistryKey regAdapter;
+                    regAdapter = regAdapters.OpenSubKey(keyName, writable: false);
+                }
+                catch
+                {
+                    continue;
+                }
 
-                    try
-                    {
-                        regAdapter = regAdapters.OpenSubKey(keyName, writable: false);
-                    }
-                    catch
-                    {
-                        continue;
-                    }
+                try
+                {
+                    string id = regAdapter?.GetValue("ComponentId")?.ToString();
+                    if (!tapDeviceVariants.Select(v => v.Class).Contains(id) || id == null) continue;
+                    string guid = regAdapter.GetValue("NetCfgInstanceId").ToString();
 
-                    try
+                    yield return new TapDevice
                     {
-                        string id = regAdapter?.GetValue("ComponentId")?.ToString();
-                        if (!tapDeviceVariants.Select(v => v.Class).Contains(id) || id == null) continue;
-                        string guid = regAdapter.GetValue("NetCfgInstanceId").ToString();
-
-                        yield return new TapDevice
-                        {
-                            DeviceSuffix = tapDeviceVariants[id],
-                            ClassName = id,
-                            Guid = guid,
-                            Name = GetDisplayName(guid)
-                        };
-                    }
-                    finally
-                    {
-                        regAdapter?.Dispose();
-                    }
+                        DeviceSuffix = tapDeviceVariants[id],
+                        ClassName = id,
+                        Guid = guid,
+                        Name = GetDisplayName(guid)
+                    };
+                }
+                finally
+                {
+                    regAdapter?.Dispose();
                 }
             }
         }
@@ -416,26 +415,17 @@ namespace HGM.Hotbird64.LicenseManager
 
         private static unsafe int DevCtl(TapIoctl code, void* data, int len)
         {
-            if
-            (
-                device?.Handle == null ||
+            return device?.Handle == null ||
                 device.Handle.IsClosed ||
                 device.Handle.IsInvalid
-            )
-            {
-                throw new InvalidOperationException("Not connected to a TAP device");
-            }
-
-            if (!DeviceIoControl
+                ? throw new InvalidOperationException("Not connected to a TAP device")
+                : !DeviceIoControl
             (
                 device.Handle, (FILE_DEVICE_UNKNOWN << 16) | (FILE_ANY_ACCESS << 14) | ((uint)code << 2) | METHOD_BUFFERED,
                 data, len, data, len, out len, IntPtr.Zero
-            ))
-            {
-                throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
-
-            return len;
+            )
+                ? throw new Win32Exception(Marshal.GetLastWin32Error())
+                : len;
         }
 
         [DllImport("Kernel32.dll", ExactSpelling = true, SetLastError = true, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Winapi)]

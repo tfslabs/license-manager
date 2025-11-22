@@ -177,7 +177,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             Show(controls, textbox);
 
-            double minutesRemaining = (double)(uint)Value;
+            double minutesRemaining = (uint)Value;
             DateTime tempDate = DateTime.Now.AddMinutes((uint)Value);
             textbox.Text = (minutesRemaining == 0.0)
                     ? ("forever (unless you install a new key or tamper with the license tokens)")
@@ -336,7 +336,7 @@ namespace HGM.Hotbird64.LicenseManager
         public void SetCheckBox(CheckBox checkBox, string p)
         {
             Property = p;
-            checkBox.IsChecked = (Value == null ? null : (bool?)((uint)Value == 0));
+            checkBox.IsChecked = (Value == null ? null : (uint)Value == 0);
         }
     }
 }

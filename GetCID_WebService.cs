@@ -46,8 +46,8 @@ namespace HGM.Hotbird64.LicenseManager
                 if (hostEntry.AddressList.Length > 0)
                 {
                     using
-                    var ping = new Ping();
-                    var reply = ping.Send(hostEntry.AddressList[0]);
+                    Ping ping = new Ping();
+                    PingReply reply = ping.Send(hostEntry.AddressList[0]);
                     if (reply.Status == IPStatus.Success)
                     {
                         isInternetGood = true;
@@ -137,7 +137,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             else
             {
-                var cidElement = responseXml.Descendants(BatchActivationResponseNs + "CID").FirstOrDefault();
+                XElement cidElement = responseXml.Descendants(BatchActivationResponseNs + "CID").FirstOrDefault();
                 return cidElement.Value;
             }
         }

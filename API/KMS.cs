@@ -241,16 +241,16 @@ namespace HGM.Hotbird64.Vlmcs
         public uint EffectiveResponseSize => (result >> 14) & 0x1ff;
 
         public bool? IsValidResponseSize => CorrectResponseSize == EffectiveResponseSize;
-        public bool? IsDecryptSuccess => Version.Major < 5 ? null : (bool?)((result & (int)ResultCode.DecryptSuccess) != 0);
+        public bool? IsDecryptSuccess => Version.Major < 5 ? null : (result & (int)ResultCode.DecryptSuccess) != 0;
         public bool? IsValidHash => (result & (int)ResultCode.IsValidHash) != 0;
         public bool? IsValidTimeStamp => (result & (int)ResultCode.IsValidTimeStamp) != 0;
         public bool? IsValidClientMachineId => (result & (int)ResultCode.IsValidClientMachineId) != 0;
         public bool? IsValidProtocolVersion => (result & (int)ResultCode.IsValidProtocolVersion) != 0;
-        public bool? IsValidInitializationVector => Version.Major < 5 ? null : (bool?)((result & (int)ResultCode.IsValidInitializationVector) != 0);
-        public bool? IsValidHmac => Version.Major < 6 ? null : (bool?)((result & (int)ResultCode.IsValidHmac) != 0);
+        public bool? IsValidInitializationVector => Version.Major < 5 ? null : (result & (int)ResultCode.IsValidInitializationVector) != 0;
+        public bool? IsValidHmac => Version.Major < 6 ? null : (result & (int)ResultCode.IsValidHmac) != 0;
         public bool? IsValidPidLength => (result & (int)ResultCode.IsValidPidLength) != 0;
         public bool? IsRpcStatusSuccess => (result & (int)ResultCode.IsRpcStatusSuccess) != 0;
-        public bool? IsSuspiciousInitializationVector => Version.Major < 6 ? null : (bool?)((result & (int)ResultCode.IsRandomInitializationVector) == 0);
+        public bool? IsSuspiciousInitializationVector => Version.Major < 6 ? null : (result & (int)ResultCode.IsRandomInitializationVector) == 0;
     }
 
     public class KmsClient : IDisposable
@@ -294,12 +294,7 @@ namespace HGM.Hotbird64.Vlmcs
 
             ctx = ConnectToServer(HostnamePunycode, Port.ToString(CultureInfo.InvariantCulture), (int)addressFamily);
 
-            if (ctx == invalidCtx)
-            {
-                throw new KmsException(LibKmsMessage);
-            }
-
-            return LibKmsMessage;
+            return ctx == invalidCtx ? throw new KmsException(LibKmsMessage) : LibKmsMessage;
         }
 
         public RpcDiag ConnectRpc(bool useMultiplexedRpc, bool useNdr64, bool useBtfn)
@@ -402,10 +397,11 @@ namespace HGM.Hotbird64.Vlmcs
                         }
 
                         errors = errorMessage.ToString();
-                        if (errorMessage.Length != 0 && throwOnBadResult) throw new KmsException(errorMessage.ToString());
-                        if (throwOnInsufficientClients && baseResponse.KMSCurrentCount < baseRequest.RequiredClientCount) throw new KmsException("The required count is not sufficient.");
-
-                        return kmsResult;
+                        return errorMessage.Length != 0 && throwOnBadResult
+                            ? throw new KmsException(errorMessage.ToString())
+                            : throwOnInsufficientClients && baseResponse.KMSCurrentCount < baseRequest.RequiredClientCount
+                            ? throw new KmsException("The required count is not sufficient.")
+                            : kmsResult;
                     }
                     finally
                     {

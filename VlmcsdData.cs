@@ -106,9 +106,9 @@ namespace HGM.Hotbird64.LicenseManager
                 m[3] = 0x00;
             }
 
-            IReadOnlyList<CsvlkItem> exportedCsvlks = KmsLists.CsvlkItemList.Where(c => c.VlmcsdIndex >= 0).OrderBy(c => c.VlmcsdIndex).ToArray() as IReadOnlyList<CsvlkItem>;
+            IReadOnlyList<CsvlkItem> exportedCsvlks = KmsLists.CsvlkItemList.Where(c => c.VlmcsdIndex >= 0).OrderBy(c => c.VlmcsdIndex).ToArray();
             CsvlkCount = (byte)exportedCsvlks.Count;
-            IReadOnlyList<WinBuild> exportedHostBuilds = KmsLists.KmsData.WinBuilds.Where(b => b.UseForEpid).OrderByDescending(b => b.BuildNumber).ToArray() as IReadOnlyList<WinBuild>;
+            IReadOnlyList<WinBuild> exportedHostBuilds = KmsLists.KmsData.WinBuilds.Where(b => b.UseForEpid).OrderByDescending(b => b.BuildNumber).ToArray();
             HostBuildCount = (uint)exportedHostBuilds.Count;
 
             try

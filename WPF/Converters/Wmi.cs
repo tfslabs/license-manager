@@ -48,17 +48,11 @@ namespace HGM.Hotbird64.LicenseManager.WPF.Converters
         {
             WmiProperty = value as IWmiProperty;
 
-            if (IsUnsupported)
-            {
-                return UnsupportedText;
-            }
-
-            if (WmiManagementObject?[PropertyName] == null)
-            {
-                return null;
-            }
-
-            return System.Convert.ChangeType(WmiManagementObject[PropertyName], targetType, culture);
+            return IsUnsupported
+                ? UnsupportedText
+                : WmiManagementObject?[PropertyName] == null
+                ? null
+                : System.Convert.ChangeType(WmiManagementObject[PropertyName], targetType, culture);
         }
     }
 
@@ -92,7 +86,7 @@ namespace HGM.Hotbird64.LicenseManager.WPF.Converters
 
                 try
                 {
-                    EPid ePid = new EPid(WmiManagementObject[PropertyName]);
+                    EPid ePid = new(WmiManagementObject[PropertyName]);
                     EPidPropertyValue = typeof(EPid).GetProperty(EPidPropertyName)?.GetValue(ePid);
                 }
                 catch

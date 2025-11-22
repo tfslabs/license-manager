@@ -423,62 +423,55 @@ namespace HGM.Hotbird64.LicenseManager
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         private static ProductKeyConfiguration ReadPkeyConfig(PKeyConfigFile pKeyConfigFile)
         {
+            using Stream stream = !pKeyConfigFile.IsExternal
+                    ? Application.GetResourceStream(pKeyConfigFile.Uri).Stream
+                    : new FileStream(pKeyConfigFile.ExternalFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            ProductKeyConfiguration pKeyConfig;
+
             using
             (
-                Stream stream = !pKeyConfigFile.IsExternal
-                    ? Application.GetResourceStream(pKeyConfigFile.Uri).Stream
-                    : new FileStream(pKeyConfigFile.ExternalFileName, FileMode.Open, FileAccess.Read, FileShare.Read)
+                Stream unzipStream = (!pKeyConfigFile.IsExternal || pKeyConfigFile.ExternalFileName.ToUpperInvariant().EndsWith(".GZ"))
+                    ? new GZipStream(stream, CompressionMode.Decompress, false)
+                    : null
             )
             {
-                ProductKeyConfiguration pKeyConfig;
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.Load(unzipStream ?? stream);
 
-                using
-                (
-                    Stream unzipStream = (!pKeyConfigFile.IsExternal || pKeyConfigFile.ExternalFileName.ToUpperInvariant().EndsWith(".GZ"))
-                        ? new GZipStream(stream, CompressionMode.Decompress, false)
-                        : null
-                )
+                try
                 {
-                    XmlDocument xmlDocument = new XmlDocument();
-                    xmlDocument.Load(unzipStream ?? stream);
+                    byte[] data = Convert.FromBase64String(xmlDocument
+                        .SelectSingleNode("/*[local-name()='licenseGroup']/*[local-name()='license']/*[local-name()='otherInfo']/*[local-name()='infoTables']/*[local-name()='infoList']/*[@name='pkeyConfigData']").InnerText);
 
-                    try
-                    {
-                        byte[] data = Convert.FromBase64String(xmlDocument
-                            .SelectSingleNode("/*[local-name()='licenseGroup']/*[local-name()='license']/*[local-name()='otherInfo']/*[local-name()='infoTables']/*[local-name()='infoList']/*[@name='pkeyConfigData']").InnerText);
-
-                        using (MemoryStream memoryStream = new MemoryStream(data))
-                        {
-                            XmlSerializer serializer = new XmlSerializer(typeof(ProductKeyConfiguration));
-                            pKeyConfig = (ProductKeyConfiguration)serializer.Deserialize(memoryStream);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Dispatcher.CurrentDispatcher.InvokeAsync(() => MessageBox.Show
-                        (
-                            $"The file \"{(pKeyConfigFile.IsExternal ? pKeyConfigFile.ExternalFileName : pKeyConfigFile.ZippedFileName)}\" " +
-                            $"could not be loaded into the pkeyconfig database\n\n{e.GetType().Name}: {e.Message}",
-                            "PKeyConfig Database Load Error",
-                            MessageBoxButton.OK, MessageBoxImage.Error
-                        ));
-
-                        throw;
-                    }
+                    using MemoryStream memoryStream = new MemoryStream(data);
+                    XmlSerializer serializer = new XmlSerializer(typeof(ProductKeyConfiguration));
+                    pKeyConfig = (ProductKeyConfiguration)serializer.Deserialize(memoryStream);
                 }
-
-                Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationConfigurations>().Single().Configuration, config =>
+                catch (Exception e)
                 {
-                    config.Source = pKeyConfigFile;
-                });
+                    Dispatcher.CurrentDispatcher.InvokeAsync(() => MessageBox.Show
+                    (
+                        $"The file \"{(pKeyConfigFile.IsExternal ? pKeyConfigFile.ExternalFileName : pKeyConfigFile.ZippedFileName)}\" " +
+                        $"could not be loaded into the pkeyconfig database\n\n{e.GetType().Name}: {e.Message}",
+                        "PKeyConfig Database Load Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error
+                    ));
 
-                Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationKeyRanges>().Single().KeyRange, keyRange =>
-                {
-                    keyRange.FileName = pKeyConfigFile.DisplayName;
-                });
-
-                return pKeyConfig;
+                    throw;
+                }
             }
+
+            Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationConfigurations>().Single().Configuration, config =>
+            {
+                config.Source = pKeyConfigFile;
+            });
+
+            Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationKeyRanges>().Single().KeyRange, keyRange =>
+            {
+                keyRange.FileName = pKeyConfigFile.DisplayName;
+            });
+
+            return pKeyConfig;
         }
 
         private void ProductTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -741,7 +734,7 @@ namespace HGM.Hotbird64.LicenseManager
                 uint right = uint.Parse(TextBoxKeyId2.Text);
                 uint keyId = left * 1000000 + right;
 
-                ulong randomSecret = (ulong)unchecked((uint)random.Next(int.MinValue, int.MaxValue));
+                ulong randomSecret = unchecked((uint)random.Next(int.MinValue, int.MaxValue));
                 randomSecret |= (ulong)random.Next(0x200000) << 32;
 
                 BinaryProductKey binaryKey = new BinaryProductKey((uint)keyConfig.RefGroupId, keyId, randomSecret);
@@ -920,18 +913,9 @@ namespace HGM.Hotbird64.LicenseManager
                     KmsItem kmsItem = KmsLists.KmsItemList.FirstOrDefault(k => k.Guid == guid);
                     AppItem appItem = KmsLists.AppItemList.FirstOrDefault(a => a.Guid == guid);
 
-                    if (kmsItem != null)
-                    {
-                        TextBlockInputErrors.Text = $"This is not an SKU GUID but the KMS GUID for {kmsItem}";
-                    }
-                    else if (appItem != null)
-                    {
-                        TextBlockInputErrors.Text = $"This is not an SKU GUID but the Application GUID for {appItem}";
-                    }
-                    else
-                    {
-                        TextBlockInputErrors.Text = "The SKU GUID is unknown.";
-                    }
+                    TextBlockInputErrors.Text = kmsItem != null
+                        ? $"This is not an SKU GUID but the KMS GUID for {kmsItem}"
+                        : appItem != null ? $"This is not an SKU GUID but the Application GUID for {appItem}" : "The SKU GUID is unknown.";
 
                     ShowControls();
                 }

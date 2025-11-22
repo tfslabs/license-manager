@@ -104,14 +104,12 @@ namespace HGM.Hotbird64.Vlmcs
 
         public bool Equals(ProductKeyConfigurationConfigurationsConfiguration other)
         {
-            if (other == null) return false;
-            return ActConfigGuid == other.ActConfigGuid;
+            return other == null ? false : ActConfigGuid == other.ActConfigGuid;
         }
 
         public override bool Equals(object obj)
         {
-            if (!(obj is ProductKeyConfigurationConfigurationsConfiguration other)) return false;
-            return ActConfigGuid == other.ActConfigGuid;
+            return !(obj is ProductKeyConfigurationConfigurationsConfiguration other) ? false : ActConfigGuid == other.ActConfigGuid;
         }
 
         public override int GetHashCode() => ActConfigGuid.GetHashCode();
@@ -169,10 +167,9 @@ namespace HGM.Hotbird64.Vlmcs
         public override bool Equals(object obj)
         {
             ProductKeyConfigurationKeyRangesKeyRange other = obj as ProductKeyConfigurationKeyRangesKeyRange;
-            if (other == null) return false;
-
-            return
-              Start == other.Start &&
+            return other == null
+                ? false
+                : Start == other.Start &&
               End == other.End &&
               RefActConfigGuid == other.RefActConfigGuid;
         }

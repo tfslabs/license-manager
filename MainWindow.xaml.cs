@@ -632,19 +632,11 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 vmName = "VMware";
             }
-            else if (vendor.StartsWith("parallels") || name.StartsWith("parallels") || version.StartsWith("parallels"))
-            {
-                vmName = "Parallels";
-            }
-
-            else if (vendor.StartsWith("microsoft") && name.StartsWith("virtual"))
-            {
-                vmName = "Microsoft Hyper-V";
-            }
-
             else
             {
-                vmName = "config";
+                vmName = vendor.StartsWith("parallels") || name.StartsWith("parallels") || version.StartsWith("parallels")
+                    ? "Parallels"
+                    : vendor.StartsWith("microsoft") && name.StartsWith("virtual") ? "Microsoft Hyper-V" : "config";
             }
 
             return vmName;

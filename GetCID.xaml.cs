@@ -192,7 +192,8 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 IsProgressBarRunning = false;
                 GetCIDLabelStatus.Text = "Completed";
-            }        }
+            }
+        }
 
         private async Task Refresh()
         {

@@ -22,7 +22,7 @@ namespace HGM.Hotbird64.LicenseManager.Controls
 
         private static void OnIsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var self = (WmiPropertyBox)d;
+            WmiPropertyBox self = (WmiPropertyBox)d;
             self.Box.IsReadOnly = (bool)e.NewValue;
         }
 

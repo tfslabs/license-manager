@@ -84,14 +84,9 @@ namespace HGM.Hotbird64.LicenseManager
 
                 ProductKey key = ((TreeViewItem)eventArgs.NewValue).Header as ProductKey;
 
-                if (key != null)
-                {
-                    TextBlockGenerated.Visibility = key.KeyType == KeyType.GvlkGenerated || key.KeyType == KeyType.RetailGenerated ? Visibility.Visible : Visibility.Collapsed;
-                }
-                else
-                {
-                    TextBlockGenerated.Visibility = Visibility.Collapsed;
-                }
+                TextBlockGenerated.Visibility = key != null
+                    ? key.KeyType == KeyType.GvlkGenerated || key.KeyType == KeyType.RetailGenerated ? Visibility.Visible : Visibility.Collapsed
+                    : Visibility.Collapsed;
             };
         }
 

@@ -16,7 +16,7 @@ namespace HGM.Hotbird64.LicenseManager
 {
     public partial class ServiceConfiguration
     {
-        private LicenseMachine.LicenseProvider licenseProvider;
+        private readonly LicenseMachine.LicenseProvider licenseProvider;
         private readonly LicenseMachine machine;
         private bool kmsHostDirty;
         private bool serverParametersDirty;
@@ -157,17 +157,7 @@ namespace HGM.Hotbird64.LicenseManager
             w.DisplayProperty(LabelKeyManagementServiceCurrentCount, TextBoxKeyManagementServiceCurrentCount, "KeyManagementServiceCurrentCount");
             uint currentCount = (uint)w.Value;
 
-            if (kmsServerEnabled)
-            {
-                if (currentCount < requiredClientCount)
-                    TextBoxKeyManagementServiceCurrentCount.Background = Brushes.OrangeRed;
-                else
-                    TextBoxKeyManagementServiceCurrentCount.Background = Brushes.LightGreen;
-            }
-            else
-            {
-                TextBoxKeyManagementServiceCurrentCount.Background = App.DefaultTextBoxBackground;
-            }
+            TextBoxKeyManagementServiceCurrentCount.Background = kmsServerEnabled ? currentCount < requiredClientCount ? Brushes.OrangeRed : Brushes.LightGreen : App.DefaultTextBoxBackground;
 
 
             w.DisplayProperty(LabelKeyManagementServiceTotalRequests, TextBoxKeyManagementServiceTotalRequests, "KeyManagementServiceTotalRequests");
@@ -224,12 +214,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private static T GetControlContent<T>(Control control, T t)
         {
-            if (control.IsEnabled && control.Visibility == Visibility.Visible)
-            {
-                return t;
-            }
-
-            return default(T);
+            return control.IsEnabled && control.Visibility == Visibility.Visible ? t : default(T);
         }
 
         [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]

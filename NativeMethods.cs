@@ -21,12 +21,12 @@ namespace HGM.Hotbird64.LicenseManager
             private struct CREDUI_INFO
             {
                 public int cbSize;
-                private IntPtr hwndParent;
+                private readonly IntPtr hwndParent;
                 [MarshalAs(UnmanagedType.LPWStr)]
                 public string MessageText;
                 [MarshalAs(UnmanagedType.LPWStr)]
                 public string CaptionText;
-                private IntPtr hbmBanner;
+                private readonly IntPtr hbmBanner;
             }
 
             [DllImport("credui", CharSet = CharSet.Unicode)]
