@@ -2,7 +2,6 @@
 using HGM.Hotbird64.Vlmcs;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -129,16 +128,16 @@ namespace HGM.Hotbird64.LicenseManager
             Version = KmsLists.KmsData.Version.Full;
             AppItemOffset = Size + csvlkDataSize;
             AppItemCount = includeAppItems ? (uint)KmsLists.AppItemList.Count : 0;
-            KmsItemOffset = AppItemOffset + AppItemCount * VlmcsdData.Size;
+            KmsItemOffset = AppItemOffset + (AppItemCount * VlmcsdData.Size);
             KmsItemCount = (uint)kmsItemList.Length;
-            SkuItemOffset = KmsItemOffset + KmsItemCount * VlmcsdData.Size;
+            SkuItemOffset = KmsItemOffset + (KmsItemCount * VlmcsdData.Size);
             SkuItemCount = includeSkuItems && includeKmsItems ? (uint)skuItemList.Length : 0;
-            HostBuildOffset = SkuItemOffset + SkuItemCount * VlmcsdData.Size;
+            HostBuildOffset = SkuItemOffset + (SkuItemCount * VlmcsdData.Size);
 
             VlmcsdData[] idData = new VlmcsdData[AppItemCount + KmsItemCount + SkuItemCount];
             HostBuild[] hostBuilds = new HostBuild[HostBuildCount];
             VlmcsdDataText[] textData = new VlmcsdDataText[idData.Length];
-            ulong currentText = (ulong)idData.Length * VlmcsdData.Size + Size + csvlkDataSize + hostBuildSize;
+            ulong currentText = ((ulong)idData.Length * VlmcsdData.Size) + Size + csvlkDataSize + hostBuildSize;
             VlmcsdDataText[] ePids = new VlmcsdDataText[CsvlkCount];
             VlmcsdDataText[] iniFileNames = new VlmcsdDataText[CsvlkCount];
             VlmcsdDataText[] csvlkNames = new VlmcsdDataText[CsvlkCount];
@@ -262,7 +261,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             MemoryStream stream = new MemoryStream();
             stream.SetLength((long)currentText);
-            stream.Seek(0, SeekOrigin.Begin);
+            _ = stream.Seek(0, SeekOrigin.Begin);
 
             fixed (VlmcsdHeader* b = &this)
             {

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -84,53 +83,46 @@ namespace HGM.Hotbird64.LicenseManager
         [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.None)]
         public struct TapConfigTun
         {
-            private int address;
-            private int network;
-            private int mask;
-
             public int Address
             {
-                get => IPAddress.NetworkToHostOrder(address);
-                set => address = IPAddress.HostToNetworkOrder(value);
+                get => IPAddress.NetworkToHostOrder(field);
+                set => field = IPAddress.HostToNetworkOrder(value);
             }
 
             public int Network
             {
-                get => IPAddress.NetworkToHostOrder(network);
-                set => network = IPAddress.HostToNetworkOrder(value);
+                get => IPAddress.NetworkToHostOrder(field);
+                set => field = IPAddress.HostToNetworkOrder(value);
             }
 
             public int Mask
             {
-                get => IPAddress.NetworkToHostOrder(mask);
-                set => mask = IPAddress.HostToNetworkOrder(value);
+                get => IPAddress.NetworkToHostOrder(field);
+                set => field = IPAddress.HostToNetworkOrder(value);
             }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.None)]
         public struct TapConfigDhcp
         {
-            private int address;
-            private int mask;
-            private int dhcpServer;
             public int LeaseDuration;
 
             public int Address
             {
-                get => IPAddress.NetworkToHostOrder(address);
-                set => address = IPAddress.HostToNetworkOrder(value);
+                get => IPAddress.NetworkToHostOrder(field);
+                set => field = IPAddress.HostToNetworkOrder(value);
             }
 
             public int Mask
             {
-                get => IPAddress.NetworkToHostOrder(mask);
-                set => mask = IPAddress.HostToNetworkOrder(value);
+                get => IPAddress.NetworkToHostOrder(field);
+                set => field = IPAddress.HostToNetworkOrder(value);
             }
 
             public int DhcpServer
             {
-                get => IPAddress.NetworkToHostOrder(dhcpServer);
-                set => dhcpServer = IPAddress.HostToNetworkOrder(value);
+                get => IPAddress.NetworkToHostOrder(field);
+                set => field = IPAddress.HostToNetworkOrder(value);
             }
         }
 
@@ -145,14 +137,12 @@ namespace HGM.Hotbird64.LicenseManager
 
         private static FileStream tap;
         private static TapDevice device;
-        private static bool isVirtualCableConnected;
-
-        private static readonly TapDeviceVariants tapDeviceVariants = new TapDeviceVariants
-        {
+        private static readonly TapDeviceVariants tapDeviceVariants =
+        [
             new TapDeviceVariant { Class = "tap0801", Suffix = "tap" },
             new TapDeviceVariant { Class = "tap0901", Suffix = "tap" },
             new TapDeviceVariant { Class = "TEAMVIEWERVPN", Suffix = "dgt" },
-        };
+        ];
 
         public static bool IsStarted => tap != null;
 
@@ -219,7 +209,7 @@ namespace HGM.Hotbird64.LicenseManager
             get
             {
                 int tapMtu;
-                DevCtl(TapIoctl.GetMtu, &tapMtu, sizeof(int));
+                _ = DevCtl(TapIoctl.GetMtu, &tapMtu, sizeof(int));
                 return tapMtu;
             }
         }
@@ -308,7 +298,7 @@ namespace HGM.Hotbird64.LicenseManager
         private static unsafe void SetSubnet(int address, int network, int mask)
         {
             TapConfigTun tapConfigTun = new TapConfigTun { Address = address, Network = network, Mask = mask };
-            DevCtl(TapIoctl.ConfigureIPv4Tunnel, &tapConfigTun, sizeof(TapConfigTun));
+            _ = DevCtl(TapIoctl.ConfigureIPv4Tunnel, &tapConfigTun, sizeof(TapConfigTun));
         }
 
         private static unsafe void EnableDhcp(int address, int mask)
@@ -321,17 +311,17 @@ namespace HGM.Hotbird64.LicenseManager
                 LeaseDuration = 24 * 60 * 60
             };
 
-            DevCtl(TapIoctl.ConfigDhcpMasquerade, &tapConfigDhcp, sizeof(TapConfigDhcp));
+            _ = DevCtl(TapIoctl.ConfigDhcpMasquerade, &tapConfigDhcp, sizeof(TapConfigDhcp));
         }
 
         public static unsafe bool IsVirtualCableConnected
         {
-            get => isVirtualCableConnected && IsStarted;
+            get => field && IsStarted;
             set
             {
                 int status = value ? 1 : 0;
-                DevCtl(TapIoctl.SetMediaStatus, &status, sizeof(int));
-                isVirtualCableConnected = value;
+                _ = DevCtl(TapIoctl.SetMediaStatus, &status, sizeof(int));
+                field = value;
             }
         }
 

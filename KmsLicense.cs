@@ -11,26 +11,24 @@ namespace HGM.Hotbird64.LicenseManager
         private KmsGuid id;
         public IEnumerable<KmsLicense> List;
 
-        private string installMessage;
         public string InstallMessage
         {
-            get => installMessage;
+            get;
             set
             {
-                if (value == installMessage) return;
-                installMessage = value;
+                if (value == field) return;
+                field = value;
                 NotifyOfPropertyChange();
             }
         }
 
-        private string installToolTip;
         public string InstallToolTip
         {
-            get => installToolTip;
+            get;
             set
             {
-                if (value == installToolTip) return;
-                installToolTip = value;
+                if (value == field) return;
+                field = value;
                 NotifyOfPropertyChange();
             }
         }
@@ -43,40 +41,37 @@ namespace HGM.Hotbird64.LicenseManager
         public LicenseStatus LicenseStatus { get; set; }
         public bool? IsGeneratedGvlk;
 
-        private bool installSuccess;
         public bool InstallSuccess
         {
-            get => installSuccess;
+            get;
             set
             {
-                if (value == installSuccess) return;
-                installSuccess = value;
+                if (value == field) return;
+                field = value;
                 NotifyOfPropertyChange();
                 NotifyOfPropertyChange(nameof(InstallMessageColor));
             }
         }
 
-        private bool isControlEnabled = true;
         public bool IsControlEnabled
         {
-            get => isControlEnabled;
+            get;
             set
             {
-                if (isControlEnabled == value) return;
-                isControlEnabled = value;
+                if (field == value) return;
+                field = value;
                 NotifyOfPropertyChange();
             }
-        }
+        } = true;
 
-        private bool isRadioButtonChecked;
         public bool IsRadioButtonChecked
         {
-            get => isRadioButtonChecked;
+            get;
             set
             {
                 if (value)
                 {
-                    if (isRadioButtonChecked && !List.Any(l => l != this && l.IsRadioButtonChecked))
+                    if (field && !List.Any(l => l != this && l.IsRadioButtonChecked))
                     {
                         IsRadioButtonChecked = false;
                         return;
@@ -85,20 +80,19 @@ namespace HGM.Hotbird64.LicenseManager
                     foreach (KmsLicense kmsLicense in List.Where(l => l != this)) kmsLicense.IsRadioButtonChecked = false;
                 }
 
-                if (isRadioButtonChecked == value) return;
-                isRadioButtonChecked = value;
+                if (field == value) return;
+                field = value;
                 NotifyOfPropertyChange();
             }
         }
 
-        private bool isCheckBoxChecked;
         public bool IsCheckBoxChecked
         {
-            get => isCheckBoxChecked;
+            get;
             set
             {
-                if (isCheckBoxChecked == value) return;
-                isCheckBoxChecked = value;
+                if (field == value) return;
+                field = value;
                 NotifyOfPropertyChange();
             }
         }

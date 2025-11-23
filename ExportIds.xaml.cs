@@ -3,7 +3,6 @@ using HGM.Hotbird64.Vlmcs;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -107,8 +106,8 @@ namespace HGM.Hotbird64.LicenseManager
 
             serializer.Serialize(writer, KmsLists.KmsData);
             byte[] buffer = new byte[stream.Length];
-            stream.Seek(0, SeekOrigin.Begin);
-            stream.Read(buffer, 0, (int)stream.Length);
+            _ = stream.Seek(0, SeekOrigin.Begin);
+            _ = stream.Read(buffer, 0, (int)stream.Length);
             string text = encoding.GetString(buffer);
 
             TextBoxOutput.Text = CheckBoxBlankLines.IsChecked.Value ?
@@ -168,7 +167,7 @@ namespace HGM.Hotbird64.LicenseManager
                     }
 
                     byte character = vlmcsdBytes[i + j];
-                    text += (character < 0x20 || (j == 15 && character == 0x5c)) || (character > 0x7e && character < 0xa1) ? '.' : (char)vlmcsdBytes[i + j];
+                    text += character < 0x20 || (j == 15 && character == 0x5c) || (character > 0x7e && character < 0xa1) ? '.' : (char)vlmcsdBytes[i + j];
                 }
 
                 TextBoxOutput.AppendText(text);
@@ -391,7 +390,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, $"Error Writing File \"{dialog.SafeFileName}\"", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(ex.Message, $"Error Writing File \"{dialog.SafeFileName}\"", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {

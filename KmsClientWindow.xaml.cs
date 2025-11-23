@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Net.Sockets;
@@ -69,7 +68,6 @@ namespace HGM.Hotbird64.LicenseManager
             public string ResultText { get; private set; }
             public SolidColorBrush ResultBrush { get; private set; }
             public int Severity { get; set; }
-            private bool hasPassed;
 
             public ServerTestResult()
             {
@@ -78,10 +76,10 @@ namespace HGM.Hotbird64.LicenseManager
 
             public bool HasPassed
             {
-                get => hasPassed;
+                get;
                 set
                 {
-                    hasPassed = value;
+                    field = value;
                     if (value)
                     {
                         ResultText = "True";
@@ -288,7 +286,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             if (dllVersion < Kms.RequiredDllVersion)
             {
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                   this,
                   $"libkms32.dll version {Kms.RequiredDllVersion} or greater required. You have version {dllVersion}.",
@@ -419,7 +417,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             try
             {
-                time.ToUniversalTime().ToFileTimeUtc();
+                _ = time.ToUniversalTime().ToFileTimeUtc();
             }
             catch
             {
@@ -561,7 +559,7 @@ namespace HGM.Hotbird64.LicenseManager
                     return;
                 }
 
-                version.Full = ((uint)major) << 16 | minor;
+                version.Full = (((uint)major) << 16) | minor;
             }
             finally
             {
@@ -916,7 +914,7 @@ namespace HGM.Hotbird64.LicenseManager
                 errorType = unchecked((uint)win32Exception.NativeErrorCode) < 0x10000 ? "RPC STATUS" : "KMS HRESULT";
             }
 
-            MessageBox.Show
+            _ = MessageBox.Show
             (
               ex.Message +
               (errorType != null
@@ -933,7 +931,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 WindowStatus = WindowStatus.Connecting;
 
-                ServerTests = new ObservableCollection<ServerTestResult>();
+                ServerTests = [];
                 DataGridEmulatorDetection.ItemsSource = ServerTests;
                 DataGridEmulatorDetection.Items.SortDescriptions.Clear();
                 DataGridEmulatorDetection.Items.SortDescriptions.Add(new SortDescription(DataGridEmulatorDetection.Columns[1].SortMemberPath, ListSortDirection.Ascending));
@@ -989,13 +987,13 @@ namespace HGM.Hotbird64.LicenseManager
                     useNdr64 = CheckBoxNdr64.IsChecked.Value;
                     useBtfn = CheckBoxBtfn.IsChecked.Value;
 
-                    await Task.Run(() => warnings = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn));
+                    _ = await Task.Run(() => warnings = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn));
                     TextBoxWarnings.Text = warnings;
                 }
                 catch (Exception ex)
                 {
                     WindowStatus = WindowStatus.Error;
-                    MessageBox.Show(ex.Message, $"Error Connecting To {TextBoxHost.Text} Port {kmsPort}", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(ex.Message, $"Error Connecting To {TextBoxHost.Text} Port {kmsPort}", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -1003,7 +1001,7 @@ namespace HGM.Hotbird64.LicenseManager
                 try
                 {
                     WindowStatus = WindowStatus.Sending;
-                    await Task.Run(() => kmsResult = kmsClient.SendRequest(out _, out warnings, out kmsResponse, kmsRequest, out hwId, false, false));
+                    _ = await Task.Run(() => kmsResult = kmsClient.SendRequest(out _, out warnings, out kmsResponse, kmsRequest, out hwId, false, false));
                     if (!string.IsNullOrWhiteSpace(warnings))
                     {
                         TextBoxWarnings.AppendText(warnings);
@@ -1205,7 +1203,7 @@ namespace HGM.Hotbird64.LicenseManager
                         result.HasPassed = false;
                     }
 
-                    kmsClient.SendRequest(out errors, out warnings, out testResponse, kmsRequest, out testHwId);
+                    _ = kmsClient.SendRequest(out errors, out warnings, out testResponse, kmsRequest, out testHwId);
                 });
 
                 ServerTests.Add(serverTestResult);
@@ -1258,10 +1256,10 @@ namespace HGM.Hotbird64.LicenseManager
 
                         if (!kmsClient.Connected)
                         {
-                            kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn);
+                            _ = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn);
                         }
 
-                        kmsClient.SendRequest(out errors, out warnings, out KmsResponse testResponse2, kmsRequest, out testHwId);
+                        _ = kmsClient.SendRequest(out errors, out warnings, out KmsResponse testResponse2, kmsRequest, out testHwId);
                         serverTestResult.HasPassed = testResponse2.KMSCurrentCount == testResponse.KMSCurrentCount;
                         lastReportedClients = testResponse2.KMSCurrentCount;
                         serverTestResult.ToolTip += $"The first request returned {testResponse.KMSCurrentCount} and the second request returned {testResponse2.KMSCurrentCount}";
@@ -1301,11 +1299,11 @@ namespace HGM.Hotbird64.LicenseManager
                         kmsRequest.ClientMachineID = KmsGuid.NewGuid();
                         if (!kmsClient.Connected)
                         {
-                            kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn);
+                            _ = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out rpcDiag, useMultiplexedRpc, useNdr64, useBtfn);
                         }
 
-                        kmsClient.SendRequest(out errors, out warnings, out KmsResponse testResponse2, kmsRequest, out testHwId);
-                        serverTestResult.HasPassed = (testResponse.KMSCurrentCount + 1 == testResponse2.KMSCurrentCount);
+                        _ = kmsClient.SendRequest(out errors, out warnings, out KmsResponse testResponse2, kmsRequest, out testHwId);
+                        serverTestResult.HasPassed = testResponse.KMSCurrentCount + 1 == testResponse2.KMSCurrentCount;
 
                         serverTestResult.ToolTip += $"\nA third request that asked for {kmsRequest.RequiredClientCount} active clients returned {testResponse2.KMSCurrentCount}";
                         serverTestResult.ToolTip += serverTestResult.HasPassed ? "." : $" but it should be {testResponse.KMSCurrentCount + 1}.";
@@ -1346,10 +1344,10 @@ namespace HGM.Hotbird64.LicenseManager
 
                     if (!kmsClient.Connected)
                     {
-                        kmsClient.Connect(SelectedAddressFamily.AddressFamily, out RpcDiag rpcDiag, useMultiplexedRpc, useNdr64, useBtfn);
+                        _ = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out RpcDiag rpcDiag, useMultiplexedRpc, useNdr64, useBtfn);
                     }
 
-                    kmsClient.SendRequest(out string errors, out string warnings, out KmsResponse testResponse, kmsRequest, out byte[] testHwId);
+                    _ = kmsClient.SendRequest(out string errors, out string warnings, out KmsResponse testResponse, kmsRequest, out byte[] testHwId);
                 });
 
             }
@@ -1391,7 +1389,7 @@ namespace HGM.Hotbird64.LicenseManager
                         warnings = kmsClient.Connect(SelectedAddressFamily.AddressFamily, out RpcDiag rpcDiag, useMultiplexedRpc, useNdr64, useBtfn);
                     }
 
-                    kmsClient.SendRequest(out string errors, out warnings, out KmsResponse testResponse, kmsRequest, out byte[] testHwId);
+                    _ = kmsClient.SendRequest(out string errors, out warnings, out KmsResponse testResponse, kmsRequest, out byte[] testHwId);
                     serverTestResult.ToolTip += "The request succeeded which is wrong.";
                 });
             }
@@ -1680,7 +1678,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (Exception ex)
             {
-                serverTestResult.ToolTip += ($"\n\n{ex.Message}");
+                serverTestResult.ToolTip += $"\n\n{ex.Message}";
                 serverTestResult.HasPassed = false;
             }
 
@@ -1733,7 +1731,7 @@ namespace HGM.Hotbird64.LicenseManager
                     return;
                 }
 
-                serverTestResult.ToolTip += $"\n\nThe KMS server is an emulator because the date in the ePID \"{pid.DateString}\" is before {thresholdDate.ToShortDateString()}.";
+                serverTestResult.ToolTip += $"\n\nThe KMS server is an emulator because the date in the ePID \"{pid.DateString}\" is before {thresholdDate:d}.";
                 serverTestResult.HasPassed = false;
             }, serverTestResult);
 
@@ -1849,8 +1847,8 @@ namespace HGM.Hotbird64.LicenseManager
             DateTime timeStampUtc = DateTime.FromFileTimeUtc(response.TimeStamp).ToUniversalTime();
 
             DateTime timeStampLocal = timeStampUtc.ToLocalTime();
-            TextBoxResponseTimeStamp.Text = $"{timeStampLocal.ToLongDateString()} {timeStampLocal.ToLongTimeString()} {CurrentTimeZone}";
-            TextBoxResponseTimeStampUtc.Text = $"{timeStampUtc.ToLongDateString()} {timeStampUtc.ToLongTimeString()} UTC";
+            TextBoxResponseTimeStamp.Text = $"{timeStampLocal:D} {timeStampLocal:T} {CurrentTimeZone}";
+            TextBoxResponseTimeStampUtc.Text = $"{timeStampUtc:D} {timeStampUtc:T} UTC";
             TextBoxResponseTimeStampUtc.Background = kmsResult.IsValidTimeStamp.Value ? Brushes.LightGreen : Brushes.OrangeRed;
 
             TextBoxActiveClients.Text = $"{response.KMSCurrentCount}";

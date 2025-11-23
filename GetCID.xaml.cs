@@ -33,8 +33,6 @@ namespace HGM.Hotbird64.LicenseManager
         public static CultureInfo OsSystemLocale;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private int selectedProductIndex = -1;
-
         private readonly GetCID_WebService WebService_Handler = new();
 
         public void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
@@ -62,8 +60,8 @@ namespace HGM.Hotbird64.LicenseManager
 
         public int SelectedProductIndex
         {
-            get => selectedProductIndex;
-            set => this.SetProperty(ref selectedProductIndex, value, postAction: () =>
+            get;
+            set => this.SetProperty(ref field, value, postAction: () =>
             {
                 try
                 {
@@ -75,7 +73,7 @@ namespace HGM.Hotbird64.LicenseManager
                     //ignored because of the useless of that
                 }
             });
-        }
+        } = -1;
 
         static GetCID()
         {
@@ -88,7 +86,7 @@ namespace HGM.Hotbird64.LicenseManager
             InitializeComponent();
             if (!WebService_Handler.CheckConnection())
             {
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     "Your Internet connection to the Microsoft Customer Service is not stable. Confirmation ID may not get.",
                     "Error while connecting to Microsoft",
                     MessageBoxButton.OK,
@@ -214,7 +212,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 GetCIDLabelStatus.Text = "Error";
                 IsProgressBarRunning = false;
-                MessageBox.Show(this, ex.Message, "Error getting License information", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(this, ex.Message, "Error getting License information", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -224,7 +222,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private async void GetCID_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Run(() => Machine = new LicenseMachine());
+            _ = await Task.Run(() => Machine = new LicenseMachine());
             OsSystemLocale = (Machine?.SysInfo?.OsInfo.Locale != null) ? Machine.SysInfo.OsInfo.Locale : OsSystemLocale;
             GetCIDLabelStatus.Text = "Gathering Data...";
             await Refresh();
@@ -250,12 +248,11 @@ namespace HGM.Hotbird64.LicenseManager
             GetCIDLabelStatus.Text = "Ready";
         }
 
-        private LicenseModel license = new();
         public LicenseModel License
         {
-            get => license;
-            set => this.SetProperty(ref license, value);
-        }
+            get;
+            set => this.SetProperty(ref field, value);
+        } = new();
 
         private void FillLicenseComboBox()
         {
@@ -268,7 +265,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 string description = l.License["Description"].ToString();
                 string name = l.License["Name"].ToString();
-                ComboBoxProductId.Items.Add(
+                _ = ComboBoxProductId.Items.Add(
                     description.Substring(0, Math.Min(100, description.Length)) +
                     ": " +
                     name.Substring(0, Math.Min(100, name.Length))

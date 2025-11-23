@@ -20,7 +20,7 @@ namespace HGM.Hotbird64.LicenseManager
             foreach (AppItem product in KmsLists.AppItemList)
             {
                 TreeViewItem appitem = new TreeViewItem { Header = product };
-                ProductTree.Items.Add(appitem);
+                _ = ProductTree.Items.Add(appitem);
 
                 foreach (KmsItem kmsProduct in KmsLists.KmsItemList.Where(k => k.App == product))
                 {
@@ -29,10 +29,10 @@ namespace HGM.Hotbird64.LicenseManager
                     foreach (SkuItem skuProduct in KmsLists.SkuItemList.Where(p => p.KmsItem == kmsProduct).OrderBy(p => p.DisplayName))
                     {
                         TreeViewItem skuItem = new TreeViewItem { Header = skuProduct };
-                        kmsItem.Items.Add(skuItem);
+                        _ = kmsItem.Items.Add(skuItem);
                     }
 
-                    appitem.Items.Add(kmsItem);
+                    _ = appitem.Items.Add(kmsItem);
                 }
             }
 

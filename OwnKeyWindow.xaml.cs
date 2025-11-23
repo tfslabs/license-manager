@@ -3,7 +3,6 @@ using HGM.Hotbird64.Vlmcs;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -57,11 +56,11 @@ namespace HGM.Hotbird64.LicenseManager
     };
 
         public static RoutedUICommand InstallKey;
-        public static InputGestureCollection CtrlE = new InputGestureCollection();
+        public static InputGestureCollection CtrlE = [];
 
         static OwnKeyWindow()
         {
-            CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
+            _ = CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
             InstallKey = new RoutedUICommand("Check or Install Key", "Install", typeof(ScalableWindow), CtrlE);
         }
 
@@ -70,7 +69,7 @@ namespace HGM.Hotbird64.LicenseManager
             InitializeComponent();
             TopElement.LayoutTransform = Scaler;
 
-            List<KeyListItem> productKeyList = new List<KeyListItem>();
+            List<KeyListItem> productKeyList = [];
 
             using (RegistryKey sysKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem && !Environment.Is64BitProcess ? RegistryView.Registry64 : RegistryView.Default))
             {
@@ -203,7 +202,7 @@ namespace HGM.Hotbird64.LicenseManager
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern uint GetSystemFirmwareTable(uint firmwareTableProviderSignature, uint firmwareTableID, IntPtr firmwareTableBuffer, uint bufferSize);
+        private static extern uint GetSystemFirmwareTable(uint firmwareTableProviderSignature, uint firmwareTableID, IntPtr firmwareTableBuffer, uint bufferSize);
 
         private void InstallKey_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = IsKeyInCurrentCell();
 

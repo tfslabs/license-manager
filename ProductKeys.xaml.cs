@@ -38,7 +38,7 @@ namespace HGM.Hotbird64.LicenseManager
             foreach (ProductKey key in keys)
             {
                 TreeViewItem keyItem = new TreeViewItem { Header = key, ToolTip = key.Key };
-                treeViewItem.Items.Add(keyItem);
+                _ = treeViewItem.Items.Add(keyItem);
             }
         }
 
@@ -53,20 +53,20 @@ namespace HGM.Hotbird64.LicenseManager
             Loaded += (s, e) => Icon = this.GenerateImage(new Icons.InstallKey(), 16, 16);
 
             TreeViewItem treeViewItem = new TreeViewItem { Header = "Store license keys" };
-            ProductTree.Items.Add(treeViewItem);
+            _ = ProductTree.Items.Add(treeViewItem);
             AddKeysToTreeViewItem(treeViewItem, ProductKeyList.Where(k => k.KeyType == KeyType.StoreLicense));
 
             treeViewItem = new TreeViewItem { Header = "User-generated GVLKs" };
-            ProductTree.Items.Add(treeViewItem);
+            _ = ProductTree.Items.Add(treeViewItem);
             AddKeysToTreeViewItem(treeViewItem, KmsLists.SkuItemList.Where(s => s.IsGeneratedGvlk && s.Gvlk != null).Select(s => new ProductKey(s.ToString(), s.Gvlk, s.IsGeneratedGvlk ? KeyType.GvlkGenerated : KeyType.Gvlk)));
 
             treeViewItem = new TreeViewItem { Header = "Genuine GVLKs" };
-            ProductTree.Items.Add(treeViewItem);
+            _ = ProductTree.Items.Add(treeViewItem);
 
             foreach (AppItem app in KmsLists.AppItemList)
             {
                 TreeViewItem appitem = new TreeViewItem { Header = app };
-                treeViewItem.Items.Add(appitem);
+                _ = treeViewItem.Items.Add(appitem);
 
                 foreach (KmsItem kmsId in app.KmsItems.OrderBy(k => k.DisplayName))
                 {
@@ -78,7 +78,7 @@ namespace HGM.Hotbird64.LicenseManager
                         AddKeysToTreeViewItem(kmsItem, ProductKeyList.Where(k => k.KeyType == KeyType.Gvlk).OrderBy(k => k.Name));
                     }
 
-                    appitem.Items.Add(kmsItem);
+                    _ = appitem.Items.Add(kmsItem);
                 }
             }
 
@@ -110,7 +110,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            _ = Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }
 

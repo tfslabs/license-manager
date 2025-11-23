@@ -112,7 +112,7 @@ namespace HGM.Hotbird64.LicenseManager
             XDocument soapResponse = new();
 
             IAsyncResult asyncResult = webRequest.BeginGetResponse(null, null);
-            asyncResult.AsyncWaitHandle.WaitOne();
+            _ = asyncResult.AsyncWaitHandle.WaitOne();
             using (WebResponse webResponse = webRequest.EndGetResponse(asyncResult))
             using (StreamReader streamReader = new(webResponse.GetResponseStream()))
             {

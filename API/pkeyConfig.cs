@@ -1,6 +1,4 @@
-﻿
-using System.Diagnostics.CodeAnalysis;
-namespace HGM.Hotbird64.Vlmcs
+﻿namespace HGM.Hotbird64.Vlmcs
 {
     using System;
     using System.Collections.Generic;

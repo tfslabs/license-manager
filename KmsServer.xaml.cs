@@ -4,7 +4,6 @@ using LicenseManager.Annotations;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -98,7 +97,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 isRunning = value;
 
-                Dispatcher.InvokeAsync(() =>
+                _ = Dispatcher.InvokeAsync(() =>
                 {
 
                     ButtonStartStop.Content = (value ? "Stop" : "Start") + " Server";
@@ -176,7 +175,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             if (dllVersion < Kms.RequiredDllVersion)
             {
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                     this,
                     $"libkms32.dll version {Kms.RequiredDllVersion} or greater required. You have version {dllVersion}.",
@@ -302,7 +301,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                     if (!allowRetailAndBetaProducts && kmsItem != null && (kmsItem.IsPreview || kmsItem.IsRetail))
                     {
-                        Dispatcher.InvokeAsync(() =>
+                        _ = Dispatcher.InvokeAsync(() =>
                         {
                             TextBoxInfoText.AppendText($"{nl}V{request.Version} request from {clientIpAddress} for {product} declined: ");
                             TextBoxInfoText.AppendText($"{(kmsItem.IsRetail ? "Retail" : "Beta")} product \"{product}\" not allowed.");
@@ -316,7 +315,7 @@ namespace HGM.Hotbird64.LicenseManager
                             (KmsLists.KmsItemList[request.KmsID] == null ||
                              KmsLists.KmsItemList[request.KmsID].App.Guid != request.ApplicationID))
                     {
-                        Dispatcher.InvokeAsync(() =>
+                        _ = Dispatcher.InvokeAsync(() =>
                         {
                             TextBoxInfoText.AppendText($"{nl}V{request.Version} request from {clientIpAddress} for {product} declined: ");
                             TextBoxInfoText.AppendText(KmsLists.KmsItemList[request.KmsID] == null ? $"Unknown KMS ID {request.KmsID}." : $"Incorrect App ID {request.ApplicationID}.");
@@ -328,7 +327,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                     if (request.RequiredClientCount > 1000)
                     {
-                        Dispatcher.InvokeAsync(() => TextBoxInfoText.AppendText($"{nl}V{request.Version} request from {clientIpAddress} for {product} declined: Required clients > 1000."));
+                        _ = Dispatcher.InvokeAsync(() => TextBoxInfoText.AppendText($"{nl}V{request.Version} request from {clientIpAddress} for {product} declined: Required clients > 1000."));
                         result = unchecked((int)0x8007000d);
                         return result;
                     }
@@ -337,7 +336,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                     if (checkTime && Math.Abs((clientDate - DateTime.UtcNow).TotalHours) > 4.0)
                     {
-                        Dispatcher.InvokeAsync(
+                        _ = Dispatcher.InvokeAsync(
                             () =>
                                 TextBoxInfoText.AppendText(
                                     $"{nl}V{request.Version} request from {clientIpAddress} for {product} declined: Client time \"{clientDate.ToLocalTime()} {KmsClientWindow.CurrentTimeZone}\" > ± 4 hours from server time \"{DateTime.Now} {KmsClientWindow.CurrentTimeZone}\"."));
@@ -351,13 +350,13 @@ namespace HGM.Hotbird64.LicenseManager
 
                     if (response.KMSCurrentCount > 671)
                     {
-                        Dispatcher.InvokeAsync(() => TextBoxInfoText.AppendText($"{nl}V{request.Version} request from {clientIpAddress} for {product} declined: > 671 clients."));
+                        _ = Dispatcher.InvokeAsync(() => TextBoxInfoText.AppendText($"{nl}V{request.Version} request from {clientIpAddress} for {product} declined: > 671 clients."));
                         result = unchecked((int)0xc004d104);
                         return result;
                     }
 
 
-                    Dispatcher.InvokeAsync(() =>
+                    _ = Dispatcher.InvokeAsync(() =>
                     {
                         TextBoxInfoText.AppendText($"{nl}V{response.Version.Major}.{response.Version.Minor} response for {product} sent to {request.WorkstationName.Text} ({clientIpAddress}).");
                     });
@@ -366,7 +365,7 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     KmsData.Lock.ReleaseReaderLock();
 
-                    Dispatcher.InvokeAsync(() =>
+                    _ = Dispatcher.InvokeAsync(() =>
                     {
                         if (result != 0)
                         {
@@ -378,7 +377,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (Exception ex)
             {
-                Dispatcher.InvokeAsync(() =>
+                _ = Dispatcher.InvokeAsync(() =>
                 {
                     TextBoxInfoText.AppendText($"{nl}Request not logged: {ex.Message}");
                     TextBoxInfoText.ScrollToEnd();
@@ -404,7 +403,7 @@ namespace HGM.Hotbird64.LicenseManager
             catch (KmsException ex)
             {
                 IsRunning = false;
-                Dispatcher.Invoke(() => MessageBox.Show(this, ex.Message, "KMS server error", MessageBoxButton.OK, MessageBoxImage.Error));
+                _ = Dispatcher.Invoke(() => MessageBox.Show(this, ex.Message, "KMS server error", MessageBoxButton.OK, MessageBoxImage.Error));
             }
         }
 
@@ -414,7 +413,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 if (TextBoxPort.Background.Equals(Brushes.OrangeRed))
                 {
-                    MessageBox.Show(TextBoxPort.ToolTip.ToString(), "Incorrect TCP-Port", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(TextBoxPort.ToolTip.ToString(), "Incorrect TCP-Port", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -422,7 +421,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                 if (TextBoxTapIp.Background.Equals(Brushes.OrangeRed))
                 {
-                    MessageBox.Show("TAP IPv4/CIDR is invalid", null, MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show("TAP IPv4/CIDR is invalid", null, MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -462,10 +461,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
 
             TimeSpan timeSpan = TimeSpan.FromMinutes(validationInterval);
-            if (parsedTextBox != null)
-            {
-                parsedTextBox.Text = $"{timeSpan.Days} days, {timeSpan.Hours} hours, {timeSpan.Minutes} minutes";
-            }
+            _ = parsedTextBox?.Text = $"{timeSpan.Days} days, {timeSpan.Hours} hours, {timeSpan.Minutes} minutes";
         }
 
         private void UseTap_Click(object sender, RoutedEventArgs e)

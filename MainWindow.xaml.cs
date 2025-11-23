@@ -38,8 +38,8 @@ namespace HGM.Hotbird64.LicenseManager
         internal LicenseMachine Machine;
         private static readonly KmsGuid zeroGuid = new([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
         private KmsGuid lastSkuId = zeroGuid;
+
         //internal bool ShowAllFields;
-        private bool kmsHostDirtyField;
         private KmsServer kmsServer;
         public bool IsClosed { get; private set; }
         public event BusyHandler BusyStatusChanged;
@@ -67,8 +67,8 @@ namespace HGM.Hotbird64.LicenseManager
             CsvlkConfigs = [.. KeyConfigs.Where(c => c.ProductKeyType == "Volume:CSVLK")];
             IEnumerable<KmsGuid> csvlkConfigIds = CsvlkConfigs.Select(c => c.ActConfigGuid);
             CsvlkRanges = [.. KeyRanges.Where(r => csvlkConfigIds.Contains(r.RefActConfigGuid))];
-            CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
-            CtrlW.Add(new KeyGesture(Key.W, ModifierKeys.Control));
+            _ = CtrlE.Add(new KeyGesture(Key.E, ModifierKeys.Control));
+            _ = CtrlW.Add(new KeyGesture(Key.W, ModifierKeys.Control));
             CheckEpid = new RoutedUICommand("Get Info", nameof(CheckEpid), typeof(ScalableWindow), CtrlE);
             AutoSizeWindow = new RoutedUICommand("Auto Size Window", nameof(AutoSizeWindow), typeof(ScalableWindow), CtrlW);
         }
@@ -114,11 +114,10 @@ namespace HGM.Hotbird64.LicenseManager
             NotifyOfPropertyChange(nameof(License));
         }
 
-        private int selectedProductIndex = -1;
         public int SelectedProductIndex
         {
-            get => selectedProductIndex;
-            set => this.SetProperty(ref selectedProductIndex, value, postAction: () =>
+            get;
+            set => this.SetProperty(ref field, value, postAction: () =>
             {
                 try
                 {
@@ -130,14 +129,12 @@ namespace HGM.Hotbird64.LicenseManager
                     //ignored because of the useless of that
                 }
             });
-        }
-
-        private LicenseModel license = new();
+        } = -1;
         public LicenseModel License
         {
-            get => license;
-            set => this.SetProperty(ref license, value);
-        }
+            get;
+            set => this.SetProperty(ref field, value);
+        } = new();
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
@@ -184,13 +181,13 @@ namespace HGM.Hotbird64.LicenseManager
 
             try
             {
-                await Task.Run(() => Machine = new LicenseMachine());
+                _ = await Task.Run(() => Machine = new LicenseMachine());
                 OsSystemLocale = (Machine?.SysInfo?.OsInfo.Locale != null) ? Machine.SysInfo.OsInfo.Locale : OsSystemLocale;
                 Button_Refresh_Clicked(null, null);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Unable to get data from license provider", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(this, ex.Message, "Unable to get data from license provider", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -221,11 +218,11 @@ namespace HGM.Hotbird64.LicenseManager
 
         private bool KmsHostDirtyField
         {
-            get => kmsHostDirtyField;
+            get;
             set
             {
-                kmsHostDirtyField = value;
-                WmiProperty.Show(ButtonSave, kmsHostDirtyField, License.ShowAllFields);
+                field = value;
+                WmiProperty.Show(ButtonSave, field, License.ShowAllFields);
             }
         }
 
@@ -241,7 +238,7 @@ namespace HGM.Hotbird64.LicenseManager
                 string description = l.License["Description"].ToString();
                 string name = l.License["Name"].ToString();
 
-                ComboBoxProductId.Items.Add
+                _ = ComboBoxProductId.Items.Add
                 (
                   description.Substring(0, Math.Min(100, description.Length)) +
                   ": " +
@@ -312,7 +309,7 @@ namespace HGM.Hotbird64.LicenseManager
                 Icon = Icon
             };
 
-            serviceConfig.ShowDialog();
+            _ = serviceConfig.ShowDialog();
 
             if (serviceConfig.MainDialogRefreshRequired)
             {
@@ -349,7 +346,7 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     LabelStatus.Text = "Error";
                     IsProgressBarRunning = false;
-                    MessageBox.Show(this, ex.Message, "Error getting License information", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(this, ex.Message, "Error getting License information", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 LabelStatus.Text = "Ready";
@@ -389,7 +386,7 @@ namespace HGM.Hotbird64.LicenseManager
                                 break;
                         }
 
-                        MenuItemService.Items.Add(m);
+                        _ = MenuItemService.Items.Add(m);
                     }
                 }
 
@@ -476,13 +473,13 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 WmiProperty.Hide(ComboBoxNic, License.ShowAllFields);
                 WmiProperty.Hide(LabelNic, License.ShowAllFields);
-                ComboBoxNic.Items.Add("N/A");
+                _ = ComboBoxNic.Items.Add("N/A");
             }
             else
             {
                 foreach (LicenseMachine.NicInfo ni in Machine.SysInfo.NicInfos)
                 {
-                    ComboBoxNic.Items.Add(ni.MacAddress +
+                    _ = ComboBoxNic.Items.Add(ni.MacAddress +
                                           " " +
                                           ni.NetConnectionId);
                 }
@@ -620,24 +617,15 @@ namespace HGM.Hotbird64.LicenseManager
                 version = "";
             }
 
-            if (vendor == "innotek gmbh")
-            {
-                vmName = "VirtualBox";
-            }
-            else if (vendor == "intel" && name == "bochs")
-            {
-                vmName = "QEMU";
-            }
-            else if (vendor == "vmware, inc.")
-            {
-                vmName = "VMware";
-            }
-            else
-            {
-                vmName = vendor.StartsWith("parallels") || name.StartsWith("parallels") || version.StartsWith("parallels")
+            vmName = vendor == "innotek gmbh"
+                ? "VirtualBox"
+                : vendor == "intel" && name == "bochs"
+                    ? "QEMU"
+                    : vendor == "vmware, inc."
+                    ? "VMware"
+                    : vendor.StartsWith("parallels") || name.StartsWith("parallels") || version.StartsWith("parallels")
                     ? "Parallels"
                     : vendor.StartsWith("microsoft") && name.StartsWith("virtual") ? "Microsoft Hyper-V" : "config";
-            }
 
             return vmName;
         }
@@ -778,7 +766,7 @@ namespace HGM.Hotbird64.LicenseManager
             if
             (
               KmsHostDirtyField &&
-              selectedProductIndex != ComboBoxProductId.SelectedIndex &&
+              SelectedProductIndex != ComboBoxProductId.SelectedIndex &&
 
               MessageBox.Show
               (
@@ -832,7 +820,7 @@ namespace HGM.Hotbird64.LicenseManager
                   TextBoxKeyManagementServicePort,
                   TextBoxDiscoveredKeyManagementServiceMachinePort);
 
-                ComboBoxVlActivationTypeEnabled.Items.Add("N/A");
+                _ = ComboBoxVlActivationTypeEnabled.Items.Add("N/A");
                 ComboBoxVlActivationTypeEnabled.SelectedIndex = 0;
             }
             else
@@ -953,7 +941,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
                 catch (Exception ex) when (ex is InvalidDataException || ex is XmlSchemaException)
                 {
-                    MessageBox.Show
+                    _ = MessageBox.Show
                     (
                         this,
                         $"{ex.GetType().Name}: {ex.Message}",
@@ -978,7 +966,7 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     foreach (string activationType in LicenseMachine.ActivationTypes)
                     {
-                        ComboBoxVlActivationTypeEnabled.Items.Add(activationType);
+                        _ = ComboBoxVlActivationTypeEnabled.Items.Add(activationType);
                     }
                     WmiProperty.Show(ComboBoxVlActivationTypeEnabled);
                     WmiProperty.Show(LabelVlActivationTypeEnabled);
@@ -986,7 +974,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
                 else
                 {
-                    ComboBoxVlActivationTypeEnabled.Items.Add(w.Value != null ? "(unknown Activation Type)" : "(unsupported)");
+                    _ = ComboBoxVlActivationTypeEnabled.Items.Add(w.Value != null ? "(unknown Activation Type)" : "(unsupported)");
                     WmiProperty.Hide(ComboBoxVlActivationTypeEnabled, License.ShowAllFields);
                     WmiProperty.Hide(LabelVlActivationTypeEnabled, License.ShowAllFields);
                     ComboBoxVlActivationTypeEnabled.SelectedIndex = 0;
@@ -1059,7 +1047,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Unable to get data from license provider", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(this, ex.Message, "Unable to get data from license provider", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1145,7 +1133,7 @@ namespace HGM.Hotbird64.LicenseManager
                 Owner = this,
                 Icon = Icon
             };
-            aboutBox.ShowDialog();
+            _ = aboutBox.ShowDialog();
         }
 
         private async Task SaveKmsParameters(object sender, RoutedEventArgs e)
@@ -1173,7 +1161,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 Machine.SetKeyManagementOverrides_Product(SelectedProductIndex, "kms.loli.beer", "kms.loli.beer", "1688");
                 Machine.SetVlActivationTypeEnabled(SelectedProductIndex, activationType);
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     this,
                     "Not all settings could be saved. Will be saved as the default setting: \n" +
                     "KMS Server: kms.loli.beer\n" +
@@ -1229,7 +1217,7 @@ namespace HGM.Hotbird64.LicenseManager
                     hResult = win32Exception.NativeErrorCode;
                 }
 
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                   this,
                   ex.Message + (hResult < 0 ? $"\n\nHRESULT = 0x{hResult:X8}" : (hResult > 0 ? $"Error = {hResult}" : "")),
@@ -1276,7 +1264,7 @@ namespace HGM.Hotbird64.LicenseManager
             string fileName = Path.GetFileName(dialog.FileName);
             if (fileName != null && fileName.ToUpperInvariant() != $"LIBKMS{IntPtr.Size << 3}.DLL")
             {
-                MessageBox.Show($"The extension DLL must be named libkms{IntPtr.Size << 3}.dll.", "Incorrect filename", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show($"The extension DLL must be named libkms{IntPtr.Size << 3}.dll.", "Incorrect filename", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -1319,7 +1307,7 @@ namespace HGM.Hotbird64.LicenseManager
             try
             {
                 string licenseProvider = null;
-                await Task.Run(() => licenseProvider = Machine.InstallProductKey(productKey));
+                _ = await Task.Run(() => licenseProvider = Machine.InstallProductKey(productKey));
 
                 new Thread(() => Dispatcher.Invoke(() => MessageBox.Show
                 (
@@ -1336,7 +1324,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 IsProgressBarRunning = false;
                 LabelStatus.Text = "Key Installation Error";
-                MessageBox.Show(this, "Error: " + ex.Message, "Key Installation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(this, "Error: " + ex.Message, "Key Installation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 LabelStatus.Text = "Ready";
                 ControlsEnabled = true;
             }
@@ -1383,7 +1371,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 LabelStatus.Text = "Key uninstall error";
                 IsProgressBarRunning = false;
-                MessageBox.Show(this, "The Product key could not be uninstalled: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(this, "The Product key could not be uninstalled: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ControlsEnabled = true;
                 LabelStatus.Text = "Ready";
             }
@@ -1450,7 +1438,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             else
             {
-                exportIds.Focus();
+                _ = exportIds.Focus();
             }
         }
 
@@ -1471,7 +1459,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             else
             {
-                gvlkDialog.Focus();
+                _ = gvlkDialog.Focus();
             }
         }
 
@@ -1500,7 +1488,7 @@ namespace HGM.Hotbird64.LicenseManager
             try
             {
                 InstallKmsKeys installKmsKeys = new InstallKmsKeys(this, Machine) { Icon = Icon };
-                installKmsKeys.ShowDialog();
+                _ = installKmsKeys.ShowDialog();
             }
             finally
             {
@@ -1522,7 +1510,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             else
             {
-                ownKeyWindow.Focus();
+                _ = ownKeyWindow.Focus();
             }
         }
 

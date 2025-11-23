@@ -25,64 +25,54 @@ namespace HGM.Hotbird64.LicenseManager
     {
         public class ProductLicense : PropertyChangeBase
         {
-            private int serviceIndex;
             public int ServiceIndex
             {
-                get => serviceIndex;
-                set => this.SetProperty(ref serviceIndex, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
-
-            private ManagementObject license;
             public ManagementObject License
             {
-                get => license;
-                set => this.SetProperty(ref license, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
         }
 
         public class LicenseProvider : PropertyChangeBase
         {
-            private string friendlyName;
-            private string version;
-            private string licenseClassName;
-            private string productClassName;
-            private string tokenClassName;
-            private string serviceName;
-
             public string FriendlyName
             {
-                get => friendlyName;
-                set => this.SetProperty(ref friendlyName, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
 
             public string Version
             {
-                get => version;
-                set => this.SetProperty(ref version, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
 
             public string LicenseClassName
             {
-                get => licenseClassName;
-                set => this.SetProperty(ref licenseClassName, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
 
             public string ProductClassName
             {
-                get => productClassName;
-                set => this.SetProperty(ref productClassName, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
 
             public string TokenClassName
             {
-                get => tokenClassName;
-                set => this.SetProperty(ref tokenClassName, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
 
             public string ServiceName
             {
-                get => serviceName;
-                set => this.SetProperty(ref serviceName, value);
+                get;
+                set => this.SetProperty(ref field, value);
             }
         }
 
@@ -156,7 +146,6 @@ namespace HGM.Hotbird64.LicenseManager
             public string Version;
         }
 
-        private string computerName;
         private readonly ConnectionOptions credentials = new();
         private ManagementScope scope;
         public IList<ProductLicense> ProductLicenseList = new ObservableCollection<ProductLicense>();
@@ -219,7 +208,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             try
             {
-                string temp = @"\\" + computerName + @"\root\cimv2";
+                string temp = @"\\" + ComputerName + @"\root\cimv2";
                 scope = new ManagementScope(temp, credentials);
 
                 try
@@ -254,7 +243,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (UnauthorizedAccessException ex)
             {
-                string tempComputer = (ComputerName.Contains(".") ? ComputerName : ComputerName.ToUpper());
+                string tempComputer = ComputerName.Contains(".") ? ComputerName : ComputerName.ToUpper();
                 string tempUser = UserName ?? WindowsIdentity.GetCurrent().Name;
                 throw new UnauthorizedAccessException("Access denied by " + tempComputer +
                                                       " with the credentials you provided. Make sure\r\n\r\n" +
@@ -262,11 +251,11 @@ namespace HGM.Hotbird64.LicenseManager
                                                       "2) Have administrative privileges on " + tempComputer + "." +
                                                       (tempUser.Contains("\\")
                                                         ? ""
-                                                        : ("\r\n3) You are using a user name in the form DOMAIN\\Username " +
+                                                        : "\r\n3) You are using a user name in the form DOMAIN\\Username " +
                                                            (ComputerName.Contains(".")
                                                              ? ""
                                                              : ("(e.g. " + tempComputer + "\\" + tempUser +
-                                                                "). This is required under some circumstances"))) + "."), ex);
+                                                                "). This is required under some circumstances")) + "."), ex);
             }
 
             GetSystemInfo();
@@ -411,7 +400,7 @@ namespace HGM.Hotbird64.LicenseManager
                     }
                     string x = @"Win32_DiskDrive.DeviceID='\\.\PHYSICALDRIVE" + partitionObject["DiskIndex"] + "'";
                     using ManagementObject physicalDisk = new(scope, new ManagementPath(x), wmiObjectOptions);
-                    si.DiskSerialNumber = ((string)physicalDisk["SerialNumber"]);
+                    si.DiskSerialNumber = (string)physicalDisk["SerialNumber"];
 
                     string decodedSerial = "";
 
@@ -467,7 +456,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         public string ComputerName
         {
-            get => computerName;
+            get;
             private set
             {
                 if (string.IsNullOrEmpty(value))
@@ -475,7 +464,7 @@ namespace HGM.Hotbird64.LicenseManager
                     value = ".";
                 }
 
-                computerName = value;
+                field = value;
             }
         }
 
@@ -547,7 +536,7 @@ namespace HGM.Hotbird64.LicenseManager
                         case ManagementStatus.ProviderLoadFailure:
                             break;
                         default:
-                            MessageBox.Show(ex.Message, $"Error in {licenseProvider.FriendlyName}", MessageBoxButton.OK, MessageBoxImage.Error);
+                            _ = MessageBox.Show(ex.Message, $"Error in {licenseProvider.FriendlyName}", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                     }
                 }
@@ -560,10 +549,10 @@ namespace HGM.Hotbird64.LicenseManager
                     switch ((uint)ex.ErrorCode)
                     {
                         case 0xC004D302:
-                            MessageBox.Show($"{licenseProvider.FriendlyName} was rearmed. You must reboot your computer to use it.", "Reboot required", MessageBoxButton.OK, MessageBoxImage.Error);
+                            _ = MessageBox.Show($"{licenseProvider.FriendlyName} was rearmed. You must reboot your computer to use it.", "Reboot required", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                         default:
-                            MessageBox.Show(ex.Message, $"Error in {licenseProvider.FriendlyName}", MessageBoxButton.OK, MessageBoxImage.Error);
+                            _ = MessageBox.Show(ex.Message, $"Error in {licenseProvider.FriendlyName}", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                     }
                 }
@@ -622,7 +611,7 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     using ManagementClass managementClass = new(scope, new ManagementPath(LicenseProvidersList[i].ProductClassName), new ObjectGetOptions(null, TimeSpan.MaxValue, true));
                     PropertyData[] properties = [.. managementClass.Properties.Cast<PropertyData>().Where(p => RequiredProperties.Contains(p.Name))];
-                    propertyList = properties.Aggregate("", (current, managementClassProperty) => current + (managementClassProperty.Name + (managementClassProperty != properties.Last() ? ", " : "")));
+                    propertyList = properties.Aggregate("", (current, managementClassProperty) => current + managementClassProperty.Name + (managementClassProperty != properties.Last() ? ", " : ""));
                 }
                 catch
                 {
@@ -702,7 +691,7 @@ namespace HGM.Hotbird64.LicenseManager
 #if DEBUG
             MessageBox.Show("RECONNECTING DUE TO ACCESS DENIED BUG\r\n\r\n" + ex.Message, "?!", MessageBoxButton.OK, MessageBoxImage.Error);
 #endif
-            string temp = @"\\" + computerName + @"\root\cimv2";
+            string temp = @"\\" + ComputerName + @"\root\cimv2";
             scope = new ManagementScope(temp, credentials);
             scope.Connect();
         }
@@ -794,10 +783,10 @@ namespace HGM.Hotbird64.LicenseManager
                         case null:
                             break;
                         case "":
-                            InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServiceLookupDomain", null);
+                            _ = InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServiceLookupDomain", null);
                             break;
                         default:
-                            InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceLookupDomain", [domain]);
+                            _ = InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceLookupDomain", [domain]);
                             break;
                     }
                 }
@@ -815,10 +804,10 @@ namespace HGM.Hotbird64.LicenseManager
                         case null:
                             break;
                         case "":
-                            InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServiceMachine", null);
+                            _ = InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServiceMachine", null);
                             break;
                         default:
-                            InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceMachine", [hostname]);
+                            _ = InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServiceMachine", [hostname]);
                             break;
                     }
                 }
@@ -831,14 +820,9 @@ namespace HGM.Hotbird64.LicenseManager
 
                 try
                 {
-                    if (port != 0)
-                    {
-                        InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServicePort", [port]);
-                    }
-                    else
-                    {
-                        InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServicePort", null);
-                    }
+                    _ = port != 0
+                        ? InvokeMethod(wmiServiceName, uniqueKey, id, "SetKeyManagementServicePort", [port])
+                        : InvokeMethod(wmiServiceName, uniqueKey, id, "ClearKeyManagementServicePort", null);
                 }
                 catch (ManagementException ex) { IgnoreMethodNotImplemented(ex); }
                 catch (ArgumentException ex)
@@ -1045,7 +1029,7 @@ namespace HGM.Hotbird64.LicenseManager
         private void InvokeProductMethod(ProductLicense productLicense, string method, params object[] inParams)
         {
             GetProductLicenseId(productLicense, out string serviceName, out string licenseId);
-            InvokeMethod(serviceName, "ID", licenseId, method, inParams);
+            _ = InvokeMethod(serviceName, "ID", licenseId, method, inParams);
         }
 
         private void InvokeServiceMethod(LicenseProvider licenseProvider, string method, params object[] inParams)
@@ -1056,7 +1040,7 @@ namespace HGM.Hotbird64.LicenseManager
                                  licenseProvider.FriendlyName +
                                  "is not installed on the target machine.");
             }
-            InvokeMethod(licenseProvider.LicenseClassName, "Version", licenseProvider.Version, method, inParams);
+            _ = InvokeMethod(licenseProvider.LicenseClassName, "Version", licenseProvider.Version, method, inParams);
         }
 
         public void InstallConfirmationID(int productIndex, string iid, string cid) => InvokeProductMethod(productIndex, "DepositOfflineConfirmationId", [iid, cid]);

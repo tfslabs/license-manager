@@ -57,7 +57,7 @@ namespace HGM.Hotbird64.Vlmcs
         public ushort Major
         {
             get { return (ushort)(Full >> 16); }
-            set { Full = ((uint)value) << 16 | Full & 0xffff; }
+            set { Full = (((uint)value) << 16) | (Full & 0xffff); }
         }
 
         public ushort Minor
@@ -359,15 +359,15 @@ namespace HGM.Hotbird64.Vlmcs
 
                         if (status != 0)
                         {
-                            if (!string.IsNullOrWhiteSpace(LibKmsMessage)) errorMessage.AppendLine(LibKmsMessage);
-                            if (status == 87 || status == 0x8007000D) errorMessage.AppendLine("The server did not understand the KMS request.");
-                            if (status == ~0U) errorMessage.AppendLine("The KMS server has declined the activation request.");
-                            if (status == 0x6b5) errorMessage.AppendLine("The RPC server does not support KMS.");
+                            if (!string.IsNullOrWhiteSpace(LibKmsMessage)) _ = errorMessage.AppendLine(LibKmsMessage);
+                            if (status == 87 || status == 0x8007000D) _ = errorMessage.AppendLine("The server did not understand the KMS request.");
+                            if (status == ~0U) _ = errorMessage.AppendLine("The KMS server has declined the activation request.");
+                            if (status == 0x6b5) _ = errorMessage.AppendLine("The RPC server does not support KMS.");
                             if (status == 1820) Close();
 
                             if (status != ~0U)
                             {
-                                errorMessage.AppendLine(Kms.StatusMessage(status));
+                                _ = errorMessage.AppendLine(Kms.StatusMessage(status));
                             }
 
                             throw new KmsException(errorMessage.ToString(), status != ~0U ? new Win32Exception(unchecked((int)status)) : null);
@@ -377,15 +377,15 @@ namespace HGM.Hotbird64.Vlmcs
                         hwId = ((HwId)Marshal.PtrToStructure(hwIdPtr, typeof(HwId))).ByteArray;
                         KmsResult kmsResult = new(result, baseResponse.Version);
 
-                        if ((result & (int)ResultCode.DecryptSuccess) == 0) errorMessage.AppendLine("AES Decryption of KMS response failed.");
-                        if ((result & (int)ResultCode.IsValidPidLength) == 0) errorMessage.AppendLine("The length field of the KMS PID is not valid.");
-                        if ((result & (int)ResultCode.IsValidInitializationVector) == 0) errorMessage.AppendLine("IVs (salts) of KMS request and response do not match.");
-                        if ((result & (int)ResultCode.IsValidProtocolVersion) == 0) errorMessage.AppendLine("KMS response version does not match request.");
-                        if ((result & (int)ResultCode.IsValidClientMachineId) == 0) errorMessage.AppendLine("Client Machine ID of request and response do not match.");
-                        if ((result & (int)ResultCode.IsValidTimeStamp) == 0) errorMessage.AppendLine("Time stamp of KMS request and response do not match.");
-                        if ((result & (int)ResultCode.IsValidHash) == 0) errorMessage.AppendLine("Hash of KMS response is not valid.");
-                        if ((result & (int)ResultCode.IsValidHmac) == 0) errorMessage.AppendLine("HMAC is not correct.");
-                        if ((result & (int)ResultCode.IsRpcStatusSuccess) == 0) errorMessage.AppendLine("RPC returned non-zero result code.");
+                        if ((result & (int)ResultCode.DecryptSuccess) == 0) _ = errorMessage.AppendLine("AES Decryption of KMS response failed.");
+                        if ((result & (int)ResultCode.IsValidPidLength) == 0) _ = errorMessage.AppendLine("The length field of the KMS PID is not valid.");
+                        if ((result & (int)ResultCode.IsValidInitializationVector) == 0) _ = errorMessage.AppendLine("IVs (salts) of KMS request and response do not match.");
+                        if ((result & (int)ResultCode.IsValidProtocolVersion) == 0) _ = errorMessage.AppendLine("KMS response version does not match request.");
+                        if ((result & (int)ResultCode.IsValidClientMachineId) == 0) _ = errorMessage.AppendLine("Client Machine ID of request and response do not match.");
+                        if ((result & (int)ResultCode.IsValidTimeStamp) == 0) _ = errorMessage.AppendLine("Time stamp of KMS request and response do not match.");
+                        if ((result & (int)ResultCode.IsValidHash) == 0) _ = errorMessage.AppendLine("Hash of KMS response is not valid.");
+                        if ((result & (int)ResultCode.IsValidHmac) == 0) _ = errorMessage.AppendLine("HMAC is not correct.");
+                        if ((result & (int)ResultCode.IsRpcStatusSuccess) == 0) _ = errorMessage.AppendLine("RPC returned non-zero result code.");
                         if ((result & (int)ResultCode.IsRandomInitializationVector) == 0) warnings += "Non-random initialization vector (salt) used in KMSv6 protocol.\n";
 
                         uint correctResponseSize = result >> 23;
@@ -393,7 +393,7 @@ namespace HGM.Hotbird64.Vlmcs
 
                         if (correctResponseSize != effectiveResponseSize)
                         {
-                            errorMessage.AppendFormat("KMS server reponse has an incorrect size of {0} bytes. Should be {1}.{2}", effectiveResponseSize, correctResponseSize, Environment.NewLine);
+                            _ = errorMessage.AppendFormat("KMS server reponse has an incorrect size of {0} bytes. Should be {1}.{2}", effectiveResponseSize, correctResponseSize, Environment.NewLine);
                         }
 
                         errors = errorMessage.ToString();
@@ -541,7 +541,7 @@ namespace HGM.Hotbird64.Vlmcs
         {
             return IntPtr.Size == 8 ? GetErrorMessage64() : GetErrorMessage32();
         }
-        
+
         private static void CloseConnection(IntPtr ctx)
         {
             if (IntPtr.Size == 8)
@@ -553,7 +553,7 @@ namespace HGM.Hotbird64.Vlmcs
                 CloseConnection32(ctx);
             }
         }
-        
+
         private static uint SendKmsRequest(IntPtr ctx, IntPtr baseResponse, IntPtr baseRequest, out uint result, IntPtr hwId)
         {
             return IntPtr.Size == 8
@@ -603,7 +603,7 @@ namespace HGM.Hotbird64.Vlmcs
         public static readonly KmsGuid O2010Guid = new("59a52881-a989-479d-af46-f275c6370663");
         public static readonly KmsGuid O2013Guid = new("0ff1ce15-a989-479d-af46-f275c6370663");
         public static readonly KmsGuid WinGuid = new("55c92734-d682-4d71-983e-d6ec3f16059f");
-        
+
         static Kms()
         {
             Idn.AllowUnassigned = true;

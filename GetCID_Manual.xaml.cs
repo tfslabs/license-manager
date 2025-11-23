@@ -16,7 +16,7 @@ namespace HGM.Hotbird64.LicenseManager
             InitializeComponent();
             if (!webService.CheckConnection())
             {
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     "Your Internet connection to the Microsoft Customer Service is not stable. Confirmation ID may not get.",
                     "Error while connecting to Microsoft",
                     MessageBoxButton.OK,

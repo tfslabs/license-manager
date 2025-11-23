@@ -14,7 +14,7 @@ namespace HGM.Hotbird64.LicenseManager
     public partial class InstallKmsKeys
     {
         private readonly LicenseMachine machine;
-        private readonly ObservableCollection<KmsLicense> kmsLicenses = new ObservableCollection<KmsLicense>();
+        private readonly ObservableCollection<KmsLicense> kmsLicenses = [];
         public bool NeedsRefresh { get; private set; }
 
         public InstallKmsKeys(MainWindow mainWindow, LicenseMachine machine) : base(mainWindow)
@@ -34,7 +34,7 @@ namespace HGM.Hotbird64.LicenseManager
                 if (!isWindowsActivated)
                 {
                     KmsLicense firstWindowsLicense = kmsLicenses.FirstOrDefault(l => l.ApplicationID == Kms.WinGuid);
-                    if (firstWindowsLicense != null) firstWindowsLicense.IsRadioButtonChecked = true;
+                    _ = firstWindowsLicense?.IsRadioButtonChecked = true;
                 }
 
                 foreach (KmsLicense kmsLicense in kmsLicenses.Where(l => l.ApplicationID != Kms.WinGuid))
@@ -56,7 +56,7 @@ namespace HGM.Hotbird64.LicenseManager
             if (ProgressBar.IsIndeterminate)
             {
                 e.Cancel = true;
-                MessageBox.Show(this, "Please wait for the current action to complete", "Be Patient", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                _ = MessageBox.Show(this, "Please wait for the current action to complete", "Be Patient", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
 
             base.OnClosing(e);
@@ -86,14 +86,14 @@ namespace HGM.Hotbird64.LicenseManager
 
                 await Task.Run(() =>
                 {
-                    Parallel.ForEach(kmsLicenses.Where(l => l.ApplicationID == Kms.WinGuid ? l.IsRadioButtonChecked : l.IsCheckBoxChecked), kmsLicense =>
+                    _ = Parallel.ForEach(kmsLicenses.Where(l => l.ApplicationID == Kms.WinGuid ? l.IsRadioButtonChecked : l.IsCheckBoxChecked), kmsLicense =>
             {
                 try
                 {
                     string licenseProvider = machine.InstallProductKey((string)kmsLicense.Gvlk);
                     NeedsRefresh = true;
 
-                    Dispatcher.InvokeAsync(() =>
+                    _ = Dispatcher.InvokeAsync(() =>
             {
                 kmsLicense.InstallMessage = "Success";
                 kmsLicense.InstallToolTip = $"Installed by {licenseProvider}";
@@ -102,7 +102,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
                 catch (Exception ex)
                 {
-                    Dispatcher.InvokeAsync(() =>
+                    _ = Dispatcher.InvokeAsync(() =>
             {
                 kmsLicense.InstallMessage = "Failure";
                 kmsLicense.InstallToolTip = ex.Message;

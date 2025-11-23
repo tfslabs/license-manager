@@ -6,25 +6,20 @@ namespace HGM.Hotbird64.LicenseManager.Model
 {
     public class LicenseModel : PropertyChangeBase, IWmiProperty
     {
-        private LicenseMachine.ProductLicense selectedLicense;
         public LicenseMachine.ProductLicense SelectedLicense
         {
-            get => selectedLicense;
-            set => this.SetProperty(ref selectedLicense, value);
+            get;
+            set => this.SetProperty(ref field, value);
         }
-
-        private bool developerMode;
         public bool DeveloperMode
         {
-            get => developerMode;
-            set => this.SetProperty(ref developerMode, value);
+            get;
+            set => this.SetProperty(ref field, value);
         }
-
-        private bool showAllFields;
         public bool ShowAllFields
         {
-            get => showAllFields;
-            set => this.SetProperty(ref showAllFields, value);
+            get;
+            set => this.SetProperty(ref field, value);
         }
 
         public ManagementObject Property => SelectedLicense?.License;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -112,7 +111,7 @@ namespace HGM.Hotbird64.Vlmcs
             {
                 ThrowOnOldKey();
                 if (value > 0x3fffffff) throw new ArgumentOutOfRangeException(nameof(Id), $"Key Id must be 0 - {0x3fffffff}");
-                Uint64Low = (UnknownSecret & 0x3fff) << 50 | (ulong)value << 20 | Group;
+                Uint64Low = ((UnknownSecret & 0x3fff) << 50) | ((ulong)value << 20) | Group;
                 Uint64High = (UnknownSecret >> 14) | (IsNewKey ? 0x8000000000000UL : 0UL);
                 Uint64High |= (ulong)Crc32(this) << 39;
             }
@@ -149,7 +148,7 @@ namespace HGM.Hotbird64.Vlmcs
                 if (value > 0x1fffffffffffff) throw new ArgumentOutOfRangeException(nameof(UnknownSecret), $"Key secret must be 0 - {0x1fffffffffffff}");
                 Uint64Low = ((value & 0x3fff) << 50) | ((ulong)Id << 20) | Group;
                 Uint64High = (value >> 14) | (IsNewKey ? 0x8000000000000UL : 0UL);
-                Uint64High |= ((ulong)Crc32(this) << 39);
+                Uint64High |= (ulong)Crc32(this) << 39;
             }
         }
 
@@ -160,9 +159,9 @@ namespace HGM.Hotbird64.Vlmcs
             {
                 ThrowOnOldKey();
                 if (value > 0xfffff) throw new ArgumentOutOfRangeException(nameof(Group), $"Key group must be 0 - {0xfffff}");
-                Uint64Low = (UnknownSecret & 0x3fff) << 50 | (ulong)Id << 20 | value;
+                Uint64Low = ((UnknownSecret & 0x3fff) << 50) | ((ulong)Id << 20) | value;
                 Uint64High = (UnknownSecret >> 14) | (IsNewKey ? 0x8000000000000UL : 0UL);
-                Uint64High |= ((ulong)Crc32(this) << 39);
+                Uint64High |= (ulong)Crc32(this) << 39;
             }
         }
 
@@ -191,7 +190,7 @@ namespace HGM.Hotbird64.Vlmcs
             return result;
         }
 
-        public static explicit operator List<byte>(BinaryProductKey binaryKey) => [.. ((byte[])binaryKey)];
+        public static explicit operator List<byte>(BinaryProductKey binaryKey) => [.. (byte[])binaryKey];
         public static explicit operator BinaryProductKey(List<byte> bytes) => new([.. bytes]);
 
         public static unsafe explicit operator BinaryProductKey(byte[] bytes)
@@ -254,11 +253,11 @@ namespace HGM.Hotbird64.Vlmcs
 
             for (byte i = (byte)(isNewKey ? 1 : 0); i < 25; i++)
             {
-                if (isNewKey && i - 1 == binaryCodedBase24Key[0]) keyBuilder.Append('N');
-                keyBuilder.Append(Base24[binaryCodedBase24Key[i]]);
+                if (isNewKey && i - 1 == binaryCodedBase24Key[0]) _ = keyBuilder.Append('N');
+                _ = keyBuilder.Append(Base24[binaryCodedBase24Key[i]]);
             }
 
-            for (byte i = 5; i < 24; i += 6) keyBuilder.Insert(i, "-", 1);
+            for (byte i = 5; i < 24; i += 6) _ = keyBuilder.Insert(i, "-", 1);
 
             return keyBuilder.ToString();
         }

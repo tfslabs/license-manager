@@ -21,12 +21,11 @@ namespace HGM.Hotbird64.Vlmcs
 
         public BinaryProductKey BinaryKey { get; private set; }
         public string EPid => BinaryProductKey.GetEpid(BinaryKey, MsKeyType);
-        private static CultureInfo osSystemLocale;
 
         public static CultureInfo OsSystemLocale
         {
-            get => osSystemLocale ?? CultureInfo.InstalledUICulture;
-            set => osSystemLocale = value;
+            get => field ?? CultureInfo.InstalledUICulture;
+            set;
         }
 
         public KeyBase(string key, KeyType keyType)

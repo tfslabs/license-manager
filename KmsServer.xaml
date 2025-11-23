@@ -15,7 +15,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <GroupBox Header="KMS Server Settings" Grid.Row="0" Margin="5,5,5,0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -38,11 +37,9 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-
                 <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource StandardLabel}" HorizontalAlignment="Left">KMS Host Port</Label>
                 <TextBox x:Name="TextBoxPort" Text="1688" Grid.Row="0" Grid.Column="1" Style="{StaticResource StandardTextBox}" Background="LightGreen" IsReadOnly="False" TextChanged="TextBoxPort_TextChanged" />
                 <Button x:Name="ButtonStartStop" Content="Start Server" Grid.Row="0" Grid.Column="2" Height="20" Margin="4,0,4,0" Click="Button_StartStop_Click"/>
-
                 <ItemsControl Grid.Row="1" ItemsSource="{Binding Csvlks}" Grid.Column="0" Grid.ColumnSpan="3">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>

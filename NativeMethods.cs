@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -41,7 +40,7 @@ namespace HGM.Hotbird64.LicenseManager
             private static extern CredUiReturnCodes CredUIConfirmCredentials(string targetName, [In, MarshalAs(UnmanagedType.Bool)] bool bConfirm);
 
             [Flags]
-            enum CREDUI_FLAGS
+            private enum CREDUI_FLAGS
             {
                 INCORRECT_PASSWORD = 0x1,
                 DO_NOT_PERSIST = 0x2,
@@ -73,7 +72,7 @@ namespace HGM.Hotbird64.LicenseManager
                 ERROR_INVALID_PARAMETER = 87,
                 ERROR_INVALID_FLAGS = 1004,
             }
-            
+
             public CredUiReturnCodes PromptForPassword(bool showUI, string messageText, string captionText)
             {
                 StringBuilder userPassword = new(256), userID = new StringBuilder(256);

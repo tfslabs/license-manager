@@ -5,7 +5,6 @@ using LicenseManager.Annotations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -36,7 +35,7 @@ namespace HGM.Hotbird64.LicenseManager
         public bool IsOnFileSystem => tempFileName != null || IsUnzippedExternal;
         public bool IsOldKeyFormat;
         public bool IsUnzippedExternal => IsExternal && !ExternalFileName.ToUpperInvariant().EndsWith(".GZ");
-        
+
         public string TempFileName
         {
             get
@@ -82,13 +81,13 @@ namespace HGM.Hotbird64.LicenseManager
         private SkuItem skuItem;
         public static RoutedUICommand InstallGeneratedKey;
         public static RoutedUICommand InstallGvlk;
-        public static InputGestureCollection CtrlI = new InputGestureCollection();
+        public static InputGestureCollection CtrlI = [];
         private readonly bool isManualEpid;
         private readonly bool isInputChanging;
         private readonly object lookupLockObject = new object();
 
-        public static IList<PKeyConfigFile> PKeyConfigFiles = new List<PKeyConfigFile>
-        {
+        public static IList<PKeyConfigFile> PKeyConfigFiles =
+        [
             /*
              * Windows Vista and Windows Server 2008
              */
@@ -159,23 +158,22 @@ namespace HGM.Hotbird64.LicenseManager
             new() {BaseFileName="pkconfig-vs2019", DisplayName="Visual Studio 2019" },
             new() {BaseFileName="pkconfig-vs2022", DisplayName="Visual Studio 2022" },
             new() {BaseFileName="pkconfig-vs2026", DisplayName="Visual Studio 2026" }
-        };
+        ];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string buildNumber = Environment.OSVersion.Version.Build.ToString(CultureInfo.InvariantCulture) + ".0000";
         public string BuildNumber
         {
-            get => buildNumber;
+            get;
 
-            set => this.SetProperty(ref buildNumber, value, postAction: () =>
+            set => this.SetProperty(ref field, value, postAction: () =>
             {
                 NotifyOfPropertyChange(nameof(IsValidBuildNumber));
                 NotifyOfPropertyChange(nameof(BuildNumberInt));
                 NotifyOfPropertyChange(nameof(FullEPid));
                 NotifyOfPropertyChange(nameof(PlatformId));
             });
-        }
+        } = Environment.OSVersion.Version.Build.ToString(CultureInfo.InvariantCulture) + ".0000";
 
         public string FullEPid
         {
@@ -231,7 +229,7 @@ namespace HGM.Hotbird64.LicenseManager
         static ProductBrowser()
         {
             LoadPkeyConfigDatabase();
-            CtrlI.Add(new KeyGesture(Key.I, ModifierKeys.Control));
+            _ = CtrlI.Add(new KeyGesture(Key.I, ModifierKeys.Control));
             InstallGeneratedKey = new RoutedUICommand("Check or Install Key", nameof(InstallGeneratedKey), typeof(ScalableWindow), CtrlI);
             InstallGvlk = new RoutedUICommand("Check or Install Key", nameof(InstallGvlk), typeof(ScalableWindow), CtrlI);
         }
@@ -292,17 +290,17 @@ namespace HGM.Hotbird64.LicenseManager
                         foreach (ProductKeyConfigurationConfigurationsConfiguration product in licenseGrouping)
                         {
                             TreeViewItem productItem = new TreeViewItem { Header = product, };
-                            licenseItem.Items.Add(productItem);
+                            _ = licenseItem.Items.Add(productItem);
                         }
 
-                        pKeyConfigItem.Items.Add(licenseItem);
+                        _ = pKeyConfigItem.Items.Add(licenseItem);
                     }
 
-                    rootItem.Items.Add(pKeyConfigItem);
+                    _ = rootItem.Items.Add(pKeyConfigItem);
                 }
             }
 
-            ProductTree.Items.Add(rootItem);
+            _ = ProductTree.Items.Add(rootItem);
 
             rootItem = new TreeViewItem { Header = "All SKUs by Group ID" };
 
@@ -316,23 +314,23 @@ namespace HGM.Hotbird64.LicenseManager
                     foreach (ProductKeyConfigurationConfigurationsConfiguration product in treeGrouping)
                     {
                         TreeViewItem productItem = new TreeViewItem { Header = product, };
-                        pKeyConfigItem.Items.Add(productItem);
+                        _ = pKeyConfigItem.Items.Add(productItem);
                     }
 
-                    rootItem.Items.Add(pKeyConfigItem);
+                    _ = rootItem.Items.Add(pKeyConfigItem);
                 }
             }
 
-            ProductTree.Items.Add(rootItem);
+            _ = ProductTree.Items.Add(rootItem);
 
             rootItem = new TreeViewItem { Header = "CSVLK SKUs only" };
 
             foreach (ProductKeyConfigurationConfigurationsConfiguration csvlkConfig in MainWindow.CsvlkConfigs.OrderBy(c => c.ToString()))
             {
-                rootItem.Items.Add(new TreeViewItem { Header = csvlkConfig, });
+                _ = rootItem.Items.Add(new TreeViewItem { Header = csvlkConfig, });
             }
 
-            ProductTree.Items.Add(rootItem);
+            _ = ProductTree.Items.Add(rootItem);
             ProductTree.SelectedItemChanged += ProductTree_SelectedItemChanged;
         }
 
@@ -354,7 +352,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             List<string> fileNames = Directory.EnumerateFiles(App.ExeDirectoryName, "*.xrm-ms").ToList();
             fileNames.AddRange(Directory.EnumerateFiles(App.ExeDirectoryName, "*.xrm-ms.gz"));
-            fileNames = new List<string>(fileNames.OrderByDescending(f => f));
+            fileNames = [.. fileNames.OrderByDescending(f => f)];
 
             foreach (string fileName in fileNames)
             {
@@ -404,17 +402,17 @@ namespace HGM.Hotbird64.LicenseManager
 
             foreach (ProductKeyConfigurationConfigurationsConfiguration keyConfig in keyConfigs)
             {
-                KeyConfigs.Add(keyConfig);
+                _ = KeyConfigs.Add(keyConfig);
             }
 
             foreach (ProductKeyConfigurationPublicKeysPublicKey publicKey in publicKeys)
             {
-                PublicKeys.Add(publicKey);
+                _ = PublicKeys.Add(publicKey);
             }
 
             foreach (ProductKeyConfigurationKeyRangesKeyRange keyRange in keyRanges)
             {
-                KeyRanges.Add(keyRange);
+                _ = KeyRanges.Add(keyRange);
             }
         }
 
@@ -446,7 +444,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
                 catch (Exception e)
                 {
-                    Dispatcher.CurrentDispatcher.InvokeAsync(() => MessageBox.Show
+                    _ = Dispatcher.CurrentDispatcher.InvokeAsync(() => MessageBox.Show
                     (
                         $"The file \"{(pKeyConfigFile.IsExternal ? pKeyConfigFile.ExternalFileName : pKeyConfigFile.ZippedFileName)}\" " +
                         $"could not be loaded into the pkeyconfig database\n\n{e.GetType().Name}: {e.Message}",
@@ -458,12 +456,12 @@ namespace HGM.Hotbird64.LicenseManager
                 }
             }
 
-            Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationConfigurations>().Single().Configuration, config =>
+            _ = Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationConfigurations>().Single().Configuration, config =>
             {
                 config.Source = pKeyConfigFile;
             });
 
-            Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationKeyRanges>().Single().KeyRange, keyRange =>
+            _ = Parallel.ForEach(pKeyConfig.Items.OfType<ProductKeyConfigurationKeyRanges>().Single().KeyRange, keyRange =>
             {
                 keyRange.FileName = pKeyConfigFile.DisplayName;
             });
@@ -478,7 +476,7 @@ namespace HGM.Hotbird64.LicenseManager
                 return;
             }
 
-            Task.Run(() => UpdatePkConfig(keyConf));
+            _ = Task.Run(() => UpdatePkConfig(keyConf));
         }
 
         private void UpdatePkConfig(ProductKeyConfigurationConfigurationsConfiguration keyConf)
@@ -613,7 +611,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             if (keyRange == null)
             {
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                   "There are no valid Key Id ranges",
                   "Database Error",
@@ -658,7 +656,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 uint left = uint.Parse(TextBoxKeyId1.Text);
                 uint right = uint.Parse(TextBoxKeyId2.Text);
-                uint keyId = left * 1000000 + right;
+                uint keyId = (left * 1000000) + right;
 
                 if (keyRanges != null)
                 {
@@ -729,7 +727,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 uint left = uint.Parse(TextBoxKeyId1.Text);
                 uint right = uint.Parse(TextBoxKeyId2.Text);
-                uint keyId = left * 1000000 + right;
+                uint keyId = (left * 1000000) + right;
 
                 ulong randomSecret = unchecked((uint)random.Next(int.MinValue, int.MaxValue));
                 randomSecret |= (ulong)random.Next(0x200000) << 32;
@@ -1083,7 +1081,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             if (!MainWindow.ControlsEnabled)
             {
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                   "The main window is currently busy. Try again in a few seconds.",
                   "Main Window Busy",
@@ -1133,7 +1131,7 @@ namespace HGM.Hotbird64.LicenseManager
                     IsEnabled = true;
                 }
 
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                     this, $"EPID \"{FullEPid}\" has {activationsRemaining} activation{(activationsRemaining == 1 ? "" : "s")} remaining.",
                     "Info from activation.sls.microsoft.com", MessageBoxButton.OK, MessageBoxImage.Information
@@ -1141,7 +1139,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (EPidQueryException ex)
             {
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                     this, $"EPID \"{ex.EPid}\" check returned: \"{ex.Message}\"",
                     $"EPID Online Check Error {ex.ErrorCode}", MessageBoxButton.OK, MessageBoxImage.Error
@@ -1149,7 +1147,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                     this, ex.Message, "EPID Online Check Error", MessageBoxButton.OK, MessageBoxImage.Error
                 );
@@ -1158,7 +1156,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void TextBoxEPid_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            CheckOnlineButton?.Visibility = Regex.IsMatch(((TextBox)sender).Text, PidGen.EpidPattern) ? Visibility.Visible : Visibility.Collapsed;
+            _ = (CheckOnlineButton?.Visibility = Regex.IsMatch(((TextBox)sender).Text, PidGen.EpidPattern) ? Visibility.Visible : Visibility.Collapsed);
         }
     }
 }

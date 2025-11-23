@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Management;
 using System.Threading.Tasks;
@@ -18,21 +17,17 @@ namespace HGM.Hotbird64.LicenseManager
     {
         private readonly LicenseMachine.LicenseProvider licenseProvider;
         private readonly LicenseMachine machine;
-        private bool kmsHostDirty;
         private bool serverParametersDirty;
         public bool MainDialogRefreshRequired;
         private MainWindow owner;
-        ManagementObject serviceParameters;
-        
+        private ManagementObject serviceParameters;
+
         private bool KmsHostDirty
         {
-            get
-            {
-                return kmsHostDirty;
-            }
+            get;
             set
             {
-                kmsHostDirty = value;
+                field = value;
                 ButtonSave.IsEnabled = value;
             }
         }
@@ -41,11 +36,11 @@ namespace HGM.Hotbird64.LicenseManager
         {
             try
             {
-                await Task.Run(() => serviceParameters = machine.GetLicenseProviderParameters(licenseProvider.LicenseClassName));
+                _ = await Task.Run(() => serviceParameters = machine.GetLicenseProviderParameters(licenseProvider.LicenseClassName));
             }
             catch (Exception ex)
             {
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                     this,
                     ex.Message,
@@ -204,7 +199,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             return control.IsEnabled && control.Visibility == Visibility.Visible ? t : default(T);
         }
-        
+
         private async void button_Save_Click(object sender, RoutedEventArgs e)
         {
             LabelServiceStatus.Text = "Saving KMS settings";
@@ -249,7 +244,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 LabelServiceStatus.Text = "Error saving settings";
 
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                     this,
                     ex.Message,
@@ -296,7 +291,7 @@ namespace HGM.Hotbird64.LicenseManager
 
 
             LabelServiceStatus.Text = "Installing License Files";
-            openFileDialog.ShowDialog(this);
+            _ = openFileDialog.ShowDialog(this);
 
             IEnumerable<string> fileNames = openFileDialog.FileNames;
 
@@ -307,7 +302,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 foreach (string fileName in fileNames)
                 {
-                    Dispatcher.Invoke(() => LabelServiceStatus.Text = "Installing " + Path.GetFileName(fileName));
+                    _ = Dispatcher.Invoke(() => LabelServiceStatus.Text = "Installing " + Path.GetFileName(fileName));
 
                     try
                     {
@@ -335,7 +330,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 LabelServiceStatus.Text = "Error while Installing Files";
 
-                MessageBox.Show
+                _ = MessageBox.Show
                 (
                     this,
                     errorstring,
@@ -351,7 +346,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void HandleServiceError(Exception ex)
         {
-            MessageBox.Show(this, ex.Message, "Service Control Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = MessageBox.Show(this, ex.Message, "Service Control Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private async void startToolStripMenuItem_Click(object sender, EventArgs e)
@@ -443,11 +438,11 @@ namespace HGM.Hotbird64.LicenseManager
 
                 await Task.Run(() =>
                 {
-                    machine.StopService(licenseProvider);
-                    machine.StartService(licenseProvider);
+                    _ = machine.StopService(licenseProvider);
+                    _ = machine.StartService(licenseProvider);
                 });
 
-                MessageBox.Show(this, licenseProvider.FriendlyName + " has been restarted.", "Success",
+                _ = MessageBox.Show(this, licenseProvider.FriendlyName + " has been restarted.", "Success",
                                 MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -469,12 +464,12 @@ namespace HGM.Hotbird64.LicenseManager
 
                 await Task.Run(() => machine.RefreshLicenseStatus(licenseProvider));
 
-                MessageBox.Show(this, licenseProvider.FriendlyName + " has been reloaded.", "Success",
+                _ = MessageBox.Show(this, licenseProvider.FriendlyName + " has been reloaded.", "Success",
                     MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Error Reloading Service", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(this, ex.Message, "Error Reloading Service", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             LabelServiceStatus.Text = "";
@@ -497,13 +492,13 @@ namespace HGM.Hotbird64.LicenseManager
 
                     await Task.Run(() => machine.ReArmWindows(licenseProvider));
 
-                    MessageBox.Show(this, licenseProvider.FriendlyName +
+                    _ = MessageBox.Show(this, licenseProvider.FriendlyName +
                                     " has been rearmed. Reboot your machine as soon as possible.",
                                     "Rearm Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(this, ex.Message, "Error Rearming " + licenseProvider.FriendlyName,
+                    _ = MessageBox.Show(this, ex.Message, "Error Rearming " + licenseProvider.FriendlyName,
                                     MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 

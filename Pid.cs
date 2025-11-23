@@ -1,7 +1,6 @@
 ﻿using HGM.Hotbird64.Vlmcs;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -73,12 +72,12 @@ namespace HGM.Hotbird64.LicenseManager
                         return false;
                     }
 
-                    OsId.ToString();
-                    GroupId.ToString();
-                    KeyId.ToString();
-                    KeyType.ToString();
-                    Date.ToString(CultureInfo.CurrentCulture);
-                    OsName.ToString();
+                    _ = OsId.ToString();
+                    _ = GroupId.ToString();
+                    _ = KeyId.ToString();
+                    _ = KeyType.ToString();
+                    _ = Date.ToString(CultureInfo.CurrentCulture);
+                    _ = OsName.ToString();
                     return true;
                 }
                 catch

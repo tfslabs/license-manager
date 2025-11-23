@@ -1,7 +1,6 @@
 ﻿using HGM.Hotbird64.Vlmcs;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Management;
@@ -17,20 +16,20 @@ namespace HGM.Hotbird64.LicenseManager
         public string Servicename;
         public ManagementObject ManagementObject;
         public object Value { private set; get; }
-        private string property;
+
         private readonly bool showAllFields;
 
         public string Property
         {
-            get => property;
+            get;
 
             set
             {
-                property = value;
+                field = value;
 
                 try
                 {
-                    Value = ManagementObject[property] ?? "";
+                    Value = ManagementObject[field] ?? "";
                 }
                 catch (ManagementException ex)
                 {
@@ -179,8 +178,8 @@ namespace HGM.Hotbird64.LicenseManager
             double minutesRemaining = (uint)Value;
             DateTime tempDate = DateTime.Now.AddMinutes((uint)Value);
             textbox.Text = (minutesRemaining == 0.0)
-                    ? ("forever (unless you install a new key or tamper with the license tokens)")
-                    : (Math.Round(minutesRemaining / 24.0 / 60.0).ToString(CultureInfo.CurrentCulture)) + " days, until " +
+                    ? "forever (unless you install a new key or tamper with the license tokens)"
+                    : Math.Round(minutesRemaining / 24.0 / 60.0).ToString(CultureInfo.CurrentCulture) + " days, until " +
                     tempDate.ToLongDateString() + " " + tempDate.ToShortTimeString();
         }
 
@@ -335,7 +334,7 @@ namespace HGM.Hotbird64.LicenseManager
         public void SetCheckBox(CheckBox checkBox, string p)
         {
             Property = p;
-            checkBox.IsChecked = (Value == null ? null : (uint)Value == 0);
+            checkBox.IsChecked = Value == null ? null : (uint)Value == 0;
         }
     }
 }

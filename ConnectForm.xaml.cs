@@ -1,6 +1,5 @@
 ﻿using HGM.Hotbird64.Vlmcs;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +18,7 @@ namespace HGM.Hotbird64.LicenseManager
         private string ComputerName
         {
             get { return Dispatcher.Invoke(() => Kms.Idn.GetAscii(TextBoxComputername.Text)); }
-            set { Dispatcher.InvokeAsync(() => TextBoxComputername.Text = Kms.Idn.GetUnicode(value)); }
+            set { _ = Dispatcher.InvokeAsync(() => TextBoxComputername.Text = Kms.Idn.GetUnicode(value)); }
         }
 
         public ConnectForm(MainWindow parent)
@@ -54,7 +53,7 @@ namespace HGM.Hotbird64.LicenseManager
                 if (showUI)
                 {
                     parent.LabelStatus.Text = "Access denied";
-                    MessageBox.Show(ex.Message, "Access denied", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(ex.Message, "Access denied", MessageBoxButton.OK, MessageBoxImage.Error);
                     parent.LabelStatus.Text = "Getting Computer Name";
                 }
                 else
@@ -71,10 +70,10 @@ namespace HGM.Hotbird64.LicenseManager
                 switch ((uint)ex.ErrorCode)
                 {
                     case 0x80070776:
-                        MessageBox.Show(ex.Message, "Microsoft Is Lame", MessageBoxButton.OK, MessageBoxImage.Error);
+                        _ = MessageBox.Show(ex.Message, "Microsoft Is Lame", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
                     default:
-                        MessageBox.Show(ex.Message, "DCOM Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        _ = MessageBox.Show(ex.Message, "DCOM Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
                 }
                 parent.LabelStatus.Text = "Getting Computer Name";
@@ -84,7 +83,7 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 parent.IsProgressBarRunning = false;
                 parent.LabelStatus.Text = "Error";
-                MessageBox.Show("The following error occured: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show("The following error occured: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 parent.LabelStatus.Text = "Getting Computer Name";
                 MainGrid.IsEnabled = true;
             }
@@ -94,7 +93,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             if (ComputerName == "")
             {
-                MessageBox.Show("Try entering something in the field Computername!", "Noob Alert!!!", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show("Try entering something in the field Computername!", "Noob Alert!!!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

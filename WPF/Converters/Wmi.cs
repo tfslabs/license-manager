@@ -149,15 +149,15 @@ namespace HGM.Hotbird64.LicenseManager.WPF.Converters
                 return stringValue;
             }
 
-            uint data1 = (uint)(guidBytes[3] << 24 |
-                               guidBytes[2] << 16 |
-                               guidBytes[1] << 8 |
+            uint data1 = (uint)((guidBytes[3] << 24) |
+                               (guidBytes[2] << 16) |
+                               (guidBytes[1] << 8) |
                                guidBytes[0]);
 
-            ushort data2 = (ushort)(guidBytes[5] << 8 |
+            ushort data2 = (ushort)((guidBytes[5] << 8) |
                                  guidBytes[4]);
 
-            ushort data3 = (ushort)(guidBytes[7] << 8 |
+            ushort data3 = (ushort)((guidBytes[7] << 8) |
                                  guidBytes[6]);
 
             string byteList = "";

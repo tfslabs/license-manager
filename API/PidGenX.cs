@@ -272,7 +272,7 @@ namespace HGM.Hotbird64.Vlmcs
             }
 
             string responsePid = (payLoadNode?.SelectSingleNode("//*[local-name()='PID']")?.InnerText) ?? throw new EPidQueryException("EPID is in an unknown format.", -1, ePid);
-            
+
             if (responsePid != ePid)
             {
                 throw new EPidQueryException($"Requested info for EPID \"{ePid}\" but got answer for EPID \"{responsePid}\"", -1, ePid);
@@ -289,17 +289,7 @@ namespace HGM.Hotbird64.Vlmcs
         public static void CheckKey(string key, string pkeyConfigFileName, out DigitalProductId2 id2, out DigitalProductId3 id3, out DigitalProductId4 id4)
         {
             int osBuild = Environment.OSVersion.Version.Build;
-            string ePidStart;
-
-            if (osBuild >= 10000)
-            {
-                ePidStart = "03612";
-            }
-            else
-            {
-                ePidStart = osBuild >= 9600 ? "06401" : osBuild >= 9200 ? "05426" : "55041";
-            }
-
+            string ePidStart = osBuild >= 10000 ? "03612" : osBuild >= 9600 ? "06401" : osBuild >= 9200 ? "05426" : "55041";
             id3 = new DigitalProductId3();
             id4 = new DigitalProductId4();
             id3.size = DigitalProductId3.Size;
