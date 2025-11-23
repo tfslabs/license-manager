@@ -1257,7 +1257,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void LoadExtensionDll(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog
+            OpenFileDialog dialog = new()
             {
                 InitialDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                 CheckFileExists = true,

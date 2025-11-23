@@ -173,7 +173,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                 try
                 {
-                    using FileStream stream = new FileStream(DatabaseFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    using FileStream stream = new(DatabaseFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
                     KmsLists.ReadDatabase(stream);
                     IsDatabaseLoaded = true;
                     DataBaseLoaded?.Invoke();

@@ -895,7 +895,7 @@ namespace HGM.Hotbird64.LicenseManager
                 StatusPanel.Visibility = Visibility.Collapsed;
                 CheckButton.Visibility = InstallButton.Visibility = Visibility.Collapsed;
                 TextBoxKeyId1.IsReadOnly = TextBoxKeyId2.IsReadOnly = false;
-                KmsGuid guid = new KmsGuid(textBox.Text);
+                KmsGuid guid = new(textBox.Text);
 
                 await Task.Run(() =>
                 {
@@ -1014,7 +1014,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             //DigitalProductId2 id2;
             //DigitalProductId3 id3;
-            DigitalProductId4 id4 = default(DigitalProductId4);
+            DigitalProductId4 id4 = default;
 
             PKeyConfigFile[] oldPKeyConfigFiles = PKeyConfigFiles.Where(f => f.IsOldKeyFormat).ToArray();
             SetBusy("Querying PidGenX.dll");
@@ -1161,10 +1161,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void TextBoxEPid_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (CheckOnlineButton != null)
-            {
-                CheckOnlineButton.Visibility = Regex.IsMatch(((TextBox)sender).Text, PidGen.EpidPattern) ? Visibility.Visible : Visibility.Collapsed;
-            }
+            CheckOnlineButton?.Visibility = Regex.IsMatch(((TextBox)sender).Text, PidGen.EpidPattern) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

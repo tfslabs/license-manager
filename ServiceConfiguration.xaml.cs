@@ -38,17 +38,6 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        /*private void CancelButton_Click(object sender, CancelEventArgs e)
-		{
-			if (!groupBox_Outer.Enabled)
-			{
-				e.Cancel = true;
-				MessageBox.Show(this, "Please wait for current action to complete.", "Be Patient", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return;
-			}
-			_dlg.label_Status.Text = "Ready";
-		}*/
-
         private async void GetParameters()
         {
             try
