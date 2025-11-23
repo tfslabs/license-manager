@@ -20,12 +20,16 @@ namespace HGM.Hotbird64.LicenseManager
             new("Windows 10/11 Professional", "VK7JG-NPHTM-C97JM-9MPGT-3V66T", KeyType.StoreLicense ),
             new ("Windows 10/11 Home", "YTMG3-N6DKC-DKB77-7M9GH-8HVX7", KeyType.StoreLicense ),
             new ("Windows 8 Preview Standard Server", "YNBF9-GPVTG-FFHQC-MJR4B-B4CQX", KeyType.StoreLicense),
-            new ("Microsoft Visual Studio 2019 Professional", "NYWVH-HT4XC-R2WYW-9Y3CM-X4V3Y", KeyType.StoreLicense ),
-            new ("Microsoft Visual Studio 2019 Enterprise", "BF8Y8-GN2QH-T84XB-QVY3B-RC4DF", KeyType.StoreLicense ),
-            new ("Microsoft Visual Studio 2022 Professional", "TD244-P4NB7-YQ6XK-Y8MMM-YWV2J", KeyType.StoreLicense ),
-            new ("Microsoft Visual Studio 2022 Enterprise", "VHF9H-NXBBB-638P6-6JHCY-88JWH", KeyType.StoreLicense ),
-            new ("Microsoft Visual Studio 2026 Professional", "NVTDK-QB8J9-M28GR-92BPC-BTHXK", KeyType.StoreLicense),
-            new ("Microsoft Visual Studio 2026 Enterprise", "VYGRN-WPR22-HG4X3-692BF-QGT2V", KeyType.StoreLicense),
+            new ("Visual Studio 2015 Professional", "HMGNV-WCYXV-X7G9W-YCX63-B98R2", KeyType.StoreLicense),
+            new ("Visual Studio 2015 Enterprise/Ultimate", "HM6NR-QXX7C-DFW2Y-8B82K-WTYJV", KeyType.StoreLicense),
+            new ("Visual Studio 2017 Professional", "KBJFW-NXHK6-W4WJM-CRMQB-G3CDH", KeyType.StoreLicense),
+            new ("Visual Studio 2017 Enterprise", "NJVYC-BMHX2-G77MM-4XJMR-6Q8QF", KeyType.StoreLicense),
+            new ("Visual Studio 2019 Professional", "NYWVH-HT4XC-R2WYW-9Y3CM-X4V3Y", KeyType.StoreLicense),
+            new ("Visual Studio 2019 Enterprise", "BF8Y8-GN2QH-T84XB-QVY3B-RC4DF", KeyType.StoreLicense),
+            new ("Visual Studio 2022 Professional", "TD244-P4NB7-YQ6XK-Y8MMM-YWV2J", KeyType.StoreLicense),
+            new ("Visual Studio 2022 Enterprise", "VHF9H-NXBBB-638P6-6JHCY-88JWH", KeyType.StoreLicense),
+            new ("Visual Studio 2026 Professional", "NVTDK-QB8J9-M28GR-92BPC-BTHXK", KeyType.StoreLicense),
+            new ("Visual Studio 2026 Enterprise", "VYGRN-WPR22-HG4X3-692BF-QGT2V", KeyType.StoreLicense),
             new ("Windows Server 2022 KMS Host", "R47NX-MVMYR-98PV9-XYVXY-XBXCH", KeyType.StoreLicense)
         };
 
