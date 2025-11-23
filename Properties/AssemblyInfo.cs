@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TheFlightSims")]
 [assembly: AssemblyProduct("License Manager")]
-[assembly: AssemblyCopyright("Copyright © 2012 - 2024")]
+[assembly: AssemblyCopyright("Copyright © 2012 - 2026")]
 [assembly: AssemblyTrademark("TheFlightSims")]
 [assembly: AssemblyCulture("")]
 
@@ -50,7 +50,7 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("5.5.0.2410")]
-[assembly: AssemblyFileVersion("5.5.0.2410")]
+[assembly: AssemblyVersion("5.5.0.2601")]
+[assembly: AssemblyFileVersion("5.5.0.2601")]
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: Guid("df0c8bf8-a64d-4e54-8e6f-a8946a796241")]
