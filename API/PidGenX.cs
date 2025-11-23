@@ -16,7 +16,7 @@ namespace HGM.Hotbird64.Vlmcs
     public unsafe struct DigitalProductId2
     {
         private fixed char pid[24];
-        public string Pid { get { fixed (char* c = pid) return Marshal.PtrToStringUni((IntPtr)c); } }
+        public string Pid { get { fixed (char* c = pid) { return Marshal.PtrToStringUni((IntPtr)c); } } }
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode, Pack = 4)]
@@ -50,16 +50,19 @@ namespace HGM.Hotbird64.Vlmcs
         public uint CRC32;
 
         public static uint Size => (uint)sizeof(DigitalProductId3);
-        public ProtocolVersion Version => new ProtocolVersion { Major = (ushort)(version & 0xffff), Minor = (ushort)(version >> 16) };
-        public string Pid { get { fixed (byte* c = pid) return Marshal.PtrToStringAnsi((IntPtr)c); } }
-        public string EditionId { get { fixed (byte* c = editionId) return Marshal.PtrToStringAnsi((IntPtr)c); } }
-        public string OemId { get { fixed (byte* c = oemId) return Marshal.PtrToStringAnsi((IntPtr)c); } }
-        public byte[] HardwareIdStatic { get { fixed (byte* b = hardwareIdStatic) return PidGen.GetBytes(b, 16); } }
-        public byte[] HardwareIdDynamic { get { fixed (byte* b = hardwareIdDynamic) return PidGen.GetBytes(b, 16); } }
+        public ProtocolVersion Version => new() { Major = (ushort)(version & 0xffff), Minor = (ushort)(version >> 16) };
+        public string Pid { get { fixed (byte* c = pid) { return Marshal.PtrToStringAnsi((IntPtr)c); } } }
+        public string EditionId { get { fixed (byte* c = editionId) { return Marshal.PtrToStringAnsi((IntPtr)c); } } }
+        public string OemId { get { fixed (byte* c = oemId) { return Marshal.PtrToStringAnsi((IntPtr)c); } } }
+        public byte[] HardwareIdStatic { get { fixed (byte* b = hardwareIdStatic) { return PidGen.GetBytes(b, 16); } } }
+        public byte[] HardwareIdDynamic { get { fixed (byte* b = hardwareIdDynamic) { return PidGen.GetBytes(b, 16); } } }
 
         public static explicit operator DigitalProductId3(byte[] bytes)
         {
-            if (bytes.Length < sizeof(DigitalProductId3)) throw new ArgumentException($"Digital Product Id 3 must have {sizeof(DigitalProductId3)} bytes", nameof(bytes));
+            if (bytes.Length < sizeof(DigitalProductId3))
+            {
+                throw new ArgumentException($"Digital Product Id 3 must have {sizeof(DigitalProductId3)} bytes", nameof(bytes));
+            }
 
             fixed (byte* b = bytes)
             {
@@ -67,7 +70,10 @@ namespace HGM.Hotbird64.Vlmcs
             }
         }
 
-        public override string ToString() => BinaryKey.ToString();
+        public override string ToString()
+        {
+            return BinaryKey.ToString();
+        }
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -95,30 +101,40 @@ namespace HGM.Hotbird64.Vlmcs
         private fixed char eula[64];
 
         public static uint Size => (uint)sizeof(DigitalProductId4);
-        public string EPid { get { fixed (char* c = ePid) return Marshal.PtrToStringUni((IntPtr)c); } }
-        public string OemId { get { fixed (char* c = oemId) return Marshal.PtrToStringUni((IntPtr)c); } }
-        public string EditionType { get { fixed (char* c = editionType) return Marshal.PtrToStringUni((IntPtr)c); } }
-        public string EditionId { get { fixed (char* c = editionId) return Marshal.PtrToStringUni((IntPtr)c); } }
-        public string KeyType { get { fixed (char* c = keyType) return Marshal.PtrToStringUni((IntPtr)c); } }
-        public string Eula { get { fixed (char* c = eula) return Marshal.PtrToStringUni((IntPtr)c); } }
-        public byte[] KeyHash { get { fixed (byte* b = keyHash) return PidGen.GetBytes(b, 32); } }
-        public byte[] Hash { get { fixed (byte* b = hash) return PidGen.GetBytes(b, 32); } }
-        public ProtocolVersion Version => new ProtocolVersion { Major = (ushort)(version & 0xffff), Minor = (ushort)(version >> 16) };
-        public override string ToString() => BinaryKey.ToString();
+        public string EPid { get { fixed (char* c = ePid) { return Marshal.PtrToStringUni((IntPtr)c); } } }
+        public string OemId { get { fixed (char* c = oemId) { return Marshal.PtrToStringUni((IntPtr)c); } } }
+        public string EditionType { get { fixed (char* c = editionType) { return Marshal.PtrToStringUni((IntPtr)c); } } }
+        public string EditionId { get { fixed (char* c = editionId) { return Marshal.PtrToStringUni((IntPtr)c); } } }
+        public string KeyType { get { fixed (char* c = keyType) { return Marshal.PtrToStringUni((IntPtr)c); } } }
+        public string Eula { get { fixed (char* c = eula) { return Marshal.PtrToStringUni((IntPtr)c); } } }
+        public byte[] KeyHash { get { fixed (byte* b = keyHash) { return PidGen.GetBytes(b, 32); } } }
+        public byte[] Hash { get { fixed (byte* b = hash) { return PidGen.GetBytes(b, 32); } } }
+        public ProtocolVersion Version => new() { Major = (ushort)(version & 0xffff), Minor = (ushort)(version >> 16) };
+        public override string ToString()
+        {
+            return BinaryKey.ToString();
+        }
 
         public Guid SkuId
         {
             get
             {
                 string skuIdString;
-                fixed (char* c = skuId) skuIdString = Marshal.PtrToStringUni((IntPtr)c);
+                fixed (char* c = skuId)
+                {
+                    skuIdString = Marshal.PtrToStringUni((IntPtr)c);
+                }
+
                 return new Guid(skuIdString);
             }
         }
 
         public static explicit operator DigitalProductId4(byte[] bytes)
         {
-            if (bytes.Length < sizeof(DigitalProductId4)) throw new ArgumentException($"Digital Product Id 4 must have {sizeof(DigitalProductId4)} bytes", nameof(bytes));
+            if (bytes.Length < sizeof(DigitalProductId4))
+            {
+                throw new ArgumentException($"Digital Product Id 4 must have {sizeof(DigitalProductId4)} bytes", nameof(bytes));
+            }
 
             fixed (byte* b = bytes)
             {
@@ -167,7 +183,10 @@ namespace HGM.Hotbird64.Vlmcs
             return result;
         }
 
-        public static int GetRemainingActivationsOnline(DigitalProductId4 id4) => GetRemainingActivationsOnline(id4.EPid);
+        public static int GetRemainingActivationsOnline(DigitalProductId4 id4)
+        {
+            return GetRemainingActivationsOnline(id4.EPid);
+        }
 
         public static int GetRemainingActivationsOnline(string ePid)
         {
@@ -243,7 +262,10 @@ namespace HGM.Hotbird64.Vlmcs
 
             using (Stream soapResponse = httpResponse.GetResponseStream())
             {
-                if (soapResponse != null) soapResponseDocument.Load(soapResponse);
+                if (soapResponse != null)
+                {
+                    soapResponseDocument.Load(soapResponse);
+                }
             }
 
             XmlDocument activationResponseDocument = new();

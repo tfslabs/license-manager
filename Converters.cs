@@ -11,7 +11,10 @@ namespace HGM.Hotbird64.LicenseManager
 {
     public abstract class ConverterBase : MarkupExtension, IValueConverter
     {
-        public override object ProvideValue(IServiceProvider serviceProvider) => this;
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
 
         public abstract object Convert(object value, Type targetType, object parameter, CultureInfo culture);
 

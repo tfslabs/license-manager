@@ -19,16 +19,16 @@ namespace HGM.Hotbird64.LicenseManager
 
             foreach (AppItem product in KmsLists.AppItemList)
             {
-                TreeViewItem appitem = new TreeViewItem { Header = product };
+                TreeViewItem appitem = new() { Header = product };
                 _ = ProductTree.Items.Add(appitem);
 
                 foreach (KmsItem kmsProduct in KmsLists.KmsItemList.Where(k => k.App == product))
                 {
-                    TreeViewItem kmsItem = new TreeViewItem { Header = kmsProduct };
+                    TreeViewItem kmsItem = new() { Header = kmsProduct };
 
                     foreach (SkuItem skuProduct in KmsLists.SkuItemList.Where(p => p.KmsItem == kmsProduct).OrderBy(p => p.DisplayName))
                     {
-                        TreeViewItem skuItem = new TreeViewItem { Header = skuProduct };
+                        TreeViewItem skuItem = new() { Header = skuProduct };
                         _ = kmsItem.Items.Add(skuItem);
                     }
 
@@ -41,10 +41,20 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void TreeViewItem_DoubleClick(object sender, MouseButtonEventArgs args)
         {
-            if (((TreeViewItem)ProductTree.SelectedItem)?.Header is SkuItem) DialogResult = true;
+            if (((TreeViewItem)ProductTree.SelectedItem)?.Header is SkuItem)
+            {
+                DialogResult = true;
+            }
         }
 
-        private void Button_OK_Click(object sender, RoutedEventArgs e) => DialogResult = true;
-        private void TreeViewItem_Collapse(object sender, RoutedEventArgs e) => ((ItemsControl)e.Source).ExpandAll(false);
+        private void Button_OK_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
+        private void TreeViewItem_Collapse(object sender, RoutedEventArgs e)
+        {
+            ((ItemsControl)e.Source).ExpandAll(false);
+        }
     }
 }

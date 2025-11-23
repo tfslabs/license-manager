@@ -34,21 +34,30 @@ namespace HGM.Hotbird64.LicenseManager
     {
         public LicenseStatus LicenseStatus { get; set; }
         public string FriendlyName { get; set; }
-        public override string ToString() => FriendlyName;
+        public override string ToString()
+        {
+            return FriendlyName;
+        }
     }
 
     public class AddressFamilyModel
     {
         public AddressFamily AddressFamily { get; set; }
         public string FriendlyName { get; set; }
-        public override string ToString() => FriendlyName;
+        public override string ToString()
+        {
+            return FriendlyName;
+        }
     }
 
     public class RemainingTimeModel
     {
         public uint MinutesRemaining { get; set; }
         public string FriendlyName { get; set; }
-        public override string ToString() => FriendlyName;
+        public override string ToString()
+        {
+            return FriendlyName;
+        }
     }
 
     public class CsvlkRule
@@ -57,7 +66,10 @@ namespace HGM.Hotbird64.LicenseManager
         public bool IsPreview;
         public ISet<KmsGuid> KmsGuids;
         public string DisplayName;
-        public override string ToString() => DisplayName;
+        public override string ToString()
+        {
+            return DisplayName;
+        }
     }
     public partial class KmsClientWindow : INotifyPropertyChanged
     {
@@ -669,9 +681,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
 
             int closingBracketPosition = address.LastIndexOf(']');
-            return address.Length == closingBracketPosition + 2
-                ? false
-                : address.Length <= closingBracketPosition + 2 || address[closingBracketPosition + 1] == ':';
+            return address.Length != closingBracketPosition + 2 && (address.Length <= closingBracketPosition + 2 || address[closingBracketPosition + 1] == ':');
         }
 
         private static void SplitKmsAddress(string address, out string host, out string port)
@@ -740,7 +750,10 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        private void TextBox_Host_TextChanged(object sender, TextChangedEventArgs e) => SetKmsAddress();
+        private void TextBox_Host_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SetKmsAddress();
+        }
 
         private void TextBox_Port_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -826,10 +839,14 @@ namespace HGM.Hotbird64.LicenseManager
         }
 
         private void ZeroGuidButton_Click(object sender, RoutedEventArgs e)
-          => TextBoxPreviousClientGuid.Text = Guid.Empty.ToString();
+        {
+            TextBoxPreviousClientGuid.Text = Guid.Empty.ToString();
+        }
 
         private void RandomNetbiosButton_Click(object sender, RoutedEventArgs e)
-          => TextBoxWorktstationName.Text = netBiosNames[random.Next(netBiosNames.Length)];
+        {
+            TextBoxWorktstationName.Text = netBiosNames[random.Next(netBiosNames.Length)];
+        }
 
         private void RandomDnsButton_Click(object sender, RoutedEventArgs e)
         {
@@ -869,7 +886,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void Button_PickProduct_Click(object sender, RoutedEventArgs e)
         {
-            ProductSelector productSelector = new ProductSelector
+            ProductSelector productSelector = new()
             {
                 Icon = Icon,
                 Owner = this
@@ -954,7 +971,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                 long requestTime = RequestTime.ToUniversalTime().ToFileTimeUtc();
 
-                KmsRequest kmsRequest = new KmsRequest
+                KmsRequest kmsRequest = new()
                 {
                     ApplicationID = AppGuid,
                     ClientMachineID = ClientGuid,
@@ -973,11 +990,11 @@ namespace HGM.Hotbird64.LicenseManager
                 ResetResponseControls();
 
                 byte[] hwId = null;
-                KmsResponse kmsResponse = default(KmsResponse);
-                KmsResult kmsResult = default(KmsResult);
-                RpcDiag rpcDiag = default(RpcDiag);
+                KmsResponse kmsResponse = default;
+                KmsResult kmsResult = default;
+                RpcDiag rpcDiag = default;
 
-                using KmsClient kmsClient = new KmsClient(TextBoxHost.Text, kmsPort);
+                using KmsClient kmsClient = new(TextBoxHost.Text, kmsPort);
                 string warnings = null;
                 bool useMultiplexedRpc, useNdr64, useBtfn;
 
@@ -1014,7 +1031,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
 
                 TextBoxHwId.Text = $"{hwId[0]:X2} {hwId[1]:X2} {hwId[2]:X2} {hwId[3]:X2} {hwId[4]:X2} {hwId[5]:X2} {hwId[6]:X2} {hwId[7]:X2}";
-                EPid pid = new EPid(kmsResponse.KmsPid);
+                EPid pid = new(kmsResponse.KmsPid);
 
                 CheckEpidForErrors(pid);
                 AnalyzeRpc(rpcDiag, pid, kmsRequest.KmsID);
@@ -1175,10 +1192,10 @@ namespace HGM.Hotbird64.LicenseManager
         {
             string warnings, errors;
             RpcDiag rpcDiag;
-            KmsResponse testResponse = default(KmsResponse);
+            KmsResponse testResponse = default;
             byte[] testHwId;
 
-            ServerTestResult serverTestResult = new ServerTestResult
+            ServerTestResult serverTestResult = new()
             {
                 DisplayName = "Multiple requests over a single connection",
                 HasPassed = true,
@@ -1325,7 +1342,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             kmsRequest.ID = KmsGuid.NewGuid();
 
-            ServerTestResult serverTestResult = new ServerTestResult
+            ServerTestResult serverTestResult = new()
             {
                 DisplayName = "Success on random SKU ID",
                 HasPassed = true,
@@ -1373,7 +1390,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             string warnings;
 
-            ServerTestResult serverTestResult = new ServerTestResult
+            ServerTestResult serverTestResult = new()
             {
                 DisplayName = displayName,
                 Severity = severity,
@@ -1516,7 +1533,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             DataGridProtocolConformance.Visibility = kmsItems == null ? Visibility.Collapsed : Visibility.Visible;
 
-            ServerTestResult serverTestResult = new ServerTestResult
+            ServerTestResult serverTestResult = new()
             {
                 DisplayName = "KMS ID matches CSVLK",
                 Severity = 40,
@@ -1584,7 +1601,7 @@ namespace HGM.Hotbird64.LicenseManager
             AppItem application = ApplicationList[request.ApplicationID];
             KmsItem product = KmsProductList[request.KmsID];
 
-            ServerTestResult serverTestResult = new ServerTestResult
+            ServerTestResult serverTestResult = new()
             {
                 DisplayName = "Refuse if unknown Kms ID",
                 Severity = 10,
@@ -1692,7 +1709,7 @@ namespace HGM.Hotbird64.LicenseManager
                 TextBoxEPid.Background = Brushes.LightYellow;
             }
 
-            ServerTestResult serverTestResult = new ServerTestResult
+            ServerTestResult serverTestResult = new()
             {
                 DisplayName = "EPID has valid LCID",
                 ToolTip = "The LCID in the EPID must be valid."
@@ -1725,7 +1742,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             ValidateEpidField(() =>
             {
-                DateTime thresholdDate = new DateTime(2009, 1, 1);
+                DateTime thresholdDate = new(2009, 1, 1);
                 if (pid.Date >= thresholdDate)
                 {
                     return;
@@ -1862,7 +1879,7 @@ namespace HGM.Hotbird64.LicenseManager
                 TextBoxWarnings.AppendText("The KMS server has been \"overcharged\".\n");
             }
 
-            TimeSpan timeSpan = new TimeSpan(0, (int)response.VLRenewalInterval, 0);
+            TimeSpan timeSpan = new(0, (int)response.VLRenewalInterval, 0);
             TextBoxRenewalInterval.Text = $"{timeSpan.Days} days, {timeSpan.Hours} hours, {timeSpan.Minutes} minutes";
             timeSpan = new TimeSpan(0, (int)response.VLActivationInterval, 0);
             TextBoxRetryInterval.Text = $"{timeSpan.Days} days, {timeSpan.Hours} hours, {timeSpan.Minutes} minutes";

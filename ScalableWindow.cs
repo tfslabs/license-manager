@@ -8,7 +8,7 @@ namespace HGM.Hotbird64.LicenseManager
 {
     public class ScalableWindow : Window
     {
-        public ScaleTransform Scaler = new ScaleTransform(1, 1);
+        public ScaleTransform Scaler = new(1, 1);
         public MainWindow MainWindow { get; protected set; }
 
         public ScalableWindow()
@@ -26,7 +26,10 @@ namespace HGM.Hotbird64.LicenseManager
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             e.Handled = false;
-            if (Keyboard.IsKeyUp(Key.LeftCtrl) && Keyboard.IsKeyUp(Key.RightCtrl)) return;
+            if (Keyboard.IsKeyUp(Key.LeftCtrl) && Keyboard.IsKeyUp(Key.RightCtrl))
+            {
+                return;
+            }
 
             e.Handled = true;
 

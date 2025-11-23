@@ -10,7 +10,7 @@ namespace HGM.Hotbird64.LicenseManager
 {
     public class EPid : IEquatable<EPid>, IEquatable<string>
     {
-        public static readonly DateTime IllegalDate = new DateTime(1601, 1, 1, 23, 59, 59);
+        public static readonly DateTime IllegalDate = new(1601, 1, 1, 23, 59, 59);
         public readonly string Id;
         public string[] Split { get; private set; }
         public string DateString => Split.Length < 8 ? null : Split[7];
@@ -21,7 +21,10 @@ namespace HGM.Hotbird64.LicenseManager
         public string GroupIdString => Split.Length < 2 ? null : Split[1];
         public string OsIdString => Split[0];
 
-        public override string ToString() => Id;
+        public override string ToString()
+        {
+            return Id;
+        }
 
         public bool Equals(string other)
         {
@@ -30,7 +33,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         public bool Equals(EPid other)
         {
-            return (object)other != null && Equals(other.Id);
+            return other is not null && Equals(other.Id);
         }
 
         public override bool Equals(object other)
@@ -43,12 +46,35 @@ namespace HGM.Hotbird64.LicenseManager
             return Id.GetHashCode();
         }
 
-        public static bool operator ==(EPid left, EPid right) => left?.Id == right?.Id;
-        public static bool operator !=(EPid left, EPid right) => !(left == right);
-        public static bool operator ==(EPid left, string right) => left?.Id == right;
-        public static bool operator !=(EPid left, string right) => !(left == right);
-        public static bool operator ==(string left, EPid right) => left == right?.Id;
-        public static bool operator !=(string left, EPid right) => !(left == right);
+        public static bool operator ==(EPid left, EPid right)
+        {
+            return left?.Id == right?.Id;
+        }
+
+        public static bool operator !=(EPid left, EPid right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator ==(EPid left, string right)
+        {
+            return left?.Id == right;
+        }
+
+        public static bool operator !=(EPid left, string right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator ==(string left, EPid right)
+        {
+            return left == right?.Id;
+        }
+
+        public static bool operator !=(string left, EPid right)
+        {
+            return !(left == right);
+        }
 
         public EPid(object pid)
         {
@@ -139,51 +165,27 @@ namespace HGM.Hotbird64.LicenseManager
             Split = Id.Split(new[] { '-' }, 8);
         }
 
-        public uint OsId
-        {
-            get
-            {
-                return !Regex.IsMatch(OsIdString, "^[0-9]{5}$")
+        public uint OsId => !Regex.IsMatch(OsIdString, "^[0-9]{5}$")
                     ? throw new FormatException($"The OS id \"{OsIdString}\" in the ePID is not in the format #####")
                     : uint.Parse(OsIdString, CultureInfo.InvariantCulture);
-            }
-        }
 
-        public uint GroupId
-        {
-            get
-            {
-                return Split.Length < 2
+        public uint GroupId => Split.Length < 2
                     ? throw new FormatException("The ePid has no group id")
                     : !Regex.IsMatch(GroupIdString, "^[0-9]{5}$")
                     ? throw new FormatException($"The group id \"{GroupIdString}\" in the ePID is not in the format #####")
                     : uint.Parse(GroupIdString, CultureInfo.InvariantCulture);
-            }
-        }
 
-        public uint KeyId
-        {
-            get
-            {
-                return Split.Length < 4
+        public uint KeyId => Split.Length < 4
                     ? throw new FormatException("The ePid has no key serial number")
                     : !Regex.IsMatch(KeyIdString, "^[0-9]{3}\x2D[0-9]{6}$")
                     ? throw new FormatException($"The key serial number \"{KeyIdString}\" in the ePID is not in the format ###-######")
                     : uint.Parse(Split[2] + Split[3], CultureInfo.InvariantCulture);
-            }
-        }
 
-        public byte KeyType
-        {
-            get
-            {
-                return Split.Length < 5
+        public byte KeyType => Split.Length < 5
                     ? throw new FormatException("The ePID has no key type")
                     : !Regex.IsMatch(Split[4], "^[0-9]{2}$")
                     ? throw new FormatException($"key type \"{Split[4]}\" in ePID is not in the format ##")
                     : byte.Parse(Split[4], CultureInfo.InvariantCulture);
-            }
-        }
 
         public CultureInfo Culture
         {

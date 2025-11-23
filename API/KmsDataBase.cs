@@ -2,31 +2,30 @@
 using HGM.Hotbird64.LicenseManager.Contracts;
 using HGM.Hotbird64.LicenseManager.Extensions;
 using LicenseManager.Annotations;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 // ReSharper disable PartialTypeWithSinglePart
 
 // ReSharper disable once CheckNamespace
 namespace HGM.Hotbird64.Vlmcs
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using System.Xml;
-    using System.Xml.Schema;
-    using System.Xml.Serialization;
-
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false)]
     public partial class KmsData
     {
-        public static ReaderWriterLock Lock = new ReaderWriterLock();
+        public static ReaderWriterLock Lock = new();
 
         [XmlArray("WinBuilds", Form = XmlSchemaForm.Unqualified), XmlArrayItem("WinBuild", Form = XmlSchemaForm.Unqualified)]
         public List<WinBuild> WinBuilds { get; set; }
@@ -117,7 +116,10 @@ namespace HGM.Hotbird64.Vlmcs
             set => this.SetProperty(ref field, value);
         }
 
-        public override string ToString() => DisplayName;
+        public override string ToString()
+        {
+            return DisplayName;
+        }
     }
 
     [XmlType(AnonymousType = true)]
@@ -181,7 +183,10 @@ namespace HGM.Hotbird64.Vlmcs
 
         [XmlIgnore] public KmsGuid Guid { get; set; }
 
-        public override string ToString() => KmsLists.KmsItemList[Guid].DisplayName;
+        public override string ToString()
+        {
+            return KmsLists.KmsItemList[Guid].DisplayName;
+        }
     }
 
 
@@ -371,7 +376,10 @@ namespace HGM.Hotbird64.Vlmcs
     public abstract class KmsProduct : GuidItem
     {
         [XmlAttribute, DefaultValue(null)] public string DisplayName { get; set; }
-        public override string ToString() => DisplayName;
+        public override string ToString()
+        {
+            return DisplayName;
+        }
     }
 
     public abstract class GuidItem : IEquatable<KmsGuid>, IEquatable<Guid>
@@ -379,7 +387,10 @@ namespace HGM.Hotbird64.Vlmcs
         [XmlIgnore] public virtual KmsGuid Guid { get; set; }
 
         // ReSharper disable once NonReadonlyMemberInGetHashCode
-        public override int GetHashCode() => Guid.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Guid.GetHashCode();
+        }
 
         public override bool Equals(object obj)
         {
@@ -404,19 +415,65 @@ namespace HGM.Hotbird64.Vlmcs
             return Guid == other;
         }
 
-        public bool Equals(KmsGuid other) => Guid == other;
-        public bool Equals(Guid other) => this == other;
+        public bool Equals(KmsGuid other)
+        {
+            return Guid == other;
+        }
 
-        public static bool operator ==(GuidItem a, GuidItem b) => a?.Equals(b) ?? (b is null);
-        public static bool operator !=(GuidItem a, GuidItem b) => !(a == b);
-        public static bool operator ==(GuidItem a, KmsGuid b) => !(a is null) && a.Equals(b);
-        public static bool operator !=(GuidItem a, KmsGuid b) => !(a == b);
-        public static bool operator ==(KmsGuid a, GuidItem b) => b == a;
-        public static bool operator !=(KmsGuid a, GuidItem b) => b != a;
-        public static bool operator ==(GuidItem a, Guid b) => !(a is null) && a.Equals(b);
-        public static bool operator !=(GuidItem a, Guid b) => !(a == b);
-        public static bool operator ==(Guid a, GuidItem b) => b == a;
-        public static bool operator !=(Guid a, GuidItem b) => b != a;
+        public bool Equals(Guid other)
+        {
+            return this == other;
+        }
+
+        public static bool operator ==(GuidItem a, GuidItem b)
+        {
+            return a?.Equals(b) ?? (b is null);
+        }
+
+        public static bool operator !=(GuidItem a, GuidItem b)
+        {
+            return !(a == b);
+        }
+
+        public static bool operator ==(GuidItem a, KmsGuid b)
+        {
+            return a is not null && a.Equals(b);
+        }
+
+        public static bool operator !=(GuidItem a, KmsGuid b)
+        {
+            return !(a == b);
+        }
+
+        public static bool operator ==(KmsGuid a, GuidItem b)
+        {
+            return b == a;
+        }
+
+        public static bool operator !=(KmsGuid a, GuidItem b)
+        {
+            return b != a;
+        }
+
+        public static bool operator ==(GuidItem a, Guid b)
+        {
+            return a is not null && a.Equals(b);
+        }
+
+        public static bool operator !=(GuidItem a, Guid b)
+        {
+            return !(a == b);
+        }
+
+        public static bool operator ==(Guid a, GuidItem b)
+        {
+            return b == a;
+        }
+
+        public static bool operator !=(Guid a, GuidItem b)
+        {
+            return b != a;
+        }
     }
 
     public interface IKmsProductCollection<T> : IList<T> where T : GuidItem
@@ -430,7 +487,7 @@ namespace HGM.Hotbird64.Vlmcs
     {
         public Activate this[KmsGuid guid]
         {
-            get { return this.FirstOrDefault(p => p.Guid == guid); }
+            get => this.FirstOrDefault(p => p.Guid == guid);
 
             set
             {
@@ -467,7 +524,7 @@ namespace HGM.Hotbird64.Vlmcs
 
         public T this[KmsGuid guid]
         {
-            get { return this.FirstOrDefault(p => p.Guid == guid); }
+            get => this.FirstOrDefault(p => p.Guid == guid);
 
             set
             {
@@ -553,9 +610,9 @@ namespace HGM.Hotbird64.Vlmcs
 
                 using (Stream xsdStream = GetXsdValidationStream())
                 {
-                    StringBuilder errors = new StringBuilder();
+                    StringBuilder errors = new();
                     XmlSchema schema = XmlSchema.Read(xsdStream, (s, e) => throw e.Exception);
-                    XmlReaderSettings settings = new XmlReaderSettings
+                    XmlReaderSettings settings = new()
                     {
                         ValidationType = ValidationType.Schema,
                     };
@@ -573,7 +630,7 @@ namespace HGM.Hotbird64.Vlmcs
                 _ = stream.Seek(0, SeekOrigin.Begin);
             }
 
-            XmlSerializer serializer = new XmlSerializer(typeof(KmsData));
+            XmlSerializer serializer = new(typeof(KmsData));
 
             KmsData.Lock.AcquireWriterLock(2000);
 

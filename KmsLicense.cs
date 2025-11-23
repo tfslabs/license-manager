@@ -16,7 +16,11 @@ namespace HGM.Hotbird64.LicenseManager
             get;
             set
             {
-                if (value == field) return;
+                if (value == field)
+                {
+                    return;
+                }
+
                 field = value;
                 NotifyOfPropertyChange();
             }
@@ -27,7 +31,11 @@ namespace HGM.Hotbird64.LicenseManager
             get;
             set
             {
-                if (value == field) return;
+                if (value == field)
+                {
+                    return;
+                }
+
                 field = value;
                 NotifyOfPropertyChange();
             }
@@ -46,7 +54,11 @@ namespace HGM.Hotbird64.LicenseManager
             get;
             set
             {
-                if (value == field) return;
+                if (value == field)
+                {
+                    return;
+                }
+
                 field = value;
                 NotifyOfPropertyChange();
                 NotifyOfPropertyChange(nameof(InstallMessageColor));
@@ -58,7 +70,11 @@ namespace HGM.Hotbird64.LicenseManager
             get;
             set
             {
-                if (field == value) return;
+                if (field == value)
+                {
+                    return;
+                }
+
                 field = value;
                 NotifyOfPropertyChange();
             }
@@ -77,10 +93,17 @@ namespace HGM.Hotbird64.LicenseManager
                         return;
                     }
 
-                    foreach (KmsLicense kmsLicense in List.Where(l => l != this)) kmsLicense.IsRadioButtonChecked = false;
+                    foreach (KmsLicense kmsLicense in List.Where(l => l != this))
+                    {
+                        kmsLicense.IsRadioButtonChecked = false;
+                    }
                 }
 
-                if (field == value) return;
+                if (field == value)
+                {
+                    return;
+                }
+
                 field = value;
                 NotifyOfPropertyChange();
             }
@@ -91,7 +114,11 @@ namespace HGM.Hotbird64.LicenseManager
             get;
             set
             {
-                if (field == value) return;
+                if (field == value)
+                {
+                    return;
+                }
+
                 field = value;
                 NotifyOfPropertyChange();
             }
@@ -102,7 +129,11 @@ namespace HGM.Hotbird64.LicenseManager
             get => id;
             set
             {
-                if (id == value) return;
+                if (id == value)
+                {
+                    return;
+                }
+
                 id = value;
                 SkuItem skuItem = KmsLists.SkuItemList[value];
                 Gvlk = skuItem?.Gvlk == null ? null : (BinaryProductKey?)skuItem.Gvlk;
@@ -114,7 +145,10 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        public override string ToString() => DisplayName;
+        public override string ToString()
+        {
+            return DisplayName;
+        }
 
         public string DisplayName
         {

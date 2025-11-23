@@ -33,10 +33,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         public bool ControlsEnabled
         {
-            set
-            {
-                EpidBox.IsEnabled = PhoneInstallationIdBox.IsEnabled = GetCIDButton.IsEnabled = value;
-            }
+            set => EpidBox.IsEnabled = PhoneInstallationIdBox.IsEnabled = GetCIDButton.IsEnabled = value;
         }
 
         internal bool IsProgressBarRunning

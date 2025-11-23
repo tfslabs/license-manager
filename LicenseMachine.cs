@@ -413,7 +413,7 @@ namespace HGM.Hotbird64.LicenseManager
 #if DEBUG
                         decodedSerial = "Error while loading disk serial: " + ex.Message;
 #else
-                                    decodedSerial = "[Error]  " + ex.HResult;
+                        decodedSerial = "[Error]  " + ex.HResult;
 #endif
                     }
                 }

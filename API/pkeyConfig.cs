@@ -1,9 +1,9 @@
-﻿namespace HGM.Hotbird64.Vlmcs
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Xml.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
+namespace HGM.Hotbird64.Vlmcs
+{
     public interface IPKeyConfigFile
     {
         string DisplayName { get; }
@@ -58,7 +58,11 @@
         {
             get
             {
-                if (ProductKeyType == null) return -1;
+                if (ProductKeyType == null)
+                {
+                    return -1;
+                }
+
                 string[] split = ProductKeyType.Split(':');
 
                 return split[0].ToUpperInvariant() switch
@@ -89,7 +93,11 @@
 
                 case "Volume:GVLK":
                     string kmsDataBaseName = KmsLists.SkuItemList[ActConfigGuid]?.DisplayName;
-                    if (kmsDataBaseName != null) return kmsDataBaseName;
+                    if (kmsDataBaseName != null)
+                    {
+                        return kmsDataBaseName;
+                    }
+
                     break;
             }
 
@@ -106,7 +114,10 @@
             return obj is ProductKeyConfigurationConfigurationsConfiguration other && ActConfigGuid == other.ActConfigGuid;
         }
 
-        public override int GetHashCode() => ActConfigGuid.GetHashCode();
+        public override int GetHashCode()
+        {
+            return ActConfigGuid.GetHashCode();
+        }
 
         public bool IsRandomized { get; set; }
 
@@ -165,7 +176,10 @@
               RefActConfigGuid == other.RefActConfigGuid;
         }
 
-        public override int GetHashCode() => Start ^ End;
+        public override int GetHashCode()
+        {
+            return Start ^ End;
+        }
     }
 
     [Serializable]
@@ -191,7 +205,10 @@
         public string PublicKeyValue { get; set; }
 
         // ReSharper disable once NonReadonlyMemberInGetHashCode
-        public override int GetHashCode() => GroupId;
+        public override int GetHashCode()
+        {
+            return GroupId;
+        }
 
         public override bool Equals(object obj)
         {

@@ -16,20 +16,17 @@ namespace HGM.Hotbird64.LicenseManager.Controls
 
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value);
         }
 
         public ImageSource Image
         {
-            get { return (ImageSource)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
+            get => (ImageSource)GetValue(ImageProperty); set => SetValue(ImageProperty, value);
         }
 
         public object Icon
         {
-            get { return GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
+            get => GetValue(IconProperty); set => SetValue(IconProperty, value);
         }
 
         public static void TextChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)

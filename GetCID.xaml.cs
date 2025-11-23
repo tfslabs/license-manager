@@ -106,14 +106,10 @@ namespace HGM.Hotbird64.LicenseManager
 
         public bool ControlsEnabled
         {
-            set
-            {
-                EpidBox.IsEnabled =
-                    ComboBoxProductId.IsEnabled =
-                        TextBoxLicenseStatusReason.IsEnabled =
-                            PhoneInstallationIdBox.IsEnabled = value;
-
-            }
+            set => EpidBox.IsEnabled =
+                  ComboBoxProductId.IsEnabled =
+                      TextBoxLicenseStatusReason.IsEnabled =
+                          PhoneInstallationIdBox.IsEnabled = value;
         }
 
         internal bool IsProgressBarRunning
@@ -163,23 +159,28 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     MessageBox.Show(this, "The Multiple Activation Key has exceeded its limit", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
                     CIDCode.Text = "The Multiple Activation Key has exceeded its limit";
-                } else if (ioExp.Message.Equals("0x67"))
+                }
+                else if (ioExp.Message.Equals("0x67"))
                 {
                     MessageBox.Show(this, "The product key has been blocked", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
                     CIDCode.Text = "The product key has been blocked";
-                } else if (ioExp.Message.Equals("0x68"))
+                }
+                else if (ioExp.Message.Equals("0x68"))
                 {
                     MessageBox.Show(this, "Invalid product key", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
                     CIDCode.Text = "Invalid product key";
-                } else if (ioExp.Message.Equals("0x86"))
+                }
+                else if (ioExp.Message.Equals("0x86"))
                 {
                     MessageBox.Show(this, "Invalid key type", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
                     CIDCode.Text = "Invalid key type";
-                } else if (ioExp.Message.Equals("0x90"))
+                }
+                else if (ioExp.Message.Equals("0x90"))
                 {
                     MessageBox.Show(this, "Please check the Installation ID and try again", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
                     CIDCode.Text = "Please check the Installation ID and try again";
-                } else
+                }
+                else
                 {
                     MessageBox.Show(this, "The server is returning unknown error", "Invalid Operation", MessageBoxButton.OK, MessageBoxImage.Error);
                     CIDCode.Text = $"The activation server is returning unknown error. Detail: {ioExp}";

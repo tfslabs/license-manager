@@ -64,17 +64,24 @@ namespace HGM.Hotbird64.LicenseManager
             return true;
         }
 
-        public static explicit operator uint(ActivationInterval activationInterval) => activationInterval.Interval;
-        public static explicit operator ActivationInterval(uint uInt) => new ActivationInterval { Interval = uInt };
+        public static explicit operator uint(ActivationInterval activationInterval)
+        {
+            return activationInterval.Interval;
+        }
+
+        public static explicit operator ActivationInterval(uint uInt)
+        {
+            return new ActivationInterval { Interval = uInt };
+        }
     }
 
     public partial class KmsServer : INotifyPropertyChanged
     {
         private static readonly string nl = Environment.NewLine;
-        public static Random Rand = new Random(unchecked((int)DateTime.UtcNow.Ticks));
+        public static Random Rand = new(unchecked((int)DateTime.UtcNow.Ticks));
         public ushort Port { get; private set; }
         public static int Lcid = 1033; //1033 is EN-US (locale)
-        private static ObservableCollection<CsvlkItem> csvlks = new ObservableCollection<CsvlkItem>(KmsLists.CsvlkItemList.Where(c => c.Export).OrderBy(c => c.VlmcsdIndex));
+        private static ObservableCollection<CsvlkItem> csvlks = new(KmsLists.CsvlkItemList.Where(c => c.Export).OrderBy(c => c.VlmcsdIndex));
 
         public ObservableCollection<CsvlkItem> Csvlks
         {
@@ -91,7 +98,7 @@ namespace HGM.Hotbird64.LicenseManager
         private static bool isRunning;
         public bool IsRunning
         {
-            get { return isRunning; }
+            get => isRunning;
 
             private set
             {
@@ -220,7 +227,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void CsvlkItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!(sender is CsvlkItem csvlkItem))
+            if (sender is not CsvlkItem csvlkItem)
             {
                 return;
             }
@@ -242,7 +249,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             KmsRequest request = (KmsRequest)Marshal.PtrToStructure(requestPtr, typeof(KmsRequest));
             string clientIpAddress = Marshal.PtrToStringAnsi(clientIpAddressPtr);
-            KmsResponse response = new KmsResponse();
+            KmsResponse response = new();
             HwId hwId;
             int result = 0;
             CsvlkItem csvlkItem = Csvlks.SingleOrDefault(c => c.Activates.Select(a => a.Guid).Contains(request.KmsID)) ?? Csvlks[KmsLists.AppItemList[request.ID]?.VlmcsdIndex ?? 0];

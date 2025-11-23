@@ -75,9 +75,9 @@ namespace HGM.Hotbird64.LicenseManager
 
             public CredUiReturnCodes PromptForPassword(bool showUI, string messageText, string captionText)
             {
-                StringBuilder userPassword = new(256), userID = new StringBuilder(256);
+                StringBuilder userPassword = new(256), userID = new(256);
 
-                CREDUI_INFO credUI = new CREDUI_INFO();
+                CREDUI_INFO credUI = new();
                 credUI.cbSize = Marshal.SizeOf(credUI);
                 credUI.CaptionText = captionText;
                 credUI.MessageText = messageText;

@@ -75,7 +75,10 @@ namespace HGM.Hotbird64.LicenseManager
 
             try
             {
-                foreach (KmsLicense kmsLicense in kmsLicenses) kmsLicense.IsControlEnabled = false;
+                foreach (KmsLicense kmsLicense in kmsLicenses)
+                {
+                    kmsLicense.IsControlEnabled = false;
+                }
 
                 foreach (KmsLicense kmsLicense in kmsLicenses.Where(l => l.ApplicationID == Kms.WinGuid ? !l.IsRadioButtonChecked : !l.IsCheckBoxChecked))
                 {
@@ -118,7 +121,10 @@ namespace HGM.Hotbird64.LicenseManager
                 LabelStatus.Text = "Finished";
                 ProgressBar.Visibility = Visibility.Collapsed;
                 ProgressBar.IsIndeterminate = false;
-                if (NeedsRefresh) MainWindow.Button_Refresh_Clicked(null, null);
+                if (NeedsRefresh)
+                {
+                    MainWindow.Button_Refresh_Clicked(null, null);
+                }
             }
         }
 

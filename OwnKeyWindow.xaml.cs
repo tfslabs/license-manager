@@ -21,7 +21,11 @@ namespace HGM.Hotbird64.LicenseManager
             public string HiveName { get; set; }
             public DigitalProductId3 Id3 { get; set; }
             public DigitalProductId4 Id4 { get; set; }
-            public override string ToString() => $"{InstallDate}: {ProductName}";
+            public override string ToString()
+            {
+                return $"{InstallDate}: {ProductName}";
+            }
+
             public string DisplayDate => $"{(InstallDate != DateTimeExtensions.Epoch ? InstallDate.ToString(CultureInfo.CurrentCulture) : "")}";
         }
 
@@ -180,12 +184,12 @@ namespace HGM.Hotbird64.LicenseManager
                 {
                     using RegistryKey registryKey = sysKey.OpenSubKey(sqlServerItem.HiveName);
                     object bytes = registryKey?.GetValue("DigitalProductId");
-                    if (!(bytes is byte[]) || ((byte[])bytes).Length != 16)
+                    if (bytes is not byte[] || ((byte[])bytes).Length != 16)
                     {
                         continue;
                     }
 
-                    id3 = default(DigitalProductId3);
+                    id3 = default;
                     id3.BinaryKey = new BinaryProductKey((byte[])bytes);
 
                     productKeyList.Add(new KeyListItem
@@ -204,15 +208,18 @@ namespace HGM.Hotbird64.LicenseManager
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern uint GetSystemFirmwareTable(uint firmwareTableProviderSignature, uint firmwareTableID, IntPtr firmwareTableBuffer, uint bufferSize);
 
-        private void InstallKey_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = IsKeyInCurrentCell();
+        private void InstallKey_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = IsKeyInCurrentCell();
+        }
 
         private bool IsKeyInCurrentCell()
         {
             DataGridCellInfo cell = DataGridKeys.SelectedCells.FirstOrDefault();
 
             object cellValue = cell.Item.GetType().GetProperties().Single(p => p.Name == cell.Column.SortMemberPath).GetValue(cell.Item);
-            BinaryProductKey binaryKey = default(BinaryProductKey);
-            if (cellValue is DigitalProductId3 || cellValue is DigitalProductId4)
+            BinaryProductKey binaryKey = default;
+            if (cellValue is DigitalProductId3 or DigitalProductId4)
             {
                 binaryKey = ((dynamic)cellValue).BinaryKey;
             }
@@ -260,9 +267,20 @@ namespace HGM.Hotbird64.LicenseManager
             catch { }
         }
 
-        private void DataGrid_Keys_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e) => InstallButton.IsEnabled = IsKeyInCurrentCell();
-        private void InstallButton_Click(object sender, RoutedEventArgs e) => InstallKey_Executed(sender, null);
-        private void CancelButton_Click(object sender, RoutedEventArgs e) => Close();
+        private void DataGrid_Keys_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            InstallButton.IsEnabled = IsKeyInCurrentCell();
+        }
+
+        private void InstallButton_Click(object sender, RoutedEventArgs e)
+        {
+            InstallKey_Executed(sender, null);
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
 
         private void DataGrid_Keys_LoadingRow(object sender, DataGridRowEventArgs e)
         {

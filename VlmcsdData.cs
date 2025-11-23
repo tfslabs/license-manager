@@ -111,7 +111,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             try
             {
-                EPid ePid = new EPid(exportedCsvlks[0].EPid);
+                EPid ePid = new(exportedCsvlks[0].EPid);
                 Flags |= (byte)(ePid.OsBuild > 7601 ? VlmcsdOption.UseNdr64 : VlmcsdOption.None);
             }
             catch
@@ -168,7 +168,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
 
             currentText = csvlkNames[CsvlkCount - 1].OffsetNext;
-            VlmcsdDataText unknownText = new VlmcsdDataText("Unknown", currentText);
+            VlmcsdDataText unknownText = new("Unknown", currentText);
 
             if (noText)
             {
@@ -259,7 +259,7 @@ namespace HGM.Hotbird64.LicenseManager
                 }
             }
 
-            MemoryStream stream = new MemoryStream();
+            MemoryStream stream = new();
             stream.SetLength((long)currentText);
             _ = stream.Seek(0, SeekOrigin.Begin);
 

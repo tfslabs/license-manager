@@ -77,7 +77,10 @@ namespace HGM.Hotbird64.LicenseManager
             public string ClassName;
             public string DeviceSuffix;
             public SafeFileHandle Handle;
-            public override string ToString() => $"{Name} ({ClassName})";
+            public override string ToString()
+            {
+                return $"{Name} ({ClassName})";
+            }
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.None)]
@@ -151,7 +154,10 @@ namespace HGM.Hotbird64.LicenseManager
             ParseSubnet(subnet, out int address, out int network, out int mask);
             device = OpenTapHandle(tapName);
             Version version = DriverVersion;
-            if (version.Major == 8 && version.Minor < 2) throw new NotSupportedException("TAP driver 8.x or 9.x greater than 8.2 required");
+            if (version.Major == 8 && version.Minor < 2)
+            {
+                throw new NotSupportedException("TAP driver 8.x or 9.x greater than 8.2 required");
+            }
 
             SetSubnet(address, network, mask);
             EnableDhcp(address, mask);
@@ -190,7 +196,10 @@ namespace HGM.Hotbird64.LicenseManager
 
                     tap.Write(buffer, 0, bytesRead);
 
-                    if (Mtu > buffer.Length) buffer = new byte[Mtu];
+                    if (Mtu > buffer.Length)
+                    {
+                        buffer = new byte[Mtu];
+                    }
                 }
                 catch (OperationCanceledException)
                 {
@@ -218,24 +227,23 @@ namespace HGM.Hotbird64.LicenseManager
         {
             get
             {
-                TapDriverVersion tapDriverVersion = new TapDriverVersion();
+                TapDriverVersion tapDriverVersion = new();
                 int len = DevCtl(TapIoctl.GetVersion, &tapDriverVersion, sizeof(TapDriverVersion));
 
-                switch (len)
+                return len switch
                 {
-                    case sizeof(int) * 2:
-                        return new Version(tapDriverVersion.Major, tapDriverVersion.Minor);
-                    case sizeof(int) * 3:
-                        return new Version(tapDriverVersion.Major, tapDriverVersion.Minor, tapDriverVersion.Build);
-                    case sizeof(int) * 4:
-                        return new Version(tapDriverVersion.Major, tapDriverVersion.Minor, tapDriverVersion.Build, tapDriverVersion.Revision);
-                    default:
-                        throw new InvalidOperationException("Cannot determine TAP driver version");
-                }
+                    sizeof(int) * 2 => new Version(tapDriverVersion.Major, tapDriverVersion.Minor),
+                    sizeof(int) * 3 => new Version(tapDriverVersion.Major, tapDriverVersion.Minor, tapDriverVersion.Build),
+                    sizeof(int) * 4 => new Version(tapDriverVersion.Major, tapDriverVersion.Minor, tapDriverVersion.Build, tapDriverVersion.Revision),
+                    _ => throw new InvalidOperationException("Cannot determine TAP driver version"),
+                };
             }
         }
 
-        public static string IpAddressString(int address) => new IPAddress(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(address))).ToString();
+        public static string IpAddressString(int address)
+        {
+            return new IPAddress(BitConverter.GetBytes(IPAddress.HostToNetworkOrder(address))).ToString();
+        }
 
         public static int IpAddressInt(string ipAddressString)
         {
@@ -249,12 +257,19 @@ namespace HGM.Hotbird64.LicenseManager
         {
             int cidr;
             string[] split = subnet.Split('/');
-            if (split.Length > 2) throw new FormatException("Subnet must be <IPv4 address>[/<CIDR mask>]");
+            if (split.Length > 2)
+            {
+                throw new FormatException("Subnet must be <IPv4 address>[/<CIDR mask>]");
+            }
 
             if (split.Length == 2)
             {
                 cidr = int.Parse(split[1], NumberStyles.None, CultureInfo.InvariantCulture);
-                if (cidr > 30 || cidr < 8) throw new ArgumentOutOfRangeException(nameof(cidr), "CIDR must be between 8 and 30");
+                if (cidr is > 30 or < 8)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(cidr), "CIDR must be between 8 and 30");
+                }
+
                 address = IpAddressInt(split[0]);
             }
             else
@@ -297,13 +312,13 @@ namespace HGM.Hotbird64.LicenseManager
 
         private static unsafe void SetSubnet(int address, int network, int mask)
         {
-            TapConfigTun tapConfigTun = new TapConfigTun { Address = address, Network = network, Mask = mask };
+            TapConfigTun tapConfigTun = new() { Address = address, Network = network, Mask = mask };
             _ = DevCtl(TapIoctl.ConfigureIPv4Tunnel, &tapConfigTun, sizeof(TapConfigTun));
         }
 
         private static unsafe void EnableDhcp(int address, int mask)
         {
-            TapConfigDhcp tapConfigDhcp = new TapConfigDhcp
+            TapConfigDhcp tapConfigDhcp = new()
             {
                 Address = address,
                 Mask = mask,
@@ -331,7 +346,10 @@ namespace HGM.Hotbird64.LicenseManager
 
             using RegistryKey regAdapters = Registry.LocalMachine.OpenSubKey(adapterKey, writable: false);
             string[] keyNames = regAdapters?.GetSubKeyNames();
-            if (keyNames == null) yield break;
+            if (keyNames == null)
+            {
+                yield break;
+            }
 
             foreach (string keyName in keyNames)
             {
@@ -349,7 +367,11 @@ namespace HGM.Hotbird64.LicenseManager
                 try
                 {
                     string id = regAdapter?.GetValue("ComponentId")?.ToString();
-                    if (!tapDeviceVariants.Select(v => v.Class).Contains(id) || id == null) continue;
+                    if (!tapDeviceVariants.Select(v => v.Class).Contains(id) || id == null)
+                    {
+                        continue;
+                    }
+
                     string guid = regAdapter.GetValue("NetCfgInstanceId").ToString();
 
                     yield return new TapDevice
@@ -378,7 +400,10 @@ namespace HGM.Hotbird64.LicenseManager
                     FILE_ATTRIBUTE_SYSTEM | FILE_FLAG_OVERLAPPED, IntPtr.Zero
                 );
 
-                if (tapHandle.IsInvalid) continue;
+                if (tapHandle.IsInvalid)
+                {
+                    continue;
+                }
 
                 tapDevice.Handle = tapHandle;
                 return tapDevice;

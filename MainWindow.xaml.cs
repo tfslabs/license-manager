@@ -144,7 +144,10 @@ namespace HGM.Hotbird64.LicenseManager
                 return;
             }
 #else
-            if (Application.Current.Windows.Count < 2) return;
+            if (Application.Current.Windows.Count < 2)
+            {
+                return;
+            }
 #endif
 
             if (MessageBox.Show(
@@ -285,25 +288,13 @@ namespace HGM.Hotbird64.LicenseManager
         private void ServiceConfig_Click(object sender, RoutedEventArgs e)
         {
             LicenseMachine.LicenseProvider provider = (LicenseMachine.LicenseProvider)((FrameworkElement)sender).Tag;
-
-            FrameworkElement icon;
-
-            switch (provider.ServiceName)
+            FrameworkElement icon = provider.ServiceName switch
             {
-                case "sppsvc":
-                    icon = new Icons.Windows();
-                    break;
-
-                case "osppsvc":
-                    icon = new Icons.Office2013();
-                    break;
-
-                default:
-                    icon = new Icons.KeyIcon { Angle = 90 };
-                    break;
-            }
-
-            ServiceConfiguration serviceConfig = new ServiceConfiguration(Machine, provider, icon)
+                "sppsvc" => new Icons.Windows(),
+                "osppsvc" => new Icons.Office2013(),
+                _ => new Icons.KeyIcon { Angle = 90 },
+            };
+            ServiceConfiguration serviceConfig = new(Machine, provider, icon)
             {
                 Owner = this,
                 Icon = Icon
@@ -358,7 +349,7 @@ namespace HGM.Hotbird64.LicenseManager
                     {
                         string description = $"Configure {provider.FriendlyName} {provider.Version}";
 
-                        MenuItem m = new MenuItem
+                        MenuItem m = new()
                         {
                             Header = description,
                             Tag = provider
@@ -434,7 +425,7 @@ namespace HGM.Hotbird64.LicenseManager
             LicenseMachine.OsInfo osInfo = Machine.SysInfo.OsInfo;
 
             TextBoxOsCaption.Text = (osInfo.Caption != null ? osInfo.Caption + " " : "") +
-                                    (osInfo.Version != null ? osInfo.Version : "");
+                                    (osInfo.Version ?? "");
 
             WmiProperty.Show(LabelOsInstallDate, TextBoxOsInstallDate, osInfo.InstallDate != null, License.ShowAllFields);
 
@@ -550,7 +541,7 @@ namespace HGM.Hotbird64.LicenseManager
                         {
                             string part1String = diskId.Substring(2, 8);
                             uint part1 = uint.Parse(part1String, NumberStyles.AllowHexSpecifier);
-                            ByteSwap part2String = new ByteSwap(uint.Parse(diskId.Substring(11, 8), NumberStyles.AllowHexSpecifier), 32);
+                            ByteSwap part2String = new(uint.Parse(diskId.Substring(11, 8), NumberStyles.AllowHexSpecifier), 32);
 
                             TextBoxDiskSerialNumberVConfig.Text = part1String +
                                                                   "-XXXX-XXXX-XXXX-XXXX" +
@@ -655,32 +646,22 @@ namespace HGM.Hotbird64.LicenseManager
                 ushort part4 = ushort.Parse(biosInfo.Uuid.Substring(19, 4), NumberStyles.AllowHexSpecifier);
                 ulong part5 = ulong.Parse(biosInfo.Uuid.Substring(24, 12), NumberStyles.AllowHexSpecifier);
 
-                if (new[] { "Vbox", "QEMU", "Parallels" }.Contains(vmName))
-                {
-                    TextBoxCsUuidVConfig.Text = new ByteSwap(part1, 32) + "-" +
+                TextBoxCsUuidVConfig.Text = new[] { "Vbox", "QEMU", "Parallels" }.Contains(vmName)
+                    ? new ByteSwap(part1, 32) + "-" +
                                                 new ByteSwap(part2, 16) + "-" +
                                                 new ByteSwap(part3, 16) + "-" +
                                                 part4.ToString("x4") + "-" +
-                                                part5.ToString("x12");
-                }
-                else
-                {
-                    switch (vmName)
+                                                part5.ToString("x12")
+                    : vmName switch
                     {
-                        case "VMware":
-                            TextBoxCsUuidVConfig.Text = GetByteSwappedHexStringWithTrailingSpace(part1, 32) +
-                                                        GetByteSwappedHexStringWithTrailingSpace(part2, 16) +
-                                                        GetByteSwappedHexStringWithTrailingSpace(part3, 16).TrimEnd() + "-" +
-                                                        GetHexStringWithTrailingSpace(part4, 16) +
-                                                        GetHexStringWithTrailingSpace(part5, 48).TrimEnd();
-                            break;
-                        case "Hyper-V":
-                            TextBoxCsUuidVConfig.Text = biosInfo.Uuid;
-                            break;
-                        default:
-                            throw new Exception();
-                    }
-                }
+                        "VMware" => GetByteSwappedHexStringWithTrailingSpace(part1, 32) +
+                                                                                GetByteSwappedHexStringWithTrailingSpace(part2, 16) +
+                                                                                GetByteSwappedHexStringWithTrailingSpace(part3, 16).TrimEnd() + "-" +
+                                                                                GetHexStringWithTrailingSpace(part4, 16) +
+                                                                                GetHexStringWithTrailingSpace(part5, 48).TrimEnd(),
+                        "Hyper-V" => biosInfo.Uuid,
+                        _ => throw new Exception(),
+                    };
             }
             catch
             {
@@ -689,7 +670,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        private struct ByteSwap
+        private readonly struct ByteSwap
         {
             private readonly ulong swapped;
             private readonly int size;
@@ -786,7 +767,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             LicenseMachine.ProductLicense l = Machine.ProductLicenseList[ComboBoxProductId.SelectedIndex];
 
-            WmiProperty w = new WmiProperty("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, License.ShowAllFields);
+            WmiProperty w = new("Version " + Machine.LicenseProvidersList[l.ServiceIndex].Version, l.License, License.ShowAllFields);
 
             try
             {
@@ -858,7 +839,7 @@ namespace HGM.Hotbird64.LicenseManager
 
                 try
                 {
-                    EPid pid = new EPid(w.Value);
+                    EPid pid = new(w.Value);
                     w.Property = "ID";
 
                     try
@@ -939,7 +920,7 @@ namespace HGM.Hotbird64.LicenseManager
                         }
                     }
                 }
-                catch (Exception ex) when (ex is InvalidDataException || ex is XmlSchemaException)
+                catch (Exception ex) when (ex is InvalidDataException or XmlSchemaException)
                 {
                     _ = MessageBox.Show
                     (
@@ -1099,7 +1080,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void ConnectToAnotherComputerToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ConnectForm connectForm = new ConnectForm(this)
+            ConnectForm connectForm = new(this)
             {
                 Icon = Icon,
                 Owner = this
@@ -1128,7 +1109,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void MenuItem_AboutBox_Clicked(object sender, RoutedEventArgs e)
         {
-            AboutBox aboutBox = new AboutBox(this)
+            AboutBox aboutBox = new(this)
             {
                 Owner = this,
                 Icon = Icon
@@ -1205,14 +1186,12 @@ namespace HGM.Hotbird64.LicenseManager
                 LabelStatus.Text = "Activation Error";
 
                 int hResult = 0;
-                COMException exception = ex as COMException;
-                if (exception != null)
+                if (ex is COMException exception)
                 {
                     hResult = exception.ErrorCode;
                 }
 
-                Win32Exception win32Exception = ex as Win32Exception;
-                if (win32Exception != null)
+                if (ex is Win32Exception win32Exception)
                 {
                     hResult = win32Exception.NativeErrorCode;
                 }
@@ -1424,7 +1403,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void KmsClient_Click(object sender, RoutedEventArgs e)
         {
-            KmsClientWindow kmsClient = new KmsClientWindow(this);
+            KmsClientWindow kmsClient = new(this);
             kmsClient.Show();
         }
 
@@ -1444,7 +1423,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void MenuItem_Browse_Click(object sender, RoutedEventArgs e)
         {
-            ProductBrowser productBrowser = new ProductBrowser(this) { Icon = this.GenerateImage(new Icons.DatabaseBrowse(), 16, 16) };
+            ProductBrowser productBrowser = new(this) { Icon = this.GenerateImage(new Icons.DatabaseBrowse(), 16, 16) };
             productBrowser.Show();
         }
 
@@ -1465,19 +1444,19 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void MenuItem_CheckEpid_Click(object sender, RoutedEventArgs e)
         {
-            ProductBrowser productBrowser = new ProductBrowser(this, null) { Icon = this.GenerateImage(new Icons.QueryKey(), 16, 16) };
+            ProductBrowser productBrowser = new(this, null) { Icon = this.GenerateImage(new Icons.QueryKey(), 16, 16) };
             productBrowser.Show();
         }
 
         private void MenuItem_GetCID_Click(object sender, RoutedEventArgs e)
         {
-            GetCID getCIDWindow = new GetCID();
+            GetCID getCIDWindow = new();
             getCIDWindow.Show();
         }
 
         private void MenuItem_GetCID_Manual_Click(object sender, RoutedEventArgs e)
         {
-            GetCID_Manual getCIDManualWindow = new GetCID_Manual();
+            GetCID_Manual getCIDManualWindow = new();
             getCIDManualWindow.Show();
         }
 
@@ -1487,7 +1466,7 @@ namespace HGM.Hotbird64.LicenseManager
 
             try
             {
-                InstallKmsKeys installKmsKeys = new InstallKmsKeys(this, Machine) { Icon = Icon };
+                InstallKmsKeys installKmsKeys = new(this, Machine) { Icon = Icon };
                 _ = installKmsKeys.ShowDialog();
             }
             finally
@@ -1533,7 +1512,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ProductBrowser productBrowser = new ProductBrowser(this, ((WmiPropertyBox)sender).Box.Text) { Icon = this.GenerateImage(new Icons.QueryKey(), 16, 16) };
+            ProductBrowser productBrowser = new(this, ((WmiPropertyBox)sender).Box.Text) { Icon = this.GenerateImage(new Icons.QueryKey(), 16, 16) };
             productBrowser.Show();
         }
 
@@ -1550,7 +1529,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void LoadDataBaseMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog
+            OpenFileDialog dialog = new()
             {
                 Filter = "XML files (*.xml)|*.xml|All files (*.*)|*",
                 AddExtension = false,

@@ -57,7 +57,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void RefreshWindow()
         {
-            WmiProperty w = new WmiProperty("Version " + licenseProvider.Version, serviceParameters, MenuItemShowAllFields.IsChecked);
+            WmiProperty w = new("Version " + licenseProvider.Version, serviceParameters, MenuItemShowAllFields.IsChecked);
 
             w.DisplayProperty(LabelClientMachineId, TextBoxClientMachineID, "ClientMachineID");
 
@@ -197,7 +197,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private static T GetControlContent<T>(Control control, T t)
         {
-            return control.IsEnabled && control.Visibility == Visibility.Visible ? t : default(T);
+            return control.IsEnabled && control.Visibility == Visibility.Visible ? t : default;
         }
 
         private async void button_Save_Click(object sender, RoutedEventArgs e)
@@ -281,7 +281,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             MainDialogRefreshRequired = true;
 
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            OpenFileDialog openFileDialog = new()
             {
                 Filter = "License files (*.xrm-ms)|*.xrm-ms|All files (*.*)|*",
                 Multiselect = true,

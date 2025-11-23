@@ -40,6 +40,9 @@ namespace HGM.Hotbird64.LicenseManager.Model
             }
         }
 
-        public static string GetText(uint licenseStatus) => GetText(unchecked((Vlmcs.LicenseStatus)licenseStatus));
+        public static string GetText(uint licenseStatus)
+        {
+            return GetText(unchecked((Vlmcs.LicenseStatus)licenseStatus));
+        }
     }
 }

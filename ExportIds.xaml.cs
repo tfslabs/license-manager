@@ -90,8 +90,8 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void ExportXml()
         {
-            using MemoryStream stream = new MemoryStream();
-            XmlWriterSettings settings = new XmlWriterSettings
+            using MemoryStream stream = new();
+            XmlWriterSettings settings = new()
             {
                 NewLineHandling = NewLineHandling.Replace,
                 NewLineOnAttributes = CheckBoxMultiLine.IsChecked.Value,
@@ -102,7 +102,7 @@ namespace HGM.Hotbird64.LicenseManager
             };
 
             XmlWriter writer = XmlWriter.Create(stream, settings);
-            XmlSerializer serializer = new XmlSerializer(typeof(KmsData));
+            XmlSerializer serializer = new(typeof(KmsData));
 
             serializer.Serialize(writer, KmsLists.KmsData);
             byte[] buffer = new byte[stream.Length];
@@ -118,7 +118,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private void ExportVlmcsd()
         {
-            VlmcsdHeader vlmcsdHeader = default(VlmcsdHeader);
+            VlmcsdHeader vlmcsdHeader = default;
 
 #if DEBUG
             Debug.Assert(CheckBoxIncludeApp.IsChecked != null, "CheckBoxIncludeApp.IsChecked != null");
@@ -343,7 +343,7 @@ namespace HGM.Hotbird64.LicenseManager
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog()
+            SaveFileDialog dialog = new()
             {
                 CheckPathExists = true,
                 AddExtension = false,
@@ -351,23 +351,13 @@ namespace HGM.Hotbird64.LicenseManager
                 DereferenceLinks = true,
                 ValidateNames = true,
                 Title = (string)ButtonSaveAsAscii.Content,
+                Filter = ExportFormat switch
+                {
+                    ExportFormat.Xml => "XML Files (*.xml)|*.xml|All Files (*.*)|*",
+                    ExportFormat.Vlmcsd => "KMS Data Files (*.kmd)|*.kmd|All Files (*.*)|*",
+                    _ => "Text Files (*.txt)|*.txt|All Files (*.*)|*",
+                }
             };
-
-            switch (ExportFormat)
-            {
-                case ExportFormat.Xml:
-                    dialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*";
-                    break;
-
-                case ExportFormat.Vlmcsd:
-                    dialog.Filter = "KMS Data Files (*.kmd)|*.kmd|All Files (*.*)|*";
-                    break;
-
-                default:
-                    dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*";
-                    break;
-            }
-
             bool? result = dialog.ShowDialog(this);
             if (!result.Value)
             {

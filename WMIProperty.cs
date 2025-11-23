@@ -186,7 +186,7 @@ namespace HGM.Hotbird64.LicenseManager
         public void DisplayPropertyAsLicenseStatus(IEnumerable<Control> controls, TextBox textBox)
         {
             Property = "LicenseStatus";
-            if (!(Value is uint))
+            if (Value is not uint)
             {
                 Hide(controls, textBox);
                 textBox.Text = "N/A";
@@ -196,20 +196,12 @@ namespace HGM.Hotbird64.LicenseManager
                 uint licenseStatus = (uint)Value;
                 string licenseStatusString = Model.LicenseStatus.GetText(licenseStatus);
 
-                switch (licenseStatus)
+                textBox.Background = licenseStatus switch
                 {
-                    case 0:
-                    case 5:
-                        textBox.Background = Brushes.OrangeRed;
-                        break;
-                    case 1:
-                        textBox.Background = Brushes.LightGreen;
-                        break;
-                    default:
-                        textBox.Background = Brushes.Yellow;
-                        break;
-                }
-
+                    0 or 5 => Brushes.OrangeRed,
+                    1 => Brushes.LightGreen,
+                    _ => Brushes.Yellow,
+                };
                 Property = "LicenseStatusReason";
 
                 if (Value != null)
@@ -304,7 +296,7 @@ namespace HGM.Hotbird64.LicenseManager
                 return;
             }
 
-            EPid pid = new EPid(Value);
+            EPid pid = new(Value);
             pidBox.Text = pid.Id;
             Show(pidControl, pidBox);
 

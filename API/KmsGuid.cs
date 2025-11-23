@@ -13,22 +13,85 @@ namespace HGM.Hotbird64.Vlmcs
         public static KmsGuid InvalidGuid = new([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,]);
         public static KmsGuid Empty = new(Guid.Empty);
 
-        public bool Equals(string guidString) => guidString != null && ((Guid)this).Equals(new Guid(guidString));
-        public bool Equals(Guid guid) => ((Guid)this).Equals(guid);
-        public bool Equals(KmsGuid kmsGuid) => ((Guid)this).Equals(kmsGuid);
-        public static bool operator ==(KmsGuid kmsGuid1, KmsGuid kmsGuid2) => kmsGuid1.GetHashCode() == kmsGuid2.GetHashCode() && kmsGuid1.Equals(kmsGuid2);
-        public static bool operator !=(KmsGuid kmsGuid1, KmsGuid kmsGuid2) => !(kmsGuid1 == kmsGuid2);
-        public static bool operator ==(KmsGuid kmsGuid, string guidString) => kmsGuid.Equals(guidString);
-        public static bool operator !=(KmsGuid kmsGuid, string guidString) => !kmsGuid.Equals(guidString);
-        public static bool operator ==(string guidString, KmsGuid kmsGuid) => kmsGuid.Equals(guidString);
-        public static bool operator !=(string guidString, KmsGuid kmsGuid) => !(guidString == kmsGuid);
-        public static bool operator ==(KmsGuid kmsGuid, Guid guid) => kmsGuid.Equals(guid);
-        public static bool operator !=(KmsGuid kmsGuid, Guid guid) => !kmsGuid.Equals(guid);
-        public static bool operator ==(Guid guid, KmsGuid kmsGuid) => kmsGuid.Equals(guid);
-        public static bool operator !=(Guid guid, KmsGuid kmsGuid) => !kmsGuid.Equals(guid);
-        public static implicit operator KmsGuid(Guid guid) => *(KmsGuid*)&guid;
-        public static implicit operator Guid(KmsGuid kmsGuid) => *(Guid*)&kmsGuid;
-        public override bool Equals(object obj) => obj != null && ToString().ToUpperInvariant() == obj.ToString().ToUpperInvariant();
+        public bool Equals(string guidString)
+        {
+            return guidString != null && ((Guid)this).Equals(new Guid(guidString));
+        }
+
+        public bool Equals(Guid guid)
+        {
+            return ((Guid)this).Equals(guid);
+        }
+
+        public bool Equals(KmsGuid kmsGuid)
+        {
+            return ((Guid)this).Equals(kmsGuid);
+        }
+
+        public static bool operator ==(KmsGuid kmsGuid1, KmsGuid kmsGuid2)
+        {
+            return kmsGuid1.GetHashCode() == kmsGuid2.GetHashCode() && kmsGuid1.Equals(kmsGuid2);
+        }
+
+        public static bool operator !=(KmsGuid kmsGuid1, KmsGuid kmsGuid2)
+        {
+            return !(kmsGuid1 == kmsGuid2);
+        }
+
+        public static bool operator ==(KmsGuid kmsGuid, string guidString)
+        {
+            return kmsGuid.Equals(guidString);
+        }
+
+        public static bool operator !=(KmsGuid kmsGuid, string guidString)
+        {
+            return !kmsGuid.Equals(guidString);
+        }
+
+        public static bool operator ==(string guidString, KmsGuid kmsGuid)
+        {
+            return kmsGuid.Equals(guidString);
+        }
+
+        public static bool operator !=(string guidString, KmsGuid kmsGuid)
+        {
+            return !(guidString == kmsGuid);
+        }
+
+        public static bool operator ==(KmsGuid kmsGuid, Guid guid)
+        {
+            return kmsGuid.Equals(guid);
+        }
+
+        public static bool operator !=(KmsGuid kmsGuid, Guid guid)
+        {
+            return !kmsGuid.Equals(guid);
+        }
+
+        public static bool operator ==(Guid guid, KmsGuid kmsGuid)
+        {
+            return kmsGuid.Equals(guid);
+        }
+
+        public static bool operator !=(Guid guid, KmsGuid kmsGuid)
+        {
+            return !kmsGuid.Equals(guid);
+        }
+
+        public static implicit operator KmsGuid(Guid guid)
+        {
+            return *(KmsGuid*)&guid;
+        }
+
+        public static implicit operator Guid(KmsGuid kmsGuid)
+        {
+            return *(Guid*)&kmsGuid;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj != null && ToString().ToUpperInvariant() == obj.ToString().ToUpperInvariant();
+        }
 
         public override int GetHashCode()
         {
@@ -40,7 +103,10 @@ namespace HGM.Hotbird64.Vlmcs
 
         private void FromByteArray(IReadOnlyList<byte> guidBytes)
         {
-            if (guidBytes.Count != 16) throw new ArgumentException("GUIDs must have a length of 16 bytes.");
+            if (guidBytes.Count != 16)
+            {
+                throw new ArgumentException("GUIDs must have a length of 16 bytes.");
+            }
 
             for (int i = 0; i < 16; i++)
             {
@@ -90,7 +156,7 @@ namespace HGM.Hotbird64.Vlmcs
 
         public KmsGuid(string guidString)
         {
-            Guid guid = new Guid(guidString);
+            Guid guid = new(guidString);
             FromByteArray(guid.ToByteArray());
         }
 
@@ -99,9 +165,15 @@ namespace HGM.Hotbird64.Vlmcs
             FromByteArray(guid.ToByteArray());
         }
 
-        public override string ToString() => ((Guid)this).ToString();
+        public override string ToString()
+        {
+            return ((Guid)this).ToString();
+        }
 
-        public static KmsGuid NewGuid() => Guid.NewGuid();
+        public static KmsGuid NewGuid()
+        {
+            return Guid.NewGuid();
+        }
     }
 
 }

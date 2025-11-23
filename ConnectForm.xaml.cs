@@ -11,14 +11,13 @@ namespace HGM.Hotbird64.LicenseManager
     {
         private readonly LicenseMachine machine;
         private bool showUI;
-        private readonly NativeMethods.AuthPrompt auth = new NativeMethods.AuthPrompt();
+        private readonly NativeMethods.AuthPrompt auth = new();
         private NativeMethods.AuthPrompt.CredUiReturnCodes rc;
         private readonly MainWindow parent;
 
         private string ComputerName
         {
-            get { return Dispatcher.Invoke(() => Kms.Idn.GetAscii(TextBoxComputername.Text)); }
-            set { _ = Dispatcher.InvokeAsync(() => TextBoxComputername.Text = Kms.Idn.GetUnicode(value)); }
+            get => Dispatcher.Invoke(() => Kms.Idn.GetAscii(TextBoxComputername.Text)); set => _ = Dispatcher.InvokeAsync(() => TextBoxComputername.Text = Kms.Idn.GetUnicode(value));
         }
 
         public ConnectForm(MainWindow parent)
@@ -67,15 +66,11 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 parent.IsProgressBarRunning = false;
                 parent.LabelStatus.Text = "DCOM Error";
-                switch ((uint)ex.ErrorCode)
+                _ = (uint)ex.ErrorCode switch
                 {
-                    case 0x80070776:
-                        _ = MessageBox.Show(ex.Message, "Microsoft Is Lame", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
-                    default:
-                        _ = MessageBox.Show(ex.Message, "DCOM Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
-                }
+                    0x80070776 => MessageBox.Show(ex.Message, "Microsoft Is Lame", MessageBoxButton.OK, MessageBoxImage.Error),
+                    _ => MessageBox.Show(ex.Message, "DCOM Error", MessageBoxButton.OK, MessageBoxImage.Error),
+                };
                 parent.LabelStatus.Text = "Getting Computer Name";
                 MainGrid.IsEnabled = true;
             }
@@ -103,7 +98,11 @@ namespace HGM.Hotbird64.LicenseManager
             if (ComputerName != ".")
             {
                 auth.ServerName = ComputerName;
-                if (!showUI) showUI = CheckBoxShowUi.IsChecked.Value;
+                if (!showUI)
+                {
+                    showUI = CheckBoxShowUi.IsChecked.Value;
+                }
+
                 MainGrid.IsEnabled = false;
 
                 rc = auth.PromptForPassword(showUI,
