@@ -239,7 +239,6 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         public int ProcessKmsRequest(IntPtr requestPtr, IntPtr responsePtr, IntPtr hwIdPtr, IntPtr clientIpAddressPtr)
         {
             KmsRequest request = (KmsRequest)Marshal.PtrToStructure(requestPtr, typeof(KmsRequest));

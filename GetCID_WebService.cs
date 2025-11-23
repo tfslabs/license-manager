@@ -46,7 +46,7 @@ namespace HGM.Hotbird64.LicenseManager
                 if (hostEntry.AddressList.Length > 0)
                 {
                     using
-                    Ping ping = new Ping();
+                    Ping ping = new();
                     PingReply reply = ping.Send(hostEntry.AddressList[0]);
                     if (reply.Status == IPStatus.Success)
                     {

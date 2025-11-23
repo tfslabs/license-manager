@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -107,7 +106,6 @@ namespace HGM.Hotbird64.Vlmcs
         public ProtocolVersion Version => new ProtocolVersion { Major = (ushort)(version & 0xffff), Minor = (ushort)(version >> 16) };
         public override string ToString() => BinaryKey.ToString();
 
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         public Guid SkuId
         {
             get
@@ -129,16 +127,10 @@ namespace HGM.Hotbird64.Vlmcs
         }
     }
 
-    public class EPidQueryException : Exception
+    public class EPidQueryException(string message, int errorCode, string epid) : Exception(message)
     {
-        public int ErrorCode;
-        public string EPid;
-
-        public EPidQueryException(string message, int errorCode, string epid) : base(message)
-        {
-            ErrorCode = errorCode;
-            EPid = epid;
-        }
+        public int ErrorCode = errorCode;
+        public string EPid = epid;
     }
 
     public static class PidGen
@@ -146,10 +138,10 @@ namespace HGM.Hotbird64.Vlmcs
         public const string EpidPattern = @"^[0-9]{5}-[0-9]{5}-[0-9]{3}-[0-9]{6}-0[0123]-[0-9]{4,5}-[0-9]{4,5}\.0000-(36[0-6]|3[0-5][0-9]|[0-2][0-9]{2})20[0-9]{2}$";
 
         public static readonly byte[] MSActivationServerHmacKey =
-        {
+        [
             0xfe, 0x31, 0x98, 0x75, 0xfb, 0x48, 0x84, 0x86, 0x9c, 0xf3, 0xf1, 0xce, 0x99, 0xa8, 0x90, 0x64,
             0xab, 0x57, 0x1f, 0xca, 0x47, 0x04, 0x50, 0x58, 0x30, 0x24, 0xe2, 0x14, 0x62, 0x87, 0x79, 0xa0,
-        };
+        ];
 
         [DllImport("pidgenx.dll", CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = false)]
         private static extern uint PidGenX
@@ -179,7 +171,7 @@ namespace HGM.Hotbird64.Vlmcs
 
         public static int GetRemainingActivationsOnline(string ePid)
         {
-            int GetNumber(string s)
+            static int GetNumber(string s)
             {
                 return s == null
                     ? 0
@@ -247,14 +239,14 @@ namespace HGM.Hotbird64.Vlmcs
                 throw new WebException($"Error while communicating with activation.sls.microsoft.com. Http status: {httpResponse.StatusCode} ({(int)httpResponse.StatusCode})", WebExceptionStatus.ProtocolError);
             }
 
-            XmlDocument soapResponseDocument = new XmlDocument();
+            XmlDocument soapResponseDocument = new();
 
             using (Stream soapResponse = httpResponse.GetResponseStream())
             {
                 if (soapResponse != null) soapResponseDocument.Load(soapResponse);
             }
 
-            XmlDocument activationResponseDocument = new XmlDocument();
+            XmlDocument activationResponseDocument = new();
             activationResponseDocument.LoadXml(soapResponseDocument.LastChild.FirstChild.FirstChild.FirstChild.FirstChild.InnerText);
 
             string responseError = activationResponseDocument.SelectSingleNode("/*[local-name()='ActivationResponse']/*[local-name()='ErrorInfo']/*[local-name()='ErrorCode']")?.InnerText;
@@ -271,24 +263,16 @@ namespace HGM.Hotbird64.Vlmcs
             {
                 int errorCode = GetNumber(errorCodeText);
 
-                switch (errorCode)
+                throw errorCode switch
                 {
-                    case 0x67:
-                        throw new EPidQueryException("The EPID is blocked", errorCode, ePid);
-                    case 0x86:
-                        throw new EPidQueryException("This is not an EPID that has multiple online activations", errorCode, ePid);
-                    default:
-                        throw new EPidQueryException("Unknown error", errorCode, ePid);
-                }
+                    0x67 => new EPidQueryException("The EPID is blocked", errorCode, ePid),
+                    0x86 => new EPidQueryException("This is not an EPID that has multiple online activations", errorCode, ePid),
+                    _ => new EPidQueryException("Unknown error", errorCode, ePid),
+                };
             }
 
-            string responsePid = payLoadNode?.SelectSingleNode("//*[local-name()='PID']")?.InnerText;
-
-            if (responsePid == null)
-            {
-                throw new EPidQueryException("EPID is in an unknown format.", -1, ePid);
-            }
-
+            string responsePid = (payLoadNode?.SelectSingleNode("//*[local-name()='PID']")?.InnerText) ?? throw new EPidQueryException("EPID is in an unknown format.", -1, ePid);
+            
             if (responsePid != ePid)
             {
                 throw new EPidQueryException($"Requested info for EPID \"{ePid}\" but got answer for EPID \"{responsePid}\"", -1, ePid);
@@ -326,14 +310,11 @@ namespace HGM.Hotbird64.Vlmcs
             if (hResult != 0)
             {
                 Win32Exception innerException = (hResult & 0xffff0000) == 0x80070000 ? new Win32Exception(unchecked((int)hResult)) : null;
-                switch (hResult)
+                throw hResult switch
                 {
-                    case 0x80070002:
-                        throw new FileNotFoundException("pkeyconfig database file not found", pkeyConfigFileName, innerException);
-
-                    default:
-                        throw new KmsException(Kms.StatusMessage(hResult), innerException);
-                }
+                    0x80070002 => new FileNotFoundException("pkeyconfig database file not found", pkeyConfigFileName, innerException),
+                    _ => new KmsException(Kms.StatusMessage(hResult), innerException),
+                };
             }
         }
     }

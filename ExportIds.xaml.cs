@@ -89,7 +89,6 @@ namespace HGM.Hotbird64.LicenseManager
             TextBoxOutput.AppendText(text + Environment.NewLine);
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void ExportXml()
         {
             using MemoryStream stream = new MemoryStream();
@@ -231,7 +230,6 @@ namespace HGM.Hotbird64.LicenseManager
             AddFooter();
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void ExportSkuIds()
         {
             switch (ExportFormat)
@@ -501,7 +499,6 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void CheckBox_UseTabs_Click(object sender, RoutedEventArgs e)
         {
             tabs = CheckBoxUseTabs.IsChecked.Value ? "\t" : "    ";

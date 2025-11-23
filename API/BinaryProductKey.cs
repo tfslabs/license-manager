@@ -10,8 +10,6 @@ using System.Text.RegularExpressions;
 namespace HGM.Hotbird64.Vlmcs
 {
     [StructLayout(LayoutKind.Explicit)]
-    [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
-    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
     public struct BinaryProductKey : IComparable
     {
         [FieldOffset(0)]
@@ -30,7 +28,7 @@ namespace HGM.Hotbird64.Vlmcs
         public const string Base24 = "BCDFGHJKMPQRTVWXY2346789";
         public const string KeyPattern = @"(?!^.*N.*N.*$)([BCDFGHJKMPQRTVWXY2-9N]{5}\-){4}[BCDFGHJKMPQRTVWXY2-9N]{4}[BCDFGHJKMPQRTVWXY2-9]";
 
-        public static readonly uint[] Crc32Table = {
+        public static readonly uint[] Crc32Table = [
             0x00000000,0x04c11db7,0x09823b6e,0x0d4326d9,0x130476dc,0x17c56b6b,0x1a864db2,0x1e475005,
             0x2608edb8,0x22c9f00f,0x2f8ad6d6,0x2b4bcb61,0x350c9b64,0x31cd86d3,0x3c8ea00a,0x384fbdbd,
             0x4c11db70,0x48d0c6c7,0x4593e01e,0x4152fda9,0x5f15adac,0x5bd4b01b,0x569796c2,0x52568b75,
@@ -63,7 +61,7 @@ namespace HGM.Hotbird64.Vlmcs
             0xe3a1cbc1,0xe760d676,0xea23f0af,0xeee2ed18,0xf0a5bd1d,0xf464a0aa,0xf9278673,0xfde69bc4,
             0x89b8fd09,0x8d79e0be,0x803ac667,0x84fbdbd0,0x9abc8bd5,0x9e7d9662,0x933eb0bb,0x97ffad0c,
             0xafb010b1,0xab710d06,0xa6322bdf,0xa2f33668,0xbcb4666d,0xb8757bda,0xb5365d03,0xb1f740b4
-        };
+        ];
 
         public BinaryProductKey(uint group, uint id, ulong unknownSecret)
         {
@@ -89,11 +87,11 @@ namespace HGM.Hotbird64.Vlmcs
             if (!key.IsNewKey) throw new NotSupportedException("Operation only supported for new keys containing an 'N'");
         }
 
-        public bool IsNullKey => (Uint64High | Uint64Low) == 0;
+        public readonly bool IsNullKey => (Uint64High | Uint64Low) == 0;
 
         public bool IsNewKey
         {
-            get => (Uint64High & 0x8000000000000) != 0;
+            readonly get => (Uint64High & 0x8000000000000) != 0;
             set
             {
                 if (value && !IsNewKey)
@@ -314,6 +312,7 @@ namespace HGM.Hotbird64.Vlmcs
 
         public override string ToString() => (string)this;
         public byte[] ToArray() => (byte[])this;
+
         public List<byte> ToList() => (List<byte>)this;
         public int CompareTo(object obj) => string.Compare(ToString(), obj.ToString(), StringComparison.OrdinalIgnoreCase);
 
@@ -324,7 +323,7 @@ namespace HGM.Hotbird64.Vlmcs
 
             if (obj is IEnumerable<byte> bytes)
             {
-                byte[] byteArray = bytes as byte[] ?? bytes.ToArray();
+                byte[] byteArray = bytes as byte[] ?? [.. bytes];
                 return byteArray.Length == 16 && ((BinaryProductKey)byteArray).Equals(this);
             }
 
@@ -333,9 +332,12 @@ namespace HGM.Hotbird64.Vlmcs
 
         public override unsafe int GetHashCode() => unchecked((int)u32[2]);
 
-        public string GetEpid(int msKeyType = -1) => GetEpid(this, msKeyType);
+        public readonly string GetEpid(int msKeyType = -1)
+        {
+            return GetEpid(this, msKeyType);
+        }
 
-        public string EPid => GetEpid();
+        public readonly string EPid => GetEpid();
 
         public static string GetEpid(BinaryProductKey binaryKey, int msKeyType = -1)
         {
@@ -363,12 +365,10 @@ namespace HGM.Hotbird64.Vlmcs
 
         public static bool operator ==(BinaryProductKey first, BinaryProductKey second) => !(first != second);
         public static bool operator !=(BinaryProductKey first, BinaryProductKey second) => first.GetHashCode() != second.GetHashCode() || !first.Equals(second);
-        [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
         public static bool operator ==(BinaryProductKey first, string second) => first.Equals(second);
         public static bool operator !=(BinaryProductKey first, string second) => !(first == second);
         public static bool operator ==(string first, BinaryProductKey second) => second == first;
         public static bool operator !=(string first, BinaryProductKey second) => !(second == first);
-        [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
         public static bool operator ==(BinaryProductKey first, IEnumerable<byte> second) => first.Equals(second);
         public static bool operator !=(BinaryProductKey first, IEnumerable<byte> second) => !(first == second);
         public static bool operator ==(IEnumerable<byte> first, BinaryProductKey second) => second == first;

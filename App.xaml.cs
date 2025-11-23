@@ -25,9 +25,7 @@ namespace HGM.Hotbird64.LicenseManager
         public static readonly Brush DefaultTextBoxBackground = new SolidColorBrush(Color.FromRgb(0xf0, 0xf0, 0xf0));
         public const double ZoomFactor = 1.025;
         public static bool HaveLibKms, IsLibKmsLoadError;
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         public static string DatabaseFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "KmsDataBase.xml");
-        //public static readonly IDictionary<KmsGuid, CsvlkRule> CsvlkRules = new Dictionary<KmsGuid, CsvlkRule>(40);
         public const string GuidPattern = @"^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})|(\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\})$";
         public static readonly IReadOnlyList<KmsGuid> ServerKmsGuids;
         public static event Action DataBaseLoaded;

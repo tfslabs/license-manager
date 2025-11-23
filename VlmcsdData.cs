@@ -95,7 +95,6 @@ namespace HGM.Hotbird64.LicenseManager
 
         public static ulong Size => (uint)sizeof(VlmcsdHeader);
 
-        [SuppressMessage("ReSharper", "ForCanBeConvertedToForeach")]
         public MemoryStream WriteData(bool includeAppItems, bool includeKmsItems, bool includeSkuItems, bool noText, bool includeBetaSkuItem)
         {
             fixed (byte* m = Magic)

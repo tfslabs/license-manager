@@ -36,8 +36,7 @@ namespace HGM.Hotbird64.LicenseManager
         public bool IsOnFileSystem => tempFileName != null || IsUnzippedExternal;
         public bool IsOldKeyFormat;
         public bool IsUnzippedExternal => IsExternal && !ExternalFileName.ToUpperInvariant().EndsWith(".GZ");
-
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        
         public string TempFileName
         {
             get
@@ -70,7 +69,6 @@ namespace HGM.Hotbird64.LicenseManager
         public override string ToString() => DisplayName;
     }
 
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public partial class ProductBrowser : IHaveNotifyOfPropertyChange
     {
         public static ProductKeyConfiguration PKeyConfig { get; set; }
@@ -420,7 +418,6 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         private static ProductKeyConfiguration ReadPkeyConfig(PKeyConfigFile pKeyConfigFile)
         {
             using Stream stream = !pKeyConfigFile.IsExternal

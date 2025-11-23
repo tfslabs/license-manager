@@ -15,8 +15,6 @@ namespace HGM.Hotbird64.LicenseManager
 {
     public partial class OwnKeyWindow
     {
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
-        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
         private class KeyListItem
         {
             public string ProductName { get; set; }

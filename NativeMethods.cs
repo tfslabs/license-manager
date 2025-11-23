@@ -11,13 +11,8 @@ namespace HGM.Hotbird64.LicenseManager
 {
     public static partial class NativeMethods
     {
-
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Local")]
         public class AuthPrompt : IDisposable
         {
-            [SuppressMessage("ReSharper", "InconsistentNaming")]
             private struct CREDUI_INFO
             {
                 public int cbSize;
@@ -46,7 +41,6 @@ namespace HGM.Hotbird64.LicenseManager
             private static extern CredUiReturnCodes CredUIConfirmCredentials(string targetName, [In, MarshalAs(UnmanagedType.Bool)] bool bConfirm);
 
             [Flags]
-            [SuppressMessage("ReSharper", "InconsistentNaming")]
             enum CREDUI_FLAGS
             {
                 INCORRECT_PASSWORD = 0x1,
@@ -79,12 +73,10 @@ namespace HGM.Hotbird64.LicenseManager
                 ERROR_INVALID_PARAMETER = 87,
                 ERROR_INVALID_FLAGS = 1004,
             }
-
-
-            [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+            
             public CredUiReturnCodes PromptForPassword(bool showUI, string messageText, string captionText)
             {
-                StringBuilder userPassword = new StringBuilder(256), userID = new StringBuilder(256);
+                StringBuilder userPassword = new(256), userID = new StringBuilder(256);
 
                 CREDUI_INFO credUI = new CREDUI_INFO();
                 credUI.cbSize = Marshal.SizeOf(credUI);

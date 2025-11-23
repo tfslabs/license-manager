@@ -39,15 +39,10 @@ namespace HGM.Hotbird64.LicenseManager
 
     public static class TapMirror
     {
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private const uint METHOD_BUFFERED = 0;
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private const uint FILE_ANY_ACCESS = 0;
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private const uint FILE_DEVICE_UNKNOWN = 0x00000022;
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private const int FILE_ATTRIBUTE_SYSTEM = 0x4;
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private const int FILE_FLAG_OVERLAPPED = 0x40000000;
 
         public enum TapIoctl

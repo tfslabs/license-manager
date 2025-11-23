@@ -34,8 +34,6 @@ namespace HGM.Hotbird64.LicenseManager
             return (object)other != null && Equals(other.Id);
         }
 
-        [SuppressMessage("ReSharper", "CanBeReplacedWithTryCastAndCheckForNull")]
-        [SuppressMessage("ReSharper", "BaseObjectEqualsIsObjectEquals")]
         public override bool Equals(object other)
         {
             return other is EPid ? Id == ((EPid)other).Id : other is string ? Id == (string)other : base.Equals(other);
@@ -64,8 +62,6 @@ namespace HGM.Hotbird64.LicenseManager
             Id = buffer.Text;
             CheckId();
         }
-
-        [SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
         public bool IsValidEpidFormat
         {
             get

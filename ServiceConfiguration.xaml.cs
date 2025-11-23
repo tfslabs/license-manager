@@ -23,8 +23,7 @@ namespace HGM.Hotbird64.LicenseManager
         public bool MainDialogRefreshRequired;
         private MainWindow owner;
         ManagementObject serviceParameters;
-
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
+        
         private bool KmsHostDirty
         {
             get
@@ -205,8 +204,7 @@ namespace HGM.Hotbird64.LicenseManager
         {
             return control.IsEnabled && control.Visibility == Visibility.Visible ? t : default(T);
         }
-
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
+        
         private async void button_Save_Click(object sender, RoutedEventArgs e)
         {
             LabelServiceStatus.Text = "Saving KMS settings";

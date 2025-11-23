@@ -8,7 +8,6 @@ using System.Runtime.InteropServices;
 namespace HGM.Hotbird64.Vlmcs
 {
     [StructLayout(LayoutKind.Sequential)]
-    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
     public unsafe struct KmsGuid : IEquatable<Guid>, IEquatable<string>, IEquatable<KmsGuid>
     {
         public fixed byte Data[16];

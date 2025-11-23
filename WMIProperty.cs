@@ -163,7 +163,6 @@ namespace HGM.Hotbird64.LicenseManager
             Hide(control, textbox, showAllFields);
         }
 
-        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         public void DisplayPropertyAsPeriodRemaining(IEnumerable<Control> controls, TextBox textbox, string p)
         {
             Property = p;

@@ -60,8 +60,6 @@ namespace HGM.Hotbird64.LicenseManager
         public string DisplayName;
         public override string ToString() => DisplayName;
     }
-
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
     public partial class KmsClientWindow : INotifyPropertyChanged
     {
         public class ServerTestResult
@@ -415,7 +413,6 @@ namespace HGM.Hotbird64.LicenseManager
             ButtonSendRequest.IsEnabled = IsValidInput;
         }
 
-        [SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
         private void ValidateTime(TextBox textBox, out DateTime time)
         {
             bool isValid = DateTime.TryParse(textBox.Text, out time);
@@ -852,14 +849,12 @@ namespace HGM.Hotbird64.LicenseManager
             textBox.Foreground = isChecked ? Brushes.Gray : Brushes.Black;
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void CheckBoxUseCurrentTime_Click(object sender, RoutedEventArgs e)
         {
             TextBoxRequestTime.Text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
             SetTextColorFromCheckBox(TextBoxRequestTime, ((CheckBox)sender).IsChecked.Value);
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void CheckBoxAutoRandomClientId_Click(object sender, RoutedEventArgs e)
         {
             bool isChecked = ((CheckBox)sender).IsChecked.Value;
@@ -867,7 +862,6 @@ namespace HGM.Hotbird64.LicenseManager
             SetTextColorFromCheckBox(TextBoxClientGuid, isChecked);
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void CheckBoxAutoRandomClientName_Click(object sender, RoutedEventArgs e)
         {
             bool isChecked = ((CheckBox)sender).IsChecked.Value;
@@ -933,8 +927,6 @@ namespace HGM.Hotbird64.LicenseManager
             );
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
-        [SuppressMessage("ReSharper", "AccessToDisposedClosure")]
         private async void Button_SendRequest_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1181,7 +1173,6 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private async Task<bool> AnalyzeSecondRequest(KmsClient kmsClient, KmsRequest kmsRequest, bool useMultiplexedRpc, bool useNdr64, bool useBtfn, KmsResponse kmsResponse)
         {
             string warnings, errors;
@@ -1430,7 +1421,6 @@ namespace HGM.Hotbird64.LicenseManager
             return true;
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void AnalyzeRpc(RpcDiag rpcDiag, EPid pid, KmsGuid kmsId)
         {
             uint osBuild;
@@ -1697,9 +1687,6 @@ namespace HGM.Hotbird64.LicenseManager
             ServerTests.Add(serverTestResult);
         }
 
-        [SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-        [SuppressMessage("ReSharper", "AccessToModifiedClosure")]
-        [SuppressMessage("ReSharper", "ImplicitlyCapturedClosure")]
         private void CheckEpidForErrors(EPid pid)
         {
             if (!pid.IsValidEpidFormat)
@@ -1785,7 +1772,6 @@ namespace HGM.Hotbird64.LicenseManager
             }, serverTestResult);
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private static void SetRpcFeature(ToggleButton requestCheckBox, ToggleButton displayCheckBox, bool hasRpcDiag, bool hasFeature)
         {
             if (!hasRpcDiag || !requestCheckBox.IsChecked.Value)
@@ -1845,7 +1831,6 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void SetTextBoxFromKmsResponse(EPid pid, KmsRequest request, KmsResponse response, KmsResult kmsResult)
         {
             TextBoxCorrectResponseSize.Text = kmsResult.CorrectResponseSize.ToString();
@@ -1934,7 +1919,6 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         private void CheckBoxDangerousTests_Click(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;

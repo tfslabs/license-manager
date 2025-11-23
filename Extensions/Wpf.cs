@@ -40,7 +40,6 @@ namespace HGM.Hotbird64.LicenseManager.Extensions
             return rtb;
         }
 
-        [SuppressMessage("ReSharper", "PartialTypeWithSinglePart")]
         public static void ExpandAll(this ItemsControl control, bool isExpanded)
         {
             foreach (object item in control.Items)

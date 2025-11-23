@@ -2,8 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lm="clr-namespace:HGM.Hotbird64.LicenseManager"
-        Title="Connect to Another Computer" Height="Auto" Width="350" SizeToContent="Height"
-        >
+        Title="Connect to Another Computer" 
+        Height="Auto"
+        Width="350"
+        SizeToContent="Height">
     <StackPanel Name="TopElement">
         <TextBlock Margin="5,5,5,5" TextWrapping="Wrap">
             Specifiy a remote computer using DNS name, or IP Address
@@ -24,8 +26,8 @@
                 <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="5,5,5,5" IsDefault="True" Click="button_Connect_Click">Connect</Button>
-            <Button Name="ButtonConnectLocal" Margin="5,5,5,5" Grid.Column="1" Click="button_Local_Click">Use Local Computer</Button>
+            <Button Margin="5,5,5,5" IsDefault="True" Click="Button_Connect_Click">Connect</Button>
+            <Button Name="ButtonConnectLocal" Margin="5,5,5,5" Grid.Column="1" Click="Button_Local_Click">Use Local Computer</Button>
             <Button Margin="5,5,5,5" IsCancel="True" Grid.Column="2">Cancel</Button>
         </Grid>
     </StackPanel>

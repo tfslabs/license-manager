@@ -90,8 +90,7 @@ namespace HGM.Hotbird64.LicenseManager
             }
         }
 
-        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
-        public async void button_Connect_Click(object sender, RoutedEventArgs e)
+        public async void Button_Connect_Click(object sender, RoutedEventArgs e)
         {
             if (ComputerName == "")
             {
@@ -125,10 +124,10 @@ namespace HGM.Hotbird64.LicenseManager
             await Connect_Worker();
         }
 
-        private void button_Local_Click(object sender, RoutedEventArgs e)
+        private void Button_Local_Click(object sender, RoutedEventArgs e)
         {
             ComputerName = ".";
-            button_Connect_Click(sender, e);
+            Button_Connect_Click(sender, e);
         }
 
     }
