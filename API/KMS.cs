@@ -510,23 +510,38 @@ namespace HGM.Hotbird64.Vlmcs
               BindRpc32(socket, useMultiplexedRpc, useNdr64, useBtfn, ref rpcDiag);
         }
 
+        // LibKMS 32
         [DllImport("libkms32.dll", EntryPoint = "GetErrorMessage", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
         private static extern IntPtr GetErrorMessage32();
-
-        [DllImport("libkms64.dll", EntryPoint = "GetErrorMessage", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
-        private static extern IntPtr GetErrorMessage64();
-
-        private static IntPtr GetErrorMessage()
-        {
-            return IntPtr.Size == 8 ? GetErrorMessage64() : GetErrorMessage32();
-        }
 
         [DllImport("libkms32.dll", EntryPoint = "CloseConnection", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
         private static extern void CloseConnection32(IntPtr ctx);
 
+        [DllImport("libkms32.dll", EntryPoint = "SendKMSRequest", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, SetLastError = false, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        private static extern uint SendKMSRequest32(IntPtr ctx, IntPtr baseResponse, IntPtr baseRequest, out uint result, IntPtr hwId);
+
+        [DllImport("libkms32.dll", EntryPoint = "IsDisconnected", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
+        private static extern byte IsDisconnected32(IntPtr ctx);
+
+        // LibKMS 64
+
+        [DllImport("libkms64.dll", EntryPoint = "GetErrorMessage", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
+        private static extern IntPtr GetErrorMessage64();
         [DllImport("libkms64.dll", EntryPoint = "CloseConnection", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
         private static extern void CloseConnection64(IntPtr ctx);
 
+        [DllImport("libkms64.dll", EntryPoint = "SendKMSRequest", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, SetLastError = false, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, ExactSpelling = true)]
+        private static extern uint SendKMSRequest64(IntPtr ctx, IntPtr baseResponse, IntPtr baseRequest, out uint result, IntPtr hwId);
+
+        [DllImport("libkms64.dll", EntryPoint = "IsDisconnected", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
+        private static extern byte IsDisconnected64(IntPtr ctx);
+
+        // General methods
+        private static IntPtr GetErrorMessage()
+        {
+            return IntPtr.Size == 8 ? GetErrorMessage64() : GetErrorMessage32();
+        }
+        
         private static void CloseConnection(IntPtr ctx)
         {
             if (IntPtr.Size == 8)
@@ -538,13 +553,7 @@ namespace HGM.Hotbird64.Vlmcs
                 CloseConnection32(ctx);
             }
         }
-
-        [DllImport("libkms32.dll", EntryPoint = "SendKMSRequest", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, SetLastError = false, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, ExactSpelling = true)]
-        private static extern uint SendKMSRequest32(IntPtr ctx, IntPtr baseResponse, IntPtr baseRequest, out uint result, IntPtr hwId);
-
-        [DllImport("libkms64.dll", EntryPoint = "SendKMSRequest", CallingConvention = CallingConvention.Cdecl, BestFitMapping = false, SetLastError = false, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true, ExactSpelling = true)]
-        private static extern uint SendKMSRequest64(IntPtr ctx, IntPtr baseResponse, IntPtr baseRequest, out uint result, IntPtr hwId);
-
+        
         private static uint SendKmsRequest(IntPtr ctx, IntPtr baseResponse, IntPtr baseRequest, out uint result, IntPtr hwId)
         {
             return IntPtr.Size == 8
@@ -552,11 +561,9 @@ namespace HGM.Hotbird64.Vlmcs
               : SendKMSRequest32(ctx, baseResponse, baseRequest, out result, hwId);
         }
 
-        [DllImport("libkms32.dll", EntryPoint = "IsDisconnected", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
-        private static extern byte IsDisconnected32(IntPtr ctx);
 
-        [DllImport("libkms64.dll", EntryPoint = "IsDisconnected", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
-        private static extern byte IsDisconnected64(IntPtr ctx);
+
+
 
         private static byte IsDisconnected(IntPtr ctx)
         {
@@ -596,10 +603,7 @@ namespace HGM.Hotbird64.Vlmcs
         public static readonly KmsGuid O2010Guid = new("59a52881-a989-479d-af46-f275c6370663");
         public static readonly KmsGuid O2013Guid = new("0ff1ce15-a989-479d-af46-f275c6370663");
         public static readonly KmsGuid WinGuid = new("55c92734-d682-4d71-983e-d6ec3f16059f");
-        //private static readonly IDictionary<uint, string> platformId = new Dictionary<uint, string>();
-        //public static IReadOnlyDictionary<uint, string> PlatformId => (IReadOnlyDictionary<uint, string>)platformId;
-
-
+        
         static Kms()
         {
             Idn.AllowUnassigned = true;
@@ -639,10 +643,10 @@ namespace HGM.Hotbird64.Vlmcs
         {
             switch (hResult)
             {
+                case 0: return "The product was activated.";
+                case 0x4004F040: return "The product was activated but the owner should verify the Product Use Rights.";
                 case 0x4004F00C: return "The application is running within the valid grace period.";
                 case 0x4004F00D: return "Application is within valid OOT Grace";
-                case 0:
-                case 0x4004F040: return "The product was activated.";
                 case 0x4004F401: return "The product has a store license.";
                 case 0x4004FC04: return "The application is running within the time-based validity period.";
                 case 0x8007000D: return "The KMS host you are using is unable to handle your product. It only supports legacy versions.";
@@ -663,8 +667,8 @@ namespace HGM.Hotbird64.Vlmcs
                 case 0xC004F00F: return "The hardware ID binding is beyond level of tolerance.";
                 case 0xC004F012: return "The value for the input key was not found.";
                 case 0xC004F014: return "The product key is not available.";
-                case 0xC004F015:
-                case 0xC004F017: return "The required license is not installed.";
+                case 0xC004F015: return "The required license is not installed. (E_PRODUCT_SKU_NOT_INSTALLED)";
+                case 0xC004F017: return "The required license is not installed. (E_PUBLISHING_LICENSE_NOT_INSTALLED)";
                 case 0xc004F01D: return "The verification of the license failed.";
                 case 0xC004F01F: return "The license data is invalid.";
                 case 0xC004F025: return "Access denied: the requested action requires elevated privileges.";
@@ -696,11 +700,11 @@ namespace HGM.Hotbird64.Vlmcs
                 case 0xC004F312: return "The computer could not be activated. The certificate cannot be used because its private key is exportable.";
                 case 0xC004FE00: return "The License Data Store has been tampered with. Reactivation required.";
                 case 0x8A010101: return "They is not recognized by the pkeyconfig file.";
-                /*case 0x80070057: return "The parameter is incorrect";
-                        case 0x8007232A: return "DNS server failure";
-                        case 0x8007232B: return "DNS name does not exist";
-                        case 0x800706BA: return "The RPC server is unavailable";
-                        case 0x8007251D: return "No records found for DNS query";*/
+                case 0x80070057: return "The parameter is incorrect";
+                case 0x8007232A: return "DNS server failure";
+                case 0x8007232B: return "DNS name does not exist";
+                case 0x800706BA: return "The RPC server is unavailable";
+                case 0x8007251D: return "No records found for DNS query";
                 case 0x80072ee7: return "Microsoft activation server could not be reached.";
 
                 default:
@@ -715,6 +719,8 @@ namespace HGM.Hotbird64.Vlmcs
             }
         }
 
+        // LibKMS 32
+
         [DllImport("libkms32.dll", EntryPoint = "StartKmsServer", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
         private static extern int StartKmsServer32(int port, KmsServerCallback callback);
 
@@ -726,6 +732,9 @@ namespace HGM.Hotbird64.Vlmcs
 
         [DllImport("libkms32.dll", EntryPoint = "GetEmulatorVersion", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
         private static extern IntPtr GetEmulatorVersion32();
+
+        // LibKMS 64
+
         [DllImport("libkms64.dll", EntryPoint = "StartKmsServer", CallingConvention = CallingConvention.Cdecl, SetLastError = false, CharSet = CharSet.Ansi, ExactSpelling = true)]
         private static extern int StartKmsServer64(int port, KmsServerCallback callback);
 
