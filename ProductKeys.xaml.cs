@@ -30,6 +30,7 @@ namespace HGM.Hotbird64.LicenseManager
             new ("Visual Studio 2022 Enterprise", "VHF9H-NXBBB-638P6-6JHCY-88JWH", KeyType.StoreLicense),
             new ("Visual Studio 2026 Professional", "NVTDK-QB8J9-M28GR-92BPC-BTHXK", KeyType.StoreLicense),
             new ("Visual Studio 2026 Enterprise", "VYGRN-WPR22-HG4X3-692BF-QGT2V", KeyType.StoreLicense),
+            new ("Windows Server 2016 KMS Host", "7PYF4-RR4RJ-2MJ8D-272GW-YWMKH", KeyType.StoreLicense),
             new ("Windows Server 2022 KMS Host", "R47NX-MVMYR-98PV9-XYVXY-XBXCH", KeyType.StoreLicense)
         };
 
