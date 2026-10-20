@@ -22,19 +22,19 @@ namespace HGM.Hotbird64.LicenseManager
             0,     0,   0,   0,   0,   0,   0,   0
         ];
 
-        protected const string Action = "http://www.microsoft.com/BatchActivationService/BatchActivate";
-        protected readonly Uri Uri = new("https://activation.sls.microsoft.com/BatchActivation/BatchActivation.asmx");
-        protected readonly XNamespace SoapSchemaNs = "http://schemas.xmlsoap.org/soap/envelope/";
-        protected readonly XNamespace XmlSchemaInstanceNs = "http://www.w3.org/2001/XMLSchema-instance";
-        protected readonly XNamespace XmlSchemaNs = "http://www.w3.org/2001/XMLSchema";
-        protected readonly XNamespace BatchActivationServiceNs = "http://www.microsoft.com/BatchActivationService";
-        protected readonly XNamespace BatchActivationRequestNs = "http://www.microsoft.com/DRM/SL/BatchActivationRequest/1.0";
-        protected readonly XNamespace BatchActivationResponseNs = "http://www.microsoft.com/DRM/SL/BatchActivationResponse/1.0";
+        private const string Action = "http://www.microsoft.com/BatchActivationService/BatchActivate";
+        private readonly Uri Uri = new("https://activation.sls.microsoft.com/BatchActivation/BatchActivation.asmx");
+        private readonly XNamespace SoapSchemaNs = "http://schemas.xmlsoap.org/soap/envelope/";
+        private readonly XNamespace XmlSchemaInstanceNs = "http://www.w3.org/2001/XMLSchema-instance";
+        private readonly XNamespace XmlSchemaNs = "http://www.w3.org/2001/XMLSchema";
+        private readonly XNamespace BatchActivationServiceNs = "http://www.microsoft.com/BatchActivationService";
+        private readonly XNamespace BatchActivationRequestNs = "http://www.microsoft.com/DRM/SL/BatchActivationRequest/1.0";
+        private readonly XNamespace BatchActivationResponseNs = "http://www.microsoft.com/DRM/SL/BatchActivationResponse/1.0";
 
-        protected readonly string webRequestType = "POST";
-        protected readonly string webAppType = "text/xml";
-        protected readonly string webRequestEncoding = "text/xml; charset=\"utf-8\"";
-        protected readonly string webHost = "activation.sls.microsoft.com";
+        private readonly string webRequestType = "POST";
+        private readonly string webAppType = "text/xml";
+        private readonly string webRequestEncoding = "text/xml; charset=\"utf-8\"";
+        private readonly string webHost = "activation.sls.microsoft.com";
 
         public bool CheckConnection()
         {
@@ -135,11 +135,9 @@ namespace HGM.Hotbird64.LicenseManager
             {
                 throw new InvalidOperationException(responseXml.Descendants(BatchActivationResponseNs + "ErrorCode").First().Value);
             }
-            else
-            {
-                XElement cidElement = responseXml.Descendants(BatchActivationResponseNs + "CID").FirstOrDefault();
-                return cidElement.Value;
-            }
+
+            XElement cidElement = responseXml.Descendants(BatchActivationResponseNs + "CID").FirstOrDefault();
+            return cidElement.Value;            
         }
     }
 }
