@@ -127,6 +127,7 @@ IsGeneratedGvlk="false"                     // If true, indicates that this is a
 		<WinBuild BuildNumber="25246" ReleaseDate="2023-12-01T19:08:21Z" DisplayName="Windows Server 2022 (23H2) vNext" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="26100" ReleaseDate="2024-01-26T11:10:00Z" DisplayName="Windows 11 24H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true" />
 		<WinBuild BuildNumber="26200" ReleaseDate="2025-03-24T23:00:01Z" DisplayName="Windows 11 25H2/Windows Server 2025" PlatformId="3612" MayBeServer="true" UsesNDR64="true"/>
+		<WinBuild BuildNumber="26300" ReleaseDate="2026-10-01T00:00:00Z" DisplayName="Windows 11 26H2" PlatformId="3612" UsesNDR64="true" />
 		<WinBuild BuildNumber="28000" ReleaseDate="2026-02-10T23:00:01Z" DisplayName="Windows 11 26H1" PlatformId="3612" MayBeServer="true" UsesNDR64="true"/>
 	</WinBuilds>
 	<CsvlkItems>
